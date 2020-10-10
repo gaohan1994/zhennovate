@@ -1,19 +1,34 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
-
+import { HashRouter, Switch, Route } from 'react-router-dom';
+import SignUp from '@/pages/sign/sign-up';
+import SignIn from '@/pages/sign/sign-in';
+import Home from '@/pages/index/home';
+/**
+ * App布局
+ * 一级路由
+ * 注册、登录、忘记密码、主页
+ *
+ * note:
+ * 注册、登录、忘记密码 使用非导航栏头部
+ * 主页以及相关使用 导航栏头部
+ * @returns
+ */
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a className="App-link" href="https://reactjs.org" target="_blank" rel="noopener noreferrer">
-          Learn React
-        </a>
-      </header>
+    <div>
+      <HashRouter>
+        <Switch>
+          <Route path="/sign-up">
+            <SignUp />
+          </Route>
+          <Route path="/sign-in">
+            <SignIn />
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </HashRouter>
     </div>
   );
 }
