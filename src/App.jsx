@@ -3,6 +3,7 @@ import { HashRouter, Switch, Route } from 'react-router-dom';
 import SignUp from '@/pages/sign/sign-up';
 import SignIn from '@/pages/sign/sign-in';
 import Home from '@/pages/index/home';
+import PaperformModal from './component/paperform-modal';
 /**
  * App布局
  * 一级路由
@@ -16,6 +17,7 @@ import Home from '@/pages/index/home';
 function App() {
   return (
     <div>
+      <PaperformModal />
       <HashRouter>
         <Switch>
           <Route path="/sign-up">
