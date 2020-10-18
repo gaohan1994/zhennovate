@@ -1,8 +1,14 @@
+/**
+ * @Author: centerm.gaohan
+ * @Date: 2020-10-14 09:20:54
+ * @Last Modified by: centerm.gaohan
+ * @Last Modified time: 2020-10-16 21:32:31
+ */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, Button } from 'antd';
 import { useDispatch } from 'react-redux';
-import './index.less';
 import postMessageSdk from '@/common/post-message-sdk';
+import './index.less';
 
 const prefix = 'page-program';
 
@@ -14,7 +20,7 @@ const menus = [
     name: '左右布局',
     paperform: {
       type: 'iframe',
-      paperformId: '1hw67gdf',
+      id: '1hw67gdf',
     },
   },
   {
@@ -25,14 +31,49 @@ const menus = [
       id: '1hw67gdf',
     },
   },
+  {
+    id: '3',
+    name: '非常长的paperform',
+    paperform: {
+      type: 'iframe',
+      id: 'hik5qng6',
+    },
+  },
+  {
+    id: '4',
+    name: '视频paper结合',
+    paperform: {
+      type: 'iframe',
+      id: '1hw67gdf',
+    },
+  },
+
+  {
+    id: '5',
+    name: '视频paper结合2',
+    paperform: {
+      type: 'modal',
+      id: '1hw67gdf',
+    },
+  },
 ];
 
+/**
+ * @time 10 13
+ * @question iframe的高度放到外层
+ * @question 视频和paperfrom结合
+ * @question paperfrom会保存做过的状态
+ *
+ * 渲染paperform function
+ *
+ * @param {*} props
+ * @return {*}
+ */
 const RenderPaperForm = (props) => {
   const dispatch = useDispatch();
   const commonUrl = 'http://znadmin.tprlearn.com/paperform.html';
   const { data, ...rest } = props;
   const { paperform } = data;
-
   if (paperform.type === 'modal') {
     return (
       <div>
@@ -42,13 +83,14 @@ const RenderPaperForm = (props) => {
               type: 'CHANGE_PAPERFORM_MODAL_VISIBLE',
               payload: true,
             });
-          }}>
+          }}
+        >
           open paperform modal
         </Button>
       </div>
     );
   }
-  return <iframe {...rest} src={`${commonUrl}?id=1hw67gdf`} />;
+  return <iframe {...rest} src={`${commonUrl}?id=${paperform.id}&time=${new Date().getTime()}`} />;
 };
 
 export default () => {
@@ -59,6 +101,10 @@ export default () => {
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [currentMenu, setCurrentMenu] = useState({});
 
+  /**
+   * 动态设置右侧高度
+   * 为剩余屏幕高度
+   */
   useEffect(() => {
     if (iframeContainerRef.current.clientHeight) {
       setIframeHeight(iframeContainerRef.current.clientHeight);
@@ -75,9 +121,7 @@ export default () => {
   }, []);
 
   useEffect(() => {
-    console.log('selectedKeys', selectedKeys);
     const menu = menus.find((m) => m.id === selectedKeys[0]);
-    console.log('menu', menu);
     if (menu) {
       setCurrentMenu(menu);
     }
@@ -102,7 +146,9 @@ export default () => {
           {currentMenu && currentMenu.paperform && iframeHeight !== -1 ? (
             <RenderPaperForm data={currentMenu} height={iframeHeight} width={iframeWidth} />
           ) : (
-            <Spin />
+            <div className={`${prefix}-spin`}>
+              <Spin size="large" />
+            </div>
           )}
         </div>
       </Content>

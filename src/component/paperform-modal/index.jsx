@@ -12,10 +12,15 @@ function PaperfromModal(props) {
     <Modal
       visible={visible}
       footer={null}
+      // width='80vw'
+      // bodyStyle={{ padding: 0 }}
       onCancel={() => {
         dispatch({ type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE });
-      }}>
-      <iframe width={500} height={300} src={`${commonUrl}?id=1hw67gdf`} />
+      }}
+    >
+      <div>
+        <iframe width={500} height={300} src={`${commonUrl}?id=1hw67gdf`} />
+      </div>
     </Modal>
   );
 }
