@@ -1,18 +1,17 @@
 /*
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
- * @Last Modified by:   centerm.gaohan
- * @Last Modified time: 2020-10-12 09:37:11
+ * @Last Modified by: centerm.gaohan
+ * @Last Modified time: 2020-10-19 22:20:10
  */
 import React from 'react';
-import LayoutHeader from '@/component/layout/header';
 import { Switch, Route, useRouteMatch } from 'react-router-dom';
-import { Layout } from 'antd';
+import LayoutContainer from '@/component/layout/home-layout';
 import Program from '@/pages/index/program';
+import ProgramDescribe from '@/pages/index/program/describe';
 import './index.less';
-// const { Content } = Layout;
 
-const prefix = 'page-home';
+// const prefix = 'page-home';
 /**
  * 主页布局
  * 包括顶部导航栏 以及路由配置
@@ -24,18 +23,11 @@ export default function () {
   const match = useRouteMatch();
   console.log('match', match);
   return (
-    <Layout style={{ width: '100%', height: '100%' }}>
-      <LayoutHeader />
-
-      <Layout className={`${prefix}-content`}>
-        <div style={{ flex: 1 }}>
-          <Switch>
-            <Route path="/program">
-              <Program />
-            </Route>
-          </Switch>
-        </div>
-      </Layout>
-    </Layout>
+    <LayoutContainer>
+      <Switch>
+        <Route path="/program" component={Program} exact={true} />
+        <Route path="/program/describe/:id" component={ProgramDescribe} exact={true} />
+      </Switch>
+    </LayoutContainer>
   );
 }
