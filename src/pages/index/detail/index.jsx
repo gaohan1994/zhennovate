@@ -2,15 +2,15 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-19 22:07:34
+ * @Last Modified time: 2020-10-20 09:17:25
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, Button } from 'antd';
 import { useDispatch } from 'react-redux';
 import postMessageSdk from '@/common/post-message-sdk';
-import '../index.less';
+import './index.less';
 
-const prefix = 'page-program';
+const prefix = 'page-detail';
 
 const { Sider, Content } = Layout;
 
@@ -93,13 +93,28 @@ const RenderPaperForm = (props) => {
   return <iframe {...rest} src={`${commonUrl}?id=${paperform.id}&time=${new Date().getTime()}`} />;
 };
 
-export default () => {
+export default (props) => {
+  console.log('props', props);
+  const { params } = props.match;
+
+  // iframe相关
   const iframeContainerRef = useRef(null);
   const [iframeHeight, setIframeHeight] = useState(-1);
   const [iframeWidth, setIframeWidth] = useState(-1);
 
   const [selectedKeys, setSelectedKeys] = useState([]);
   const [currentMenu, setCurrentMenu] = useState({});
+
+  const [detailMenu, setDetailMenu] = useState([]);
+
+  /**
+   * 创建program侧边栏menu
+   */
+  useEffect(() => {
+    const commonMenu = [{}];
+    setDetailMenu(commonMenu);
+    console.log('commonMenu', detailMenu);
+  }, [params.id]);
 
   /**
    * 动态设置右侧高度

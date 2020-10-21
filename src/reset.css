@@ -129,3 +129,11 @@ table {
   border-collapse: collapse;
   border-spacing: 0;
 }
+@font-face {
+  font-family: 'Montserrat';
+  src: url('./assets/Montserrat.otf');
+}
+
+.ant-form-item-explain {
+  min-height: 0px !important;
+}

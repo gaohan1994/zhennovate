@@ -2,31 +2,19 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 21:46:55
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-19 21:58:05
+ * @Last Modified time: 2020-10-20 22:30:13
  */
 import React, { useEffect } from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
-import SignUp from '@/pages/sign/sign-up';
-import SignIn from '@/pages/sign/sign-in';
-import Forgot from '@/pages/sign/forgot';
 import Home from '@/pages/index/home';
+import Sign from '@/pages/sign';
 import PaperformModal from './component/paperform-modal';
 
 const RouteMenu = [
   {
     // 注册
-    path: '/sign-up',
-    component: SignUp,
-  },
-  {
-    // 登录
-    path: '/sign-in',
-    component: SignIn,
-  },
-  {
-    // 忘记密码
-    path: '/forgot-password',
-    component: Forgot,
+    path: '/sign',
+    component: Sign,
   },
   {
     // 主页
