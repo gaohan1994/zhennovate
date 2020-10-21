@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:10:21
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 12:21:55
+ * @Last Modified time: 2020-10-21 14:23:29
  */
 import { BASE_URL } from './config';
 import { notification } from 'antd';
@@ -102,7 +102,7 @@ class ApiRequest {
       headers: {
         'Content-Type': contentType,
       },
-      credentials: 'include',
+      // credentials: 'include',
       ...(method === 'POST' ? { body: data } : {}),
     };
     console.log('option', option);
@@ -111,6 +111,12 @@ class ApiRequest {
     }
     return fetch(`${BASE_URL}${url}`, option)
       .then((res) => res.json())
+      .then((res) => {
+        if (res.error_code !== 0) {
+          notification.error({ message: res.message });
+        }
+        return res;
+      })
       .catch((error) => {
         notification.warn({
           message: error.message,

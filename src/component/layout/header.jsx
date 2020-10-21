@@ -8,7 +8,10 @@ const { Header } = Layout;
 
 export default function () {
   return (
-    <Header className={`${prefix}-header`}>
+    <Header
+      className={`${prefix}-header`}
+      style={{ position: 'fixed', zIndex: 1 }}
+    >
       <div className="logo" />
       <Menu mode="horizontal" defaultSelectedKeys={['2']}>
         <Menu.Item key="1">

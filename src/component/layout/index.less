@@ -1,8 +1,24 @@
+@import '../../common/theme.less';
 @prefix: component-layout;
 
 .@{prefix} {
+  &-content {
+    display: flex;
+    flex: 1;
+  }
   &-header {
     background-color: #ffffff !important;
+  }
+
+  &-footer {
+    background-color: #fff;
+    .margin(72px, tb);
+    .flex(center, center, column);
+    &-text {
+      font-size: 14px;
+      .margin(16px, t);
+      color: @gray-1;
+    }
   }
 
   &-sign {

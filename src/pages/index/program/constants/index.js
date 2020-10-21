@@ -1,9 +1,11 @@
 /**
- * @todo program 接口文件
+ * @todo program接口
  * @Author: centerm.gaohan
- * @Date: 2020-10-20 22:15:57
+ * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-20 22:16:17
+ * @Last Modified time: 2020-10-21 14:12:42
  */
 
-export {};
+import { api } from '@/common/request';
+
+export const program = (id) => api.get(`/program/${id}`);
