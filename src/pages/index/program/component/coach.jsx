@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 17:06:57
+ * @Last Modified time: 2020-10-22 09:38:04
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
@@ -41,9 +41,12 @@ export default (props) => {
               {item.Modules &&
                 item.Modules.map((moduleItem) => {
                   return (
-                    <div key={moduleItem} className={`${prefix}-coach-module`}>
+                    <div
+                      key={moduleItem._id}
+                      className={`${prefix}-coach-module`}
+                    >
                       <div className={`${prefix}-coach-module-dot`} />
-                      {moduleItem}
+                      {moduleItem.Title}
                     </div>
                   );
                 })}

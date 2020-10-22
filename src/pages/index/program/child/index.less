@@ -1,0 +1,43 @@
+@import '../../../../common/theme.less';
+
+@prefix: program-child;
+
+.@{prefix} {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+
+  &-sort {
+    .flex(center, space-between, row);
+    .margin(24px, b);
+    &-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: @black;
+    }
+  }
+
+  &-filter {
+    width: 360px;
+    &-title {
+      position: relative;
+      .padding(16px, b);
+      font-size: 16px;
+      font-weight: normal;
+      color: rgba(0, 0, 0, 0.85);
+
+      &::after {
+        .border1px;
+      }
+    }
+
+    &-checkbox {
+      display: flex;
+      flex-direction: column;
+      &-item {
+        .margin(16px, t);
+        .flex(center, space-between, row);
+      }
+    }
+  }
+}

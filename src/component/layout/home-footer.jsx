@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 17:12:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 17:24:27
+ * @Last Modified time: 2020-10-22 17:09:07
  */
 
 import React from 'react';
@@ -15,6 +15,9 @@ const prefix = 'component-layout';
 
 export default () => {
   return (
+    // <Layout.Footer>
+
+    // </Layout.Footer>
     <div className={`${prefix}-footer`}>
       <div className={`${prefix}-sign-logo`}>
         <img className={`${prefix}-sign-logo-img`} src={logo} />

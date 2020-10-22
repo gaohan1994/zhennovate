@@ -55,6 +55,7 @@
     "react-markdown": "^5.0.0",
     "react-redux": "^7.2.1",
     "react-router-dom": "^5.2.0",
+    "react-router-transition": "^2.0.0",
     "redux": "^4.0.5",
     "redux-logger": "^3.0.6",
     "resolve": "1.15.0",
@@ -156,7 +157,8 @@
     "husky": "^4.3.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.2",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore"
   },
   "config": {
     "commitizen": {

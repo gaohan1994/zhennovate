@@ -137,3 +137,28 @@ table {
 .ant-form-item-explain {
   min-height: 0px !important;
 }
+.ant-tabs-tab {
+  padding: 4px 0 !important;
+}
+
+.ant-tabs-nav {
+  padding-bottom: 24px !important;
+}
+
+.ant-tabs-nav::before {
+  border-bottom: 0px !important;
+}
+
+.ant-tabs-nav::after {
+  content: '';
+  position: absolute;
+  transform-origin: center;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleY(0.5);
+  border-bottom: 1px solid #d6d6d6;
+}

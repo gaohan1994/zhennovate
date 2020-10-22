@@ -1,0 +1,58 @@
+@import '../../common/theme.less';
+
+@prefix: component-program;
+
+.@{prefix} {
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: row;
+  border: solid 1px @gray-4;
+
+  &-auto {
+    width: 100%;
+  }
+
+  &-fix {
+    width: 744px;
+  }
+
+  &-cover {
+    width: 176px;
+    height: 176px;
+    background-color: @tiffany-blue;
+  }
+  &-content {
+    flex: 1;
+    display: flex;
+    position: relative;
+    .padding(24px);
+    flex-direction: column;
+    font-size: 14px;
+    line-height: 1;
+
+    &-title {
+      color: @black;
+      font-size: 20px;
+      line-height: 1.4;
+      font-weight: bold;
+      .margin(12px, t);
+    }
+    &-status {
+      font-weight: bold;
+      color: @gray-1;
+      .margin(12px, t);
+    }
+    &-progress {
+      width: 312px;
+      .margin(12px, t);
+    }
+    &-save {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      width: 24px;
+      height: 24px;
+      background-color: @theme-color;
+    }
+  }
+}
