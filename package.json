@@ -75,7 +75,8 @@
   "scripts": {
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
-    "test": "node scripts/test.js"
+    "test": "node scripts/test.js",
+    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -157,8 +158,7 @@
     "husky": "^4.3.0",
     "less": "^3.12.2",
     "less-loader": "^7.0.2",
-    "prettier": "^2.1.2",
-    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore"
+    "prettier": "^2.1.2"
   },
   "config": {
     "commitizen": {

@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-22 16:35:56
+ * @Last Modified time: 2020-10-23 09:39:40
  */
 import React, { useState, useEffect } from 'react';
 import { Select, Card, Checkbox } from 'antd';
@@ -22,7 +22,7 @@ export default (props) => {
 
   // 构造假数据
   useEffect(() => {
-    const num = Math.floor(Math.random() * 10 + 1);
+    const num = Math.floor(Math.random() * 10 + 1) * 2;
     const data = new Array(num).fill({}).map((_, index) => {
       return {
         key: index,

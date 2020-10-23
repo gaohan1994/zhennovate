@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-22 17:46:06
+ * @Last Modified time: 2020-10-23 09:42:52
  */
 import React, { useEffect, useState } from 'react';
 import { notification } from 'antd';
@@ -23,6 +23,15 @@ export default (props) => {
   const { id } = props.match.params;
   // program详情数据
   const [programDescribe, setProgramDescribe] = useState({});
+
+  // 进入页面滑动到顶端
+
+  useEffect(() => {
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth',
+    });
+  }, []);
 
   // 获取program详情
   useEffect(() => {
