@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-23 11:51:22
+ * @Last Modified time: 2020-10-23 11:55:17
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Select, Card, Checkbox } from 'antd';
@@ -27,7 +27,8 @@ export default (props) => {
   const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
   const { top } = useScroll(document);
-  const isSticky = top >= 500;
+  console.log('top', top);
+  const isSticky = top >= 420 + 24 + 24 + 10;
 
   useEffect(() => {
     if (programContainerRef.current?.offsetLeft) {
