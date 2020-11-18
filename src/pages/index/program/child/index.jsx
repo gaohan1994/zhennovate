@@ -5,18 +5,24 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-23 11:55:17
+ * @Last Modified time: 2020-11-17 10:17:13
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { Select, Card, Checkbox } from 'antd';
+import { Select, Card, Checkbox, notification } from 'antd';
 import { useScroll } from 'ahooks';
 import ProgramItem from '@/component/program';
+import invariant from 'invariant';
+import { availableList } from '../constants';
 import './index.less';
+import Empty from '@/component/empty';
+import useProgramHooks from '../hooks';
 
 const prefix = 'program-child';
 
 export default (props) => {
   const { tab } = props;
+  useProgramHooks();
+
   // programs的容器
   const programContainerRef = useRef(null);
   // programs数据
@@ -27,14 +33,24 @@ export default (props) => {
   const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
   const { top } = useScroll(document);
-  console.log('top', top);
-  const isSticky = top >= 420 + 24 + 24 + 10;
+  const isSticky = top >= 420 + 24 + 24 + 10; // 计算触发sticky的距离
 
   useEffect(() => {
     if (programContainerRef.current?.offsetLeft) {
       setProgramOffsetLeft(programContainerRef.current.offsetLeft);
     }
   }, [programContainerRef.current]);
+
+  useEffect(() => {
+    availableList().then((result) => {
+      try {
+        invariant(result.error_code === 0, result.message || ' ');
+        console.log('result', result);
+      } catch (error) {
+        notification.warn({ message: error.message });
+      }
+    });
+  }, [tab]);
 
   // 构造假数据
   useEffect(() => {
@@ -110,6 +126,7 @@ export default (props) => {
         {programs.map((item) => {
           return <ProgramItem key={item.key} />;
         })}
+        {programs.length === 0 && <Empty />}
       </div>
 
       {renderFilter()}

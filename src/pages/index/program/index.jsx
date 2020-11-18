@@ -2,12 +2,13 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-22 17:54:37
+ * @Last Modified time: 2020-11-17 09:51:58
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
 import ProgramChild from '@/pages/index/program/child';
 import './index.less';
+import { ProgramTabKeys } from './constants';
 
 const prefix = 'page-program';
 
@@ -15,22 +16,22 @@ const { TabPane } = Tabs;
 
 const tabsMenu = [
   {
-    key: 'available',
+    key: ProgramTabKeys.available,
     tab: 'Available',
     Component: ProgramChild,
   },
   {
-    key: 'progress',
+    key: ProgramTabKeys.progress,
     tab: 'In Progress',
     Component: ProgramChild,
   },
   {
-    key: 'complete',
+    key: ProgramTabKeys.complete,
     tab: 'Completed',
     Component: ProgramChild,
   },
   {
-    key: 'save',
+    key: ProgramTabKeys.save,
     tab: 'Saved',
     Component: ProgramChild,
   },
@@ -59,6 +60,12 @@ export default () => {
       }, 500);
     }
   }, [showSkeleton]);
+
+  useEffect(() => {
+    // availableList().then((result) => {
+    //   console.log('result', result);
+    // });
+  }, []);
 
   // 切换tab显示骨架屏 滑动到tabs顶部
   const onChangeTab = (key) => {

@@ -1,5 +1,5 @@
 import { ACTION_TYPES_COMMON } from '@/component/paperform-modal/store';
-import { store } from '@/module/redux';
+import { store } from '@/module/redux/persist';
 /**
  * iframe 通信sdk
  *

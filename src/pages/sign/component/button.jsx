@@ -2,10 +2,11 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 10:22:02
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 11:46:43
+ * @Last Modified time: 2020-11-18 15:58:09
  */
 import React, { useRef, useEffect, useState } from 'react';
-import { Button, message } from 'antd';
+import { message, Button } from 'antd';
+// import  from '@/component/button';
 
 export default (props) => {
   const { form, submit } = props;
@@ -45,7 +46,7 @@ export default (props) => {
   return (
     <div ref={buttonRef}>
       <Button type="primary" style={{ width: '100%' }} onClick={onSubmit}>
-        sign up
+        {props.children}
       </Button>
     </div>
   );

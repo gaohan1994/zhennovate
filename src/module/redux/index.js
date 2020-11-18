@@ -1,20 +1,8 @@
-import { createStore, combineReducers, applyMiddleware, compose } from 'redux';
-import logger from 'redux-logger';
+import { combineReducers } from 'redux';
 import { paperformModal } from '@/component/paperform-modal/store';
+import { sign } from '@/pages/sign/store/sign-store';
 
 export const reducer = combineReducers({
   paperformModal,
+  sign,
 });
-
-const configureStore = () => {
-  const store =
-    process.env.NODE_ENV === 'prodcution'
-      ? createStore(reducer)
-      : createStore(reducer, compose(applyMiddleware(logger)));
-
-  return store;
-};
-
-export const store = configureStore();
-
-export default store;

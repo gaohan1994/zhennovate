@@ -9,3 +9,5 @@
 import { api } from '@/common/request';
 
 export const register = (params) => api.post(`/user/register`, params);
+
+export const signin = (params) => api.post('/user/signin', params);

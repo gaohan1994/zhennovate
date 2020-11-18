@@ -14,4 +14,10 @@ export const isProduction = () => {
 /**
  * 测试环境   http://api.zhennovate.com
  */
-export const BASE_URL = !isProduction() ? 'http://api.zhennovate.com' : 'http://api.zhennovate.com';
+export const BASE_URL = !isProduction()
+  ? 'http://api.zhennovate.com'
+  : 'http://api.zhennovate.com';
+
+export const ResponseCode = {
+  success: 0,
+};

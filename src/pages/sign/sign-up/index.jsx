@@ -3,15 +3,16 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 11:56:35
+ * @Last Modified time: 2020-11-18 15:58:20
  */
 import React from 'react';
 import { Form, notification, Checkbox } from 'antd';
 import md5 from 'blueimp-md5';
-import { register } from '../constants';
+import { register, signin } from '../constants';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
 import SignButton from '../component/button';
+import invariant from 'invariant';
 import '../index.less';
 
 const prefix = 'sign-page';
@@ -25,15 +26,26 @@ export default function SignUp() {
    */
   const onSubmit = async (values) => {
     try {
-      console.log('values', values);
       const payload = {
-        // ...values,
         email: values.email,
+        name: values.name,
         password: md5(values.password),
       };
+      console.log('payload', payload);
       const result = await register(payload);
       console.log('result', result);
-      // invariant(result)
+      invariant(result.error_code === 0, result.message || ' ');
+
+      const signinResult = await signin({
+        email: values.email,
+        password: md5(values.password),
+      });
+      invariant(signinResult.error_code === 0, signinResult.message || ' ');
+      // data: {_id: "5fb373ad194f21052f809d36", CreateAt: "2020-11-17T06:54:37.729Z", __v: 0}
+      // CreateAt: "2020-11-17T06:54:37.729Z"
+      // __v: 0
+      // _id: "5fb373ad194f21052f809d36"
+      // error_code: 0
     } catch (error) {
       notification.error({ message: error.message });
     }
@@ -45,7 +57,7 @@ export default function SignUp() {
       <Form form={form} layout="vertical">
         <FormItem
           label="Full Name"
-          name="username"
+          name="name"
           rules={[
             {
               required: true,
@@ -60,7 +72,8 @@ export default function SignUp() {
             {
               required: true,
               type: 'email',
-              message: 'This doesn’t look like an email address.Please check it for typos and try again.',
+              message:
+                'This doesn’t look like an email address.Please check it for typos and try again.',
             },
           ]}
         />
@@ -83,19 +96,24 @@ export default function SignUp() {
           rules={[
             {
               required: true,
-              type: 'boolean',
+              type: 'enum',
+              enum: [true],
               message: 'Please agree with the terms to sign up.',
             },
           ]}
           render={() => {
             return (
               <Checkbox>
-                <span className={`${prefix}-up-policy`}>I agree to Zhennovate’s Terms and Privacy Policy</span>
+                <span className={`${prefix}-up-policy`}>
+                  I agree to Zhennovate’s Terms and Privacy Policy
+                </span>
               </Checkbox>
             );
           }}
         />
-        <SignButton form={form} submit={onSubmit} />
+        <SignButton form={form} submit={onSubmit}>
+          Sign up
+        </SignButton>
       </Form>
     </Container>
   );
