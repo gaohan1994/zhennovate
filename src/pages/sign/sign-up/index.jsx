@@ -3,12 +3,12 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-18 15:58:20
+ * @Last Modified time: 2020-11-18 19:09:44
  */
 import React from 'react';
 import { Form, notification, Checkbox } from 'antd';
 import md5 from 'blueimp-md5';
-import { register, signin } from '../constants';
+import { register } from '../constants';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
 import SignButton from '../component/button';
@@ -36,11 +36,11 @@ export default function SignUp() {
       console.log('result', result);
       invariant(result.error_code === 0, result.message || ' ');
 
-      const signinResult = await signin({
-        email: values.email,
-        password: md5(values.password),
-      });
-      invariant(signinResult.error_code === 0, signinResult.message || ' ');
+      // const signinResult = await signin({
+      //   email: values.email,
+      //   password: md5(values.password),
+      // });
+      // invariant(signinResult.error_code === 0, signinResult.message || ' ');
       // data: {_id: "5fb373ad194f21052f809d36", CreateAt: "2020-11-17T06:54:37.729Z", __v: 0}
       // CreateAt: "2020-11-17T06:54:37.729Z"
       // __v: 0

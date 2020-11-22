@@ -8,7 +8,6 @@ import { useSelector } from 'react-redux';
 
 function useSignSdk() {
   const sign = useSelector((state) => state.sign);
-  console.log('sign', sign);
   /**
    * 用户登录
    *

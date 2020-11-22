@@ -1,9 +1,14 @@
 import { useEffect, useReducer } from 'react';
 import { ProgramTabKeys, availableList } from '../constants';
 import { useRequest } from 'ahooks';
+import { ResponseCode } from '@/common/config';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const initState = {
-  availabelList: [],
+  [ProgramTabKeys.available]: [],
+  [ProgramTabKeys.progress]: [],
+  [ProgramTabKeys.complete]: [],
+  [ProgramTabKeys.save]: [],
 };
 
 const ReducerActions = {
@@ -18,10 +23,11 @@ function programReducer(state, action) {
     case ReducerActions.Receive_Availabel_List: {
       return {
         ...state,
+        [ProgramTabKeys.available]: action.payload,
       };
     }
     default: {
-      return {};
+      return { ...state };
     }
   }
 }
@@ -29,26 +35,63 @@ function programReducer(state, action) {
 /**
  * program模块的hooks
  */
-function useProgramHooks(key, params) {
+function useProgramHooks(type, options) {
+  // usereducer
   const [state, dispatch] = useReducer(programReducer, initState);
 
-  const result = useRequest(availableList, { manual: true });
-  console.log('result', result);
+  // 获取用户信息
+  const { sign } = useSignSdk();
 
+  // 请求availableList 拿到数据后存到hooks中
+  const field = useRequest(availableList, {
+    manual: true,
+    onSuccess: (result, params) => {
+      if (result.error_code === ResponseCode.success) {
+        dispatch({
+          type: ReducerActions.Receive_Availabel_List,
+          payload: result.data,
+        });
+      }
+    },
+  });
+
+  // 请求availableList 拿到数据后存到hooks中
+  const fieldUsers = useRequest(availableList, {
+    manual: true,
+    onSuccess: (result, params) => {
+      console.log('result', result);
+      return;
+      // if (result.error_code === ResponseCode.success) {
+      //   dispatch({
+      //     type: ReducerActions.Receive_Availabel_List,
+      //     payload: result.data,
+      //   });
+      // }
+    },
+  });
+
+  // 使用hooks时触发
   useEffect(() => {
-    switch (key) {
+    console.log('sign', sign);
+    switch (type) {
       case ProgramTabKeys.available: {
+        field.run();
+        break;
+      }
+      case ProgramTabKeys.complete: {
+        fieldUsers.run(sign.userinfo);
         break;
       }
       default: {
         break;
       }
     }
-  }, [key, params]);
+  }, [type, options, sign]);
 
   return {
     state,
     dispatch,
+    list: state[type],
   };
 }
 

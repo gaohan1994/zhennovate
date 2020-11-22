@@ -5,14 +5,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-17 10:17:13
+ * @Last Modified time: 2020-11-19 10:46:07
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { Select, Card, Checkbox, notification } from 'antd';
+import { Select, Card, Checkbox } from 'antd';
 import { useScroll } from 'ahooks';
 import ProgramItem from '@/component/program';
-import invariant from 'invariant';
-import { availableList } from '../constants';
+// import invariant from 'invariant';
+// import { availableList } from '../constants';
 import './index.less';
 import Empty from '@/component/empty';
 import useProgramHooks from '../hooks';
@@ -21,7 +21,7 @@ const prefix = 'program-child';
 
 export default (props) => {
   const { tab } = props;
-  useProgramHooks();
+  const { list } = useProgramHooks(tab.key);
 
   // programs的容器
   const programContainerRef = useRef(null);
@@ -41,27 +41,10 @@ export default (props) => {
     }
   }, [programContainerRef.current]);
 
-  useEffect(() => {
-    availableList().then((result) => {
-      try {
-        invariant(result.error_code === 0, result.message || ' ');
-        console.log('result', result);
-      } catch (error) {
-        notification.warn({ message: error.message });
-      }
-    });
-  }, [tab]);
-
   // 构造假数据
   useEffect(() => {
-    const num = Math.floor(Math.random() * 10 + 1) * 5;
-    const data = new Array(num).fill({}).map((_, index) => {
-      return {
-        key: index,
-      };
-    });
-    setPrograms(data);
-  }, []);
+    setPrograms(list);
+  }, [list]);
 
   // 渲染列表头部
   const renderSort = () => {
@@ -124,7 +107,7 @@ export default (props) => {
       <div style={{ marginRight: 24 }} ref={programContainerRef}>
         {renderSort()}
         {programs.map((item) => {
-          return <ProgramItem key={item.key} />;
+          return <ProgramItem key={item._id} data={item} />;
         })}
         {programs.length === 0 && <Empty />}
       </div>

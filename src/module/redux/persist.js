@@ -2,8 +2,8 @@
  * 加入持久化
  * @Author: centerm.gaohan
  * @Date: 2020-11-17 15:30:18
- * @Last Modified by:   centerm.gaohan
- * @Last Modified time: 2020-11-17 15:30:18
+ * @Last Modified by: centerm.gaohan
+ * @Last Modified time: 2020-11-19 10:31:57
  */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';

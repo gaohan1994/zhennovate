@@ -1,7 +1,5 @@
 export const initState = {
-  userinfo: {
-    _id: '5fb4d85d194f21052f809d39',
-  },
+  userinfo: {},
 };
 
 export const Action_Types = {
@@ -18,8 +16,6 @@ export function sign(state = initState, action) {
       };
     }
     default:
-      return {
-        ...state,
-      };
+      return state;
   }
 }
