@@ -7,12 +7,15 @@
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
+import { useHistory } from 'react-router-dom';
 import './index.less';
 
 const prefix = 'program-component';
 
 export default (props) => {
-  const { data } = props;
+  const history = useHistory();
+  const { data, id } = props;
+  console.log('props', props);
   const [coachMenu, setCoachMenu] = useState([]);
   const [activeKey, setActiveKey] = useState(['']);
 
@@ -21,6 +24,10 @@ export default (props) => {
       setCoachMenu(data.Sessions);
     }
   }, [data.Sessions]);
+
+  const onModuleClick = (item) => {
+    history.push(`/program/detail/${id}?module_id=${item._id}`);
+  };
 
   return (
     <div>
@@ -44,6 +51,7 @@ export default (props) => {
                     <div
                       key={moduleItem._id}
                       className={`${prefix}-coach-module`}
+                      onClick={() => onModuleClick(moduleItem)}
                     >
                       <div className={`${prefix}-coach-module-dot`} />
                       {moduleItem.Title}

@@ -65,14 +65,14 @@ export default (props) => {
           <Instructor data={programDescribe} />
 
           <div style={{ width: '100%', height: 32 }} />
-          <Coach data={programDescribe} />
+          <Coach data={programDescribe} id={id} />
         </div>
 
         <div
           className={`${prefix}-container-right`}
           style={{ paddingTop: 32 + 32 }}
         >
-          <Card data={programDescribe} />
+          <Card data={programDescribe} id={id} />
 
           <div style={{ width: '100%', height: 32 }} />
 

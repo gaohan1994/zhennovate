@@ -15,7 +15,7 @@ import './index.less';
 const prefix = 'program-component';
 
 export default (props) => {
-  const { data } = props;
+  const { data, id } = props;
   // 视频modal显示
   const [visible, setVisible] = useState(false);
   return (
@@ -46,7 +46,7 @@ export default (props) => {
           <span>Duration</span>
           <span>7 days</span>
         </div>
-        <Link to={`/program/detail/${1}`}>
+        <Link to={`/program/detail/${id}`}>
           <Button type="primary" style={{ width: '100%', marginTop: 24 }}>
             Start Program
           </Button>
