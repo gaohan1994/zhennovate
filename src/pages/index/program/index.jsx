@@ -2,13 +2,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-18 17:53:01
+ * @Last Modified time: 2020-11-23 10:54:14
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
 import ProgramChild from '@/pages/index/program/child';
 import './index.less';
 import { ProgramTabKeys } from './constants';
+import { formatSearch } from '@/common/request';
 
 const prefix = 'page-program';
 
@@ -37,8 +38,9 @@ const tabsMenu = [
   },
 ];
 
-export default () => {
+export default (props) => {
   // banner的ref
+  const searchParams = formatSearch(props.location.search);
   const bannerContainer = useRef(null);
   const [bannerHeight, setBannerHeight] = useState(420);
 
@@ -77,6 +79,14 @@ export default () => {
     setShowSkeleton(true);
     setCurrentTab(key);
   };
+
+  useEffect(() => {
+    if (searchParams.entry) {
+      if (Object.keys(ProgramTabKeys).some((k) => k === searchParams.entry)) {
+        onChangeTab(searchParams.entry);
+      }
+    }
+  }, []);
 
   return (
     <div>

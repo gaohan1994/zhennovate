@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-19 10:57:04
+ * @Last Modified time: 2020-11-23 10:48:26
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -13,10 +13,13 @@ import './index.less';
 const prefix = 'component-program';
 
 export default (props) => {
-  const { data } = props;
+  const { data, tab } = props;
   const history = useHistory();
+
   const onClick = () => {
-    history.push(`/program/describe/${data._id}`);
+    history.push(
+      `/program/describe/${data._id}${tab ? `?entry=${tab.key}` : ''}`,
+    );
   };
 
   // 点击保存、取消保存 阻止冒泡

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-23 09:42:52
+ * @Last Modified time: 2020-11-23 10:50:38
  */
 import React, { useEffect, useState } from 'react';
 import { notification } from 'antd';
@@ -16,10 +16,12 @@ import Detail from '../component/detail';
 import Skill from '../component/skill';
 import Instructor from '../component/instructor';
 import Coach from '../component/coach';
+import { formatSearch } from '@/common/request';
 
 const prefix = 'page-program';
 
 export default (props) => {
+  const searchParams = formatSearch(props.location.search);
   const { id } = props.match.params;
   // program详情数据
   const [programDescribe, setProgramDescribe] = useState({});
@@ -50,7 +52,7 @@ export default (props) => {
     <div className={`${prefix}-container`}>
       <div className={`${prefix}-container-box`}>
         <div className={`${prefix}-container-left`}>
-          <Bread data={programDescribe} entry="entry" />
+          <Bread data={programDescribe} entry={searchParams.entry || ''} />
           <div className={`${prefix}-describe-title`}>
             {programDescribe.Name}
           </div>

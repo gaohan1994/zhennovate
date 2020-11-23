@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-19 10:46:07
+ * @Last Modified time: 2020-11-23 10:47:47
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Select, Card, Checkbox } from 'antd';
@@ -107,7 +107,7 @@ export default (props) => {
       <div style={{ marginRight: 24 }} ref={programContainerRef}>
         {renderSort()}
         {programs.map((item) => {
-          return <ProgramItem key={item._id} data={item} />;
+          return <ProgramItem key={item._id} data={item} tab={tab} />;
         })}
         {programs.length === 0 && <Empty />}
       </div>

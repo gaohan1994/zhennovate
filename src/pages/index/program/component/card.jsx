@@ -3,9 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-22 16:23:21
+ * @Last Modified time: 2020-11-23 10:24:49
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal } from 'antd';
 import { CaretRightOutlined } from '@ant-design/icons';
 import { Link } from 'react-router-dom';
@@ -18,6 +18,20 @@ export default (props) => {
   const { data, id } = props;
   // 视频modal显示
   const [visible, setVisible] = useState(false);
+  // 总时间
+  const [duration, setDuration] = useState(0);
+
+  useEffect(() => {
+    const totalDuration = data?.Sessions
+      ? data?.Sessions.reduce(
+          (prevValue, currentValue) => currentValue.totalDuration + prevValue,
+          0,
+        )
+      : 0;
+
+    setDuration(totalDuration);
+  }, [data]);
+
   return (
     <Card
       cover={
@@ -44,7 +58,7 @@ export default (props) => {
         </div>
         <div className={`${prefix}-card-desc`}>
           <span>Duration</span>
-          <span>7 days</span>
+          <span>{`${duration} Hours`}</span>
         </div>
         <Link to={`/program/detail/${id}`}>
           <Button type="primary" style={{ width: '100%', marginTop: 24 }}>

@@ -9,7 +9,7 @@ export default (props) => {
   const { data } = props;
   return (
     <Card>
-      <div className={`${prefix}-title`}>Learner Outcome</div>
+      <div className={`${prefix}-title`}>Program Details</div>
       <ReactMarkdown>{data.Detail}</ReactMarkdown>
     </Card>
   );

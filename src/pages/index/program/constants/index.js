@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-19 10:57:54
+ * @Last Modified time: 2020-11-23 14:25:46
  */
 
 import { api } from '@/common/request';
@@ -13,6 +13,13 @@ export const ProgramTabKeys = {
   progress: 'progress',
   complete: 'complete',
   save: 'save',
+};
+
+export const ProgramTabTitles = {
+  available: 'Available',
+  progress: 'In Progress',
+  complete: 'Completed',
+  save: 'Saved',
 };
 
 export const program = (id) => api.get(`/program/${id}`);
