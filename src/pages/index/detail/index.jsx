@@ -2,60 +2,20 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-20 09:17:25
+ * @Last Modified time: 2020-11-27 15:22:39
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
-// import { useDispatch } from 'react-redux';
 import { program } from '@/pages/index/program/constants';
-import postMessageSdk from '@/common/post-message-sdk';
 import './index.less';
 import MyHeader from './component/header';
 import { formatSearch } from '@/common/request';
+import { formatModuleData } from './constants';
+import RenderPaperForm from '@/component/paperform';
 
 const prefix = 'page-detail';
 
 const { Sider, Content, Header } = Layout;
-
-/**
- * @time 10 13
- * @question iframe的高度放到外层
- * @question 视频和paperfrom结合
- * @question paperfrom会保存做过的状态
- *
- * 渲染paperform function
- *
- * @param {*} props
- * @return {*}
- */
-const RenderPaperForm = (props) => {
-  // const dispatch = useDispatch();
-  const commonUrl = 'http://znadmin.tprlearn.com/paperform.html';
-  const { data, ...rest } = props;
-  console.log('data,', data);
-  // if (paperform.type === 'modal') {
-  //   return (
-  //     <div>
-  //       <Button
-  //         onClick={() => {
-  //           dispatch({
-  //             type: 'CHANGE_PAPERFORM_MODAL_VISIBLE',
-  //             payload: true,
-  //           });
-  //         }}
-  //       >
-  //         open paperform modal
-  //       </Button>
-  //     </div>
-  //   );
-  // }
-  return (
-    <iframe
-      {...rest}
-      src={`${commonUrl}?id=${data.PFKey}&time=${new Date().getTime()}`}
-    />
-  );
-};
 
 export default (props) => {
   const searchParams = formatSearch(props.location.search);
@@ -96,7 +56,6 @@ export default (props) => {
    */
   useEffect(() => {
     if (programData) {
-      console.log('programData.Sessions', programData.Sessions);
       const commonMenu = [
         {
           id: '1',
@@ -126,10 +85,6 @@ export default (props) => {
    */
   useEffect(() => {
     if (iframeContainerRef.current.clientHeight) {
-      // console.log(
-      //   'iframeContainerRef.current.clientHeight,',
-      //   iframeContainerRef.current.clientHeight - 64,
-      // );
       setIframeHeight(iframeContainerRef.current.clientHeight - 64);
       setIframeWidth(iframeContainerRef.current.clientWidth);
     }
@@ -137,33 +92,16 @@ export default (props) => {
 
   useEffect(() => {
     if (searchParams.module_id && programData.Sessions) {
-      let indexs = [];
-      programData.Sessions?.forEach((s, sindex) => {
-        const token = s.Modules?.findIndex((m) => {
-          return m._id === searchParams?.module_id;
-        });
-
-        if (token > -1) {
-          indexs = [sindex, token];
-        }
-      });
-      const session = programData.Sessions[indexs[0]];
-      const moduleItem = session.Modules[indexs[1]];
-      setCurrentPaperform(moduleItem);
+      const { moduleData } = formatModuleData(
+        searchParams.module_id,
+        programData,
+      );
+      setCurrentPaperform(moduleData);
+      setSelectedKeys([searchParams.module_id]);
     }
-  }, [searchParams, programData]);
-
-  /**
-   * 监听window.postmessage事件
-   */
-  useEffect(() => {
-    window.addEventListener('message', postMessageSdk.receiveMessage, false);
-    return () =>
-      window.removeEventListener('message', postMessageSdk.receiveMessage);
-  }, []);
+  }, [programData]);
 
   const onSelect = (keys) => {
-    // console.log('keys', keys);
     setSelectedKeys([keys.key]);
   };
 
@@ -171,15 +109,20 @@ export default (props) => {
     setCurrentPaperform(item);
   };
 
-  const defaultKeys = [
-    '2',
-    programData.Sessions?.find((s) => {
-      return s.Modules.some((m) => {
-        return m._id === searchParams?.module_id;
-      });
-    })?._id || '',
-  ];
-  console.log('defaultKeys, ', defaultKeys);
+  const getDefaultKeys = () => {
+    if (searchParams.module_id && programData._id) {
+      const { session } = formatModuleData(searchParams.module_id, programData);
+      return ['2', session._id];
+    } else {
+      return [];
+    }
+  };
+
+  // 做完paperfrom的callback
+  const finishPaperformCallback = (data) => {
+    console.log('data', data);
+  };
+
   return (
     <Layout
       className={`${prefix}-pos`}
@@ -190,26 +133,12 @@ export default (props) => {
       </Header>
       <Layout className={`${prefix}-pos`} style={{ marginLeft: 200 }}>
         <Sider theme="light" className={`${prefix}-slider`}>
-          {detailMenu.some((d) => d.children) && (
+          {programData._id && detailMenu.some((d) => d.children) && (
             <Menu
               mode="inline"
               selectedKeys={selectedKeys}
               onSelect={onSelect}
-              defaultOpenKeys={searchParams?.module_id ? defaultKeys : []}
-              defaultSelectedKeys={
-                searchParams?.module_id
-                  ? [
-                      // programData.Sessions?.find((s) => {
-                      //   return s.Modules.some((m) => {
-                      //     return m._id === searchParams?.module_id;
-                      //   });
-                      // })?._id || '',
-                      searchParams?.module_id,
-                    ]
-                  : []
-              }
-              // openKeys={openKeys}
-              // onOpenChange={onOpenChange}
+              defaultOpenKeys={searchParams?.module_id ? getDefaultKeys() : []}
             >
               {detailMenu.map((item) => {
                 if (item.children) {
@@ -246,9 +175,11 @@ export default (props) => {
           <div ref={iframeContainerRef} className={`${prefix}-box`}>
             {currentPaperform && currentPaperform._id && iframeHeight !== -1 ? (
               <RenderPaperForm
-                data={currentPaperform}
                 height={iframeHeight}
                 width={iframeWidth}
+                data={currentPaperform}
+                programData={programData}
+                callback={finishPaperformCallback}
               />
             ) : (
               <div className={`${prefix}-spin`}>

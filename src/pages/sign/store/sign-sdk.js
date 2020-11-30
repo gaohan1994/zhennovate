@@ -38,6 +38,7 @@ function useSignSdk() {
   return {
     userSignin,
     sign,
+    userId: (sign.userinfo && sign.userinfo.userId) || '',
   };
 }
 
