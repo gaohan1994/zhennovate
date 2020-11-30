@@ -1,0 +1,55 @@
+@import '../../../../common/theme.less';
+@prefix: component-home;
+
+.@{prefix} {
+  &-welcome {
+    &-sign {
+      font-size: 32px;
+      color: @topaz;
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+    }
+    &-box {
+      position: relative;
+      width: 100%;
+      height: 128px;
+      .flex(flex-start, center, column);
+      box-sizing: border-box;
+      border-radius: 4px;
+      border: solid 1px @gray-4;
+      font-size: 16px;
+      color: @black;
+    }
+
+    &-info {
+      display: flex;
+      flex-direction: column;
+      line-height: 1;
+      .margin(228px, l);
+
+      &-title {
+        color: @topaz;
+        font-size: 32px;
+        font-weight: bold;
+        .margin(12px, b);
+      }
+    }
+
+    &-check {
+      position: absolute;
+      bottom: 30px;
+      right: 27px;
+      color: @clear-blue;
+    }
+
+    &-avatar {
+      width: 180px;
+      height: 180px;
+      position: absolute;
+      left: 24px;
+      bottom: 0;
+      background-color: @topaz;
+    }
+  }
+}

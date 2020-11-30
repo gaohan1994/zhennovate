@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-23 11:27:35
+ * @Last Modified time: 2020-11-30 09:57:24
  */
 import React from 'react';
 import { Route, useRouteMatch } from 'react-router-dom';
@@ -12,6 +12,7 @@ import LayoutFooter from '@/component/layout/home-footer';
 import Program from '@/pages/index/program';
 import ProgramDescribe from '@/pages/index/program/describe';
 import ProgramDetail from '@/pages/index/detail';
+import HomePage from '@/pages/index/home/home';
 import './index.less';
 
 const renderWithFooter = (Component, props) => {
@@ -57,6 +58,11 @@ export default function () {
           path="/program/detail/:id"
           render={(props) => renderWithFooter(ProgramDetail, props)}
           // component={ProgramDetail}
+        />
+        <Route
+          exact={true}
+          path="/home"
+          render={(props) => renderWithFooter(HomePage, props)}
         />
       </AnimatedSwitch>
     </LayoutContainer>
