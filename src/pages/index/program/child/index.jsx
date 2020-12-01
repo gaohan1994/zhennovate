@@ -5,17 +5,17 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 14:11:15
+ * @Last Modified time: 2020-12-01 16:05:36
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Select, Card, Checkbox } from 'antd';
 import { useScroll } from 'ahooks';
 import ProgramItem from '@/component/program';
-// import invariant from 'invariant';
-// import { availableList } from '../constants';
+import Swiper from '../component/swiper';
 import './index.less';
 import Empty from '@/component/empty';
 import useProgramHooks from '../hooks';
+import { ProgramTabKeys } from '../constants';
 
 const prefix = 'program-child';
 
@@ -135,6 +135,28 @@ export default (props) => {
       </div>
     );
   };
+
+  if (tab.key === ProgramTabKeys.available) {
+    return (
+      <div className={`${prefix}-card`}>
+        {category.map((cate, cateIndex) => {
+          const currentCatePrograms = list[cate];
+          if (currentCatePrograms && currentCatePrograms.length > 0) {
+            return (
+              <Swiper
+                key={cate}
+                cate={cate}
+                cateIndex={cateIndex}
+                list={list}
+                tab={tab}
+              />
+            );
+          }
+          return <div key={cate} />;
+        })}
+      </div>
+    );
+  }
 
   return (
     <div className={`${prefix}`}>

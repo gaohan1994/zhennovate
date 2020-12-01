@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 14:37:38
+ * @Last Modified time: 2020-12-01 16:34:53
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -15,7 +15,7 @@ import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 const prefix = 'component-program';
 
 export default (props) => {
-  const { data, tab } = props;
+  const { data, tab, type, style = {} } = props;
   const history = useHistory();
 
   const onClick = () => {
@@ -29,8 +29,40 @@ export default (props) => {
     e.stopPropagation();
   };
 
+  if (type === 'card') {
+    return (
+      <div className={`${prefix}-card`} style={{ ...style }} onClick={onClick}>
+        <div
+          className={`${prefix}-card-cover`}
+          style={{ backgroundImage: `url(${data.Cover})` }}
+        />
+        <div className={`${prefix}-card-detail`}>
+          <span className={`${prefix}-card-title`}>
+            {data.Name}
+            {data.Name}
+            {data.Name}
+          </span>
+          <span style={{ marginTop: 12 }}>By Coach Name Written here</span>
+          <span style={{ marginTop: 12 }}>
+            {data.Sessions?.length || 0} sessions 3hrs
+          </span>
+
+          <div
+            className={`${prefix}-content-save`}
+            style={{ backgroundImage: `url(${imgbookunsave})` }}
+            onClick={onSave}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
-    <div className={`${prefix} ${prefix}-fix`} onClick={onClick}>
+    <div
+      className={`${prefix} ${prefix}-fix`}
+      onClick={onClick}
+      style={{ ...style }}
+    >
       <div
         className={`${prefix}-cover`}
         style={{ backgroundImage: `url(${data.Cover})` }}
