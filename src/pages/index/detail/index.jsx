@@ -2,16 +2,22 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-27 15:22:39
+ * @Last Modified time: 2020-12-01 17:57:50
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
+import { AuditOutlined } from '@ant-design/icons';
 import { program } from '@/pages/index/program/constants';
 import './index.less';
 import MyHeader from './component/header';
 import { formatSearch } from '@/common/request';
 import { formatModuleData } from './constants';
 import RenderPaperForm from '@/component/paperform';
+import imgwork from '@/assets/Icon-Workshop@2x.png';
+import imgcoach from '@/assets/Icon-CoachingPAth@2x.png';
+import imgentry from '@/assets/Icon-Entry@2x.png';
+import imgabout from '@/assets/Icon-About@2x.png';
+import About from './about';
 
 const prefix = 'page-detail';
 
@@ -35,6 +41,8 @@ export default (props) => {
 
   // 选中的paperform数据
   const [currentPaperform, setCurrentPaperform] = useState({});
+
+  const [currentKey, setCurrentKey] = useState('');
 
   /**
    * 请求数据
@@ -60,22 +68,27 @@ export default (props) => {
         {
           id: '1',
           title: 'Workshops',
+          icon: imgwork,
         },
         {
           id: '2',
           title: 'Coaching Path',
           children: programData.Sessions ? programData.Sessions : [],
+          icon: imgcoach,
         },
         {
           id: '3',
           title: 'Entries',
+          icon: imgentry,
         },
         {
           id: '4',
           title: 'About',
+          icon: imgabout,
         },
       ];
       setDetailMenu(commonMenu);
+      setCurrentKey('3');
     }
   }, [programData]);
 
@@ -98,6 +111,7 @@ export default (props) => {
       );
       setCurrentPaperform(moduleData);
       setSelectedKeys([searchParams.module_id]);
+      setCurrentKey(searchParams.module_id);
     }
   }, [programData]);
 
@@ -123,13 +137,18 @@ export default (props) => {
     console.log('data', data);
   };
 
+  const handleMenuClick = (menu) => {
+    console.log('menu', menu);
+    setCurrentKey(menu.key);
+  };
+
   return (
     <Layout
       className={`${prefix}-pos`}
       style={{ position: 'fixed', top: 64, left: 0, right: 0, bottom: 0 }}
     >
       <Header style={{ backgroundColor: '#fff', padding: 0, height: 72 }}>
-        <MyHeader />
+        <MyHeader data={programData} />
       </Header>
       <Layout className={`${prefix}-pos`} style={{ marginLeft: 200 }}>
         <Sider theme="light" className={`${prefix}-slider`}>
@@ -139,11 +158,16 @@ export default (props) => {
               selectedKeys={selectedKeys}
               onSelect={onSelect}
               defaultOpenKeys={searchParams?.module_id ? getDefaultKeys() : []}
+              onClick={handleMenuClick}
             >
               {detailMenu.map((item) => {
                 if (item.children) {
                   return (
-                    <Menu.SubMenu title={item.title} key={item.id}>
+                    <Menu.SubMenu
+                      title={item.title}
+                      key={item.id}
+                      icon={<AuditOutlined />}
+                    >
                       {item.children.map((session) => {
                         return (
                           <Menu.SubMenu title={session.Title} key={session._id}>
@@ -165,7 +189,25 @@ export default (props) => {
                     </Menu.SubMenu>
                   );
                 }
-                return <Menu.Item key={item.id}>{item.title}</Menu.Item>;
+                return (
+                  <Menu.Item key={item.id}>
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                      }}
+                    >
+                      {item.icon ? (
+                        <div
+                          className={`${prefix}-icon`}
+                          style={{ backgroundImage: `url(${item.icon})` }}
+                        />
+                      ) : null}
+                      {item.title}
+                    </div>
+                  </Menu.Item>
+                );
               })}
             </Menu>
           )}
@@ -173,17 +215,25 @@ export default (props) => {
 
         <Content className={`${prefix}`}>
           <div ref={iframeContainerRef} className={`${prefix}-box`}>
-            {currentPaperform && currentPaperform._id && iframeHeight !== -1 ? (
-              <RenderPaperForm
-                height={iframeHeight}
-                width={iframeWidth}
-                data={currentPaperform}
-                programData={programData}
-                callback={finishPaperformCallback}
-              />
-            ) : (
-              <div className={`${prefix}-spin`}>
-                <Spin size="large" />
+            {currentKey === '3' && <div>entry</div>}
+            {currentKey === '4' && <About programData={programData} />}
+            {currentKey && currentKey.length > 5 && (
+              <div>
+                {currentPaperform &&
+                currentPaperform._id &&
+                iframeHeight !== -1 ? (
+                  <RenderPaperForm
+                    height={iframeHeight}
+                    width={iframeWidth}
+                    data={currentPaperform}
+                    programData={programData}
+                    callback={finishPaperformCallback}
+                  />
+                ) : (
+                  <div className={`${prefix}-spin`}>
+                    <Spin size="large" mode="center" />
+                  </div>
+                )}
               </div>
             )}
           </div>
