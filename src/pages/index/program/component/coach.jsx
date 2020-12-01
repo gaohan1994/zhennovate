@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-22 09:38:04
+ * @Last Modified time: 2020-12-01 09:44:53
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
@@ -15,9 +15,9 @@ const prefix = 'program-component';
 export default (props) => {
   const history = useHistory();
   const { data, id } = props;
-  console.log('props', props);
   const [coachMenu, setCoachMenu] = useState([]);
   const [activeKey, setActiveKey] = useState(['']);
+  const [hoverModuleId, setHoverModuleId] = useState('');
 
   useEffect(() => {
     if (data.Sessions && data.Sessions.length > 0) {
@@ -52,9 +52,14 @@ export default (props) => {
                       key={moduleItem._id}
                       className={`${prefix}-coach-module`}
                       onClick={() => onModuleClick(moduleItem)}
+                      onMouseEnter={() => setHoverModuleId(moduleItem._id)}
+                      onMouseLeave={() => setHoverModuleId('')}
                     >
                       <div className={`${prefix}-coach-module-dot`} />
                       {moduleItem.Title}
+                      {hoverModuleId === moduleItem._id && (
+                        <div className={`${prefix}-coach-preview`}>Preview</div>
+                      )}
                     </div>
                   );
                 })}

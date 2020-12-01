@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-30 10:04:53
+ * @Last Modified time: 2020-12-01 14:11:15
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Select, Card, Checkbox } from 'antd';
@@ -32,6 +32,9 @@ export default (props) => {
   // program容器距离左边的距离
   const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
+  const [category, setCategory] = useState(['']);
+  const [selectedCategory, setSelectedCategory] = useState(['']);
+
   const { top } = useScroll(document);
   const isSticky = top >= 420 + 24 + 24 + 10; // 计算触发sticky的距离
 
@@ -41,10 +44,33 @@ export default (props) => {
     }
   }, [programContainerRef.current]);
 
-  // 构造假数据
+  // 构造数据
   useEffect(() => {
-    setPrograms(list);
+    const programkyes = Object.keys(list);
+    if (programkyes.length > 0) {
+      // 默认全选
+      setCategory(programkyes);
+      setSelectedCategory(programkyes);
+    }
   }, [list]);
+
+  /**
+   * 如果切换category则显示对应的数据
+   */
+  useEffect(() => {
+    let renderProgramList = [];
+
+    selectedCategory.forEach((key) => {
+      renderProgramList = renderProgramList.concat(list[key]);
+    });
+
+    setPrograms(renderProgramList.filter((i) => !!i));
+  }, [list, category, selectedCategory]);
+
+  // 设置选中的categroy
+  const onChangeCategory = (selectedValues) => {
+    setSelectedCategory(selectedValues);
+  };
 
   // 渲染列表头部
   const renderSort = () => {
@@ -65,8 +91,6 @@ export default (props) => {
    */
   const renderFilter = () => {
     // 是否固定
-
-    const checkboxFilter = ['all', 'Category1', 'Category2', 'Category3'];
     return (
       <div
         className={`${prefix}-filter`}
@@ -84,18 +108,28 @@ export default (props) => {
           <div className={`${prefix}-filter-card`}>
             <div className={`${prefix}-filter-title`}>Filter by</div>
 
-            <div className={`${prefix}-filter-checkbox`}>
-              {checkboxFilter.map((item) => {
-                return (
-                  <div key={item} className={`${prefix}-filter-checkbox-item`}>
-                    <Checkbox style={{ marginLeft: 0 }}>
-                      <span>{item}</span>
-                    </Checkbox>
-                    <span>#</span>
-                  </div>
-                );
-              })}
-            </div>
+            <Checkbox.Group
+              onChange={onChangeCategory}
+              style={{ width: '100%' }}
+            >
+              <div className={`${prefix}-filter-checkbox`}>
+                {category.length > 0 &&
+                  category.map((item) => {
+                    const currentCategory = list[item];
+                    return (
+                      <div
+                        key={item}
+                        className={`${prefix}-filter-checkbox-item`}
+                      >
+                        <Checkbox style={{ marginLeft: 0 }} value={item}>
+                          <span>{item}</span>
+                        </Checkbox>
+                        <span>{currentCategory && currentCategory.length}</span>
+                      </div>
+                    );
+                  })}
+              </div>
+            </Checkbox.Group>
           </div>
         </Card>
       </div>
@@ -106,10 +140,11 @@ export default (props) => {
     <div className={`${prefix}`}>
       <div style={{ marginRight: 24 }} ref={programContainerRef}>
         {renderSort()}
-        {programs.map((item) => {
-          return <ProgramItem key={item._id} data={item} tab={tab} />;
-        })}
-        {programs.length === 0 && <Empty />}
+        {programs.length > 0 &&
+          programs.map((item) => {
+            return <ProgramItem key={item?._id} data={item || {}} tab={tab} />;
+          })}
+        {programs.length === 0 && <Empty tab={tab} />}
       </div>
 
       {renderFilter()}

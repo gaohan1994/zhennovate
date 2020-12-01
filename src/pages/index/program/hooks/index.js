@@ -5,10 +5,10 @@ import { ResponseCode } from '@/common/config';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const initState = {
-  [ProgramTabKeys.available]: [],
-  [ProgramTabKeys.progress]: [],
-  [ProgramTabKeys.complete]: [],
-  [ProgramTabKeys.save]: [],
+  [ProgramTabKeys.available]: {},
+  [ProgramTabKeys.progress]: {},
+  [ProgramTabKeys.complete]: {},
+  [ProgramTabKeys.save]: {},
 };
 
 const ReducerActions = {
@@ -61,12 +61,6 @@ function useProgramHooks(type, options) {
     onSuccess: (result, params) => {
       console.log('result', result);
       return;
-      // if (result.error_code === ResponseCode.success) {
-      //   dispatch({
-      //     type: ReducerActions.Receive_Availabel_List,
-      //     payload: result.data,
-      //   });
-      // }
     },
   });
 

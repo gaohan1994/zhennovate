@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-23 10:24:49
+ * @Last Modified time: 2020-12-01 14:14:21
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal } from 'antd';
@@ -54,11 +54,11 @@ export default (props) => {
         <div className={`${prefix}-card-title`}>{data.Name}</div>
         <div className={`${prefix}-card-desc`}>
           <span>Total Time</span>
-          <span>3 hours to complete</span>
+          <span>{duration} hours to complete</span>
         </div>
         <div className={`${prefix}-card-desc`}>
           <span>Duration</span>
-          <span>{`${duration} Hours`}</span>
+          <span>{`${data?.Sessions?.length || 0} days`}</span>
         </div>
         <Link to={`/program/detail/${id}`}>
           <Button type="primary" style={{ width: '100%', marginTop: 24 }}>
@@ -74,9 +74,7 @@ export default (props) => {
         width={860}
         centered
       >
-        <Player>
-          <srouce src="https://www.bilibili.com/video/BV1tE411h7VP" />
-        </Player>
+        <Player src={data.VideoUrl} />
       </Modal>
     </Card>
   );

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:29:48
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 16:34:52
+ * @Last Modified time: 2020-11-30 13:51:22
  */
 import React from 'react';
 import { Card, Tag } from 'antd';
@@ -20,7 +20,7 @@ export default (props) => {
         data.Skills.map((item, index) => {
           return (
             <Tag key={index} color="#e0e0e0">
-              {item}
+              <span style={{ color: '#1b2631' }}>{item}</span>
             </Tag>
           );
         })}

@@ -3,9 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-23 10:50:38
+ * @Last Modified time: 2020-12-01 09:58:19
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { notification } from 'antd';
 import { program } from '../constants';
 import '../index.less';
@@ -17,17 +17,32 @@ import Skill from '../component/skill';
 import Instructor from '../component/instructor';
 import Coach from '../component/coach';
 import { formatSearch } from '@/common/request';
+import { useScroll } from 'ahooks';
 
 const prefix = 'page-program';
 
 export default (props) => {
   const searchParams = formatSearch(props.location.search);
+  // programs的容器
+  const programContainerRef = useRef(null);
   const { id } = props.match.params;
   // program详情数据
   const [programDescribe, setProgramDescribe] = useState({});
 
-  // 进入页面滑动到顶端
+  // program容器距离左边的距离
+  const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
+  const { top } = useScroll(document);
+  const isSticky = top >= 32; // 计算触发sticky的距离
+  console.log('isSticky', isSticky);
+
+  useEffect(() => {
+    if (programContainerRef.current?.offsetLeft) {
+      setProgramOffsetLeft(programContainerRef.current.offsetLeft);
+    }
+  }, [programContainerRef.current]);
+
+  // 进入页面滑动到顶端
   useEffect(() => {
     window.scrollTo({
       top: 0,
@@ -51,7 +66,7 @@ export default (props) => {
   return (
     <div className={`${prefix}-container`}>
       <div className={`${prefix}-container-box`}>
-        <div className={`${prefix}-container-left`}>
+        <div className={`${prefix}-container-left`} ref={programContainerRef}>
           <Bread data={programDescribe} entry={searchParams.entry || ''} />
           <div className={`${prefix}-describe-title`}>
             {programDescribe.Name}
@@ -72,7 +87,15 @@ export default (props) => {
 
         <div
           className={`${prefix}-container-right`}
-          style={{ paddingTop: 32 + 32 }}
+          style={
+            isSticky
+              ? {
+                  position: 'fixed',
+                  top: 64 + 32,
+                  left: programOffsetLeft + 744 + 24,
+                }
+              : { paddingTop: 32 + 32 }
+          }
         >
           <Card data={programDescribe} id={id} />
 
@@ -80,6 +103,7 @@ export default (props) => {
 
           <Outcome data={programDescribe} />
         </div>
+        {isSticky && <div style={{ width: 360, height: 1 }} />}
       </div>
     </div>
   );

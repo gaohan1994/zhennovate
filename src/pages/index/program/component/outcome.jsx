@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-21 16:19:56
+ * @Last Modified time: 2020-11-30 13:45:32
  */
 import React from 'react';
 import { Card } from 'antd';
@@ -21,7 +21,9 @@ export default (props) => {
           return (
             <div key={index} className={`${prefix}-outcome-item`}>
               <div className={`${prefix}-outcome-item-rate`}>{item.rate}</div>
-              <div>{item.content}</div>
+              <div style={{ textAlign: 'left', width: 230 }}>
+                {item.content}
+              </div>
             </div>
           );
         })}

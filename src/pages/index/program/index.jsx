@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-23 10:54:14
+ * @Last Modified time: 2020-12-01 14:01:08
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -20,21 +20,25 @@ const tabsMenu = [
     key: ProgramTabKeys.available,
     tab: 'Available',
     Component: ProgramChild,
+    empty: '',
   },
   {
     key: ProgramTabKeys.progress,
     tab: 'In Progress',
     Component: ProgramChild,
+    empty: 'Programs you’ve started will appear here.',
   },
   {
     key: ProgramTabKeys.complete,
     tab: 'Completed',
     Component: ProgramChild,
+    empty: 'Completed program will be added here.',
   },
   {
     key: ProgramTabKeys.save,
     tab: 'Saved',
     Component: ProgramChild,
+    empty: 'Saved program will be added here.',
   },
 ];
 

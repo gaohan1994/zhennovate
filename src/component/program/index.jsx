@@ -3,12 +3,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-23 10:48:26
+ * @Last Modified time: 2020-12-01 14:37:38
  */
 import React from 'react';
 import { Progress } from 'antd';
 import { useHistory } from 'react-router-dom';
 import './index.less';
+// import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
+import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 
 const prefix = 'component-program';
 
@@ -29,7 +31,10 @@ export default (props) => {
 
   return (
     <div className={`${prefix} ${prefix}-fix`} onClick={onClick}>
-      <div className={`${prefix}-cover`}>cover</div>
+      <div
+        className={`${prefix}-cover`}
+        style={{ backgroundImage: `url(${data.Cover})` }}
+      />
       <div className={`${prefix}-content`}>
         <span>{data.Sessions?.length || 0} sessions</span>
 
@@ -41,7 +46,11 @@ export default (props) => {
           <Progress percent={100} showInfo={false} />
         </div>
 
-        <div className={`${prefix}-content-save`} onClick={onSave} />
+        <div
+          className={`${prefix}-content-save`}
+          style={{ backgroundImage: `url(${imgbookunsave})` }}
+          onClick={onSave}
+        />
       </div>
     </div>
   );
