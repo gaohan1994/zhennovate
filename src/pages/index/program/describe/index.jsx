@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 09:58:19
+ * @Last Modified time: 2020-12-01 16:35:40
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { notification } from 'antd';
@@ -34,7 +34,6 @@ export default (props) => {
 
   const { top } = useScroll(document);
   const isSticky = top >= 32; // 计算触发sticky的距离
-  console.log('isSticky', isSticky);
 
   useEffect(() => {
     if (programContainerRef.current?.offsetLeft) {

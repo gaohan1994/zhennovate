@@ -130,4 +130,32 @@
       }
     }
   }
+
+  &-markdown {
+    position: relative;
+    font-size: 14px;
+    color: @black;
+    .margin(24px, b);
+
+    &-overflow {
+      display: -webkit-box;
+      -webkit-box-orient: vertical;
+      -webkit-line-clamp: 4;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    & > h1 {
+      font-weight: bold;
+    }
+
+    &-more {
+      position: absolute;
+      right: 24px;
+      bottom: 24px;
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+  }
 }
