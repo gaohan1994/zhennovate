@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 16:34:53
+ * @Last Modified time: 2020-12-02 14:57:29
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -14,7 +14,7 @@ import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 
 const prefix = 'component-program';
 
-export default (props) => {
+function Program(props) {
   const { data, tab, type, style = {} } = props;
   const history = useHistory();
 
@@ -86,4 +86,7 @@ export default (props) => {
       </div>
     </div>
   );
-};
+}
+export default Program;
+
+export { Program };
