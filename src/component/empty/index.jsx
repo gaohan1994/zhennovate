@@ -6,15 +6,17 @@ import imgcomplete from '../../assets/Icon-CompletedProgram-Empty@2x.png';
 const prefix = 'component-empty';
 
 function Empty(props) {
-  const { tab } = props;
+  const { tab, title, icon } = props;
   return (
     <div className={`${prefix}`}>
       <div
         className={`${prefix}-icon`}
-        style={{ backgroundImage: `url(${imgcomplete})` }}
+        style={{ backgroundImage: `url(${icon || imgcomplete})` }}
       />
       <span className={`${prefix}-title`}>
-        {tab.key === ProgramTabKeys.available
+        {title
+          ? title
+          : tab.key === ProgramTabKeys.available
           ? 'No Available Programs here'
           : tab.key === ProgramTabKeys.progress
           ? 'No Programs here'

@@ -5,10 +5,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 16:05:36
+ * @Last Modified time: 2020-12-02 11:16:59
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { Select, Card, Checkbox } from 'antd';
 import { useScroll } from 'ahooks';
 import ProgramItem from '@/component/program';
 import Swiper from '../component/swiper';
@@ -16,6 +15,8 @@ import './index.less';
 import Empty from '@/component/empty';
 import useProgramHooks from '../hooks';
 import { ProgramTabKeys } from '../constants';
+import Filter from '@/component/fliter';
+import Sort from '@/component/sort';
 
 const prefix = 'program-child';
 
@@ -75,12 +76,12 @@ export default (props) => {
   // 渲染列表头部
   const renderSort = () => {
     return (
-      <div className={`${prefix}-sort`}>
-        <div className={`${prefix}-sort-title`}>{tab.tab}</div>
-        <Select value={sortValue} onChange={setSortValue}>
-          <Select.Option value="1">Sort by: Newest to oldest</Select.Option>
-        </Select>
-      </div>
+      <Sort
+        title={tab.tab}
+        value={sortValue}
+        onChange={setSortValue}
+        options={[{ label: 'Sort by: Newest to oldest', value: '1' }]}
+      />
     );
   };
 
@@ -92,8 +93,10 @@ export default (props) => {
   const renderFilter = () => {
     // 是否固定
     return (
-      <div
-        className={`${prefix}-filter`}
+      <Filter
+        category={category}
+        list={list}
+        onChange={onChangeCategory}
         style={
           isSticky
             ? {
@@ -103,36 +106,7 @@ export default (props) => {
               }
             : { position: 'relative' }
         }
-      >
-        <Card bodyStyle={{ paddingTop: 16 }}>
-          <div className={`${prefix}-filter-card`}>
-            <div className={`${prefix}-filter-title`}>Filter by</div>
-
-            <Checkbox.Group
-              onChange={onChangeCategory}
-              style={{ width: '100%' }}
-            >
-              <div className={`${prefix}-filter-checkbox`}>
-                {category.length > 0 &&
-                  category.map((item) => {
-                    const currentCategory = list[item];
-                    return (
-                      <div
-                        key={item}
-                        className={`${prefix}-filter-checkbox-item`}
-                      >
-                        <Checkbox style={{ marginLeft: 0 }} value={item}>
-                          <span>{item}</span>
-                        </Checkbox>
-                        <span>{currentCategory && currentCategory.length}</span>
-                      </div>
-                    );
-                  })}
-              </div>
-            </Checkbox.Group>
-          </div>
-        </Card>
-      </div>
+      />
     );
   };
 

@@ -136,7 +136,6 @@
     font-size: 14px;
     color: @black;
     .margin(24px, b);
-
     &-overflow {
       display: -webkit-box;
       -webkit-box-orient: vertical;
@@ -144,9 +143,41 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
+    & > h1,
+    & > h2,
+    & > h3,
+    & > h4,
+    & > h5,
+    & > h6,
+    & > strong {
+      font-weight: bold;
+    }
 
     & > h1 {
-      font-weight: bold;
+      color: @black;
+      font-size: 24px;
+    }
+    & > h2 {
+      // border-bottom: 1px solid #cccccc;
+      color: @black;
+      font-size: 24px;
+    }
+    & > h3 {
+      font-size: 18px;
+    }
+    & > h4 {
+      font-size: 16px;
+    }
+    & > h5 {
+      font-size: 14px;
+    }
+    & > h6 {
+      color: #777777;
+      background-color: inherit;
+      font-size: 14px;
+    }
+    &-img {
+      max-width: 100%;
     }
 
     &-more {

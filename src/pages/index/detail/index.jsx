@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 17:57:50
+ * @Last Modified time: 2020-12-02 14:48:53
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -18,6 +18,8 @@ import imgcoach from '@/assets/Icon-CoachingPAth@2x.png';
 import imgentry from '@/assets/Icon-Entry@2x.png';
 import imgabout from '@/assets/Icon-About@2x.png';
 import About from './about';
+import Entry from './entry';
+import Workshop from './workshop';
 
 const prefix = 'page-detail';
 
@@ -88,7 +90,8 @@ export default (props) => {
         },
       ];
       setDetailMenu(commonMenu);
-      setCurrentKey('3');
+      setCurrentKey('1');
+      setSelectedKeys(['1']);
     }
   }, [programData]);
 
@@ -215,7 +218,8 @@ export default (props) => {
 
         <Content className={`${prefix}`}>
           <div ref={iframeContainerRef} className={`${prefix}-box`}>
-            {currentKey === '3' && <div>entry</div>}
+            {currentKey === '1' && <Workshop programData={programData} />}
+            {currentKey === '3' && <Entry programData={programData} />}
             {currentKey === '4' && <About programData={programData} />}
             {currentKey && currentKey.length > 5 && (
               <div>
