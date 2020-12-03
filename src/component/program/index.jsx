@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-02 14:57:29
+ * @Last Modified time: 2020-12-03 14:22:03
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -30,6 +30,15 @@ function Program(props) {
   };
 
   if (type === 'card') {
+    let teachersName = 'Unknow Coach Name';
+
+    if (data.Teachers && data.Teachers.length > 0) {
+      teachersName = 'By';
+
+      const names = data.Teachers.map((t) => t.Name);
+      teachersName += ` ${names.join(', ')}`;
+    }
+
     return (
       <div className={`${prefix}-card`} style={{ ...style }} onClick={onClick}>
         <div
@@ -37,12 +46,8 @@ function Program(props) {
           style={{ backgroundImage: `url(${data.Cover})` }}
         />
         <div className={`${prefix}-card-detail`}>
-          <span className={`${prefix}-card-title`}>
-            {data.Name}
-            {data.Name}
-            {data.Name}
-          </span>
-          <span style={{ marginTop: 12 }}>By Coach Name Written here</span>
+          <span className={`${prefix}-card-title`}>{data.Name}</span>
+          <span style={{ marginTop: 12 }}>{teachersName}</span>
           <span style={{ marginTop: 12 }}>
             {data.Sessions?.length || 0} sessions 3hrs
           </span>

@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-02 14:48:53
+ * @Last Modified time: 2020-12-03 14:12:48
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -178,10 +178,20 @@ export default (props) => {
                               ? session.Modules.map((module) => {
                                   return (
                                     <Menu.Item
+                                      style={{ paddingLeft: 48 }}
                                       key={module._id}
                                       onClick={() => onModuleClick(module)}
                                     >
-                                      {module.Title}
+                                      <div className={`${prefix}-menu`}>
+                                        <span>{module.Title}</span>
+                                        <span
+                                          style={{ marginTop: 2, fontSize: 12 }}
+                                        >
+                                          {module.Type}
+                                          <span className="dot" />
+                                          {`${module.Duration} min`}
+                                        </span>
+                                      </div>
                                     </Menu.Item>
                                   );
                                 })
