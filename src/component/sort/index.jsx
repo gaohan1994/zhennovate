@@ -5,13 +5,28 @@ import { Select } from 'antd';
 const prefix = 'program-child';
 
 function Sort(props) {
-  const { title, subTitle, options, value, onChange, showSort = true } = props;
+  const {
+    title,
+    titleStyle = {},
+    subTitle,
+    subTitleStyle = {},
+    options,
+    value,
+    onChange,
+    showSort = true,
+    renderSort,
+  } = props;
   return (
     <div className={`${prefix}-sort`}>
       <div style={{ display: 'flex', flexDirection: 'column' }}>
-        <div className={`${prefix}-sort-title`}>{title}</div>
+        <div className={`${prefix}-sort-title`} style={titleStyle}>
+          {title}
+        </div>
         {subTitle && (
-          <span className={`${prefix}-sort-subtitle`} style={{ marginTop: 8 }}>
+          <span
+            className={`${prefix}-sort-subtitle`}
+            style={{ marginTop: 8, ...subTitleStyle }}
+          >
             {subTitle}
           </span>
         )}
@@ -20,6 +35,8 @@ function Sort(props) {
       {showSort && (
         <Select value={value} onChange={onChange} options={options} />
       )}
+
+      {renderSort && renderSort()}
     </div>
   );
 }

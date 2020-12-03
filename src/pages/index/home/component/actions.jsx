@@ -4,42 +4,61 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-30 16:38:35
+ * @Last Modified time: 2020-12-03 11:14:14
  */
 import React from 'react';
-import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+// import { LeftOutlined, RightOutlined } from '@ant-design/icons';
 import './index.less';
+import Swiper from '@/component/swiper';
+import WeeklyGoal from './weekly-goal';
+import HomeProgramCard from './card';
 
-const prefix = 'component-home-actions';
+function Actions(props) {
+  const renderData = (item, index) => {
+    console.log('item', item);
+    if (index === 0) {
+      return <WeeklyGoal />;
+    }
+    return <HomeProgramCard />;
+  };
 
-function Actions() {
   return (
-    <div className={`${prefix}`}>
-      <div className={`${prefix}-header`} style={{ flexDirection: 'row' }}>
-        <div className={`${prefix}-header-left`}>
-          <span className={`${prefix}-header-title`}>My Actions</span>
-          <span style={{ marginTop: 5 }}>
-            Practice what you’ve learned for mastery
-          </span>
-        </div>
-
-        <div className={`${prefix}-bar`}>
-          <div style={{ marginRight: 13 }}>1 / 1</div>
-          <div>
-            <LeftOutlined />
-            <RightOutlined />
-          </div>
-        </div>
-      </div>
-
-      <div className={`${prefix}-bar`}>
-        <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
-          card
-        </div>
-        <div className={`${prefix}-card`}>card</div>
-      </div>
+    <div style={{ marginTop: 32 }}>
+      <Swiper
+        title="My Actions"
+        subTitle="Practice what you’ve learned for mastery"
+        height={240}
+        width={744}
+        data={[[{}, {}]]}
+        renderData={renderData}
+      />
     </div>
   );
+  // return (
+  //   <div className={`${prefix}`}>
+  //     <div className={`${prefix}-header`} style={{ flexDirection: 'row' }}>
+  //       <div className={`${prefix}-header-left`}>
+  //         <span className={`${prefix}-header-title`}>My Actions</span>
+  //         <span style={{ marginTop: 5 }}>
+  //           Practice what you’ve learned for mastery
+  //         </span>
+  //       </div>
+
+  //       <div className={`${prefix}-bar`}>
+  //         <div style={{ marginRight: 13 }}>1 / 1</div>
+  //         <div>
+  //           <LeftOutlined />
+  //           <RightOutlined />
+  //         </div>
+  //       </div>
+  //     </div>
+
+  //     <div className={`${prefix}-bar`}>
+  //       <WeeklyGoal />
+  //       <div className={`${prefix}-card`}>card</div>
+  //     </div>
+  //   </div>
+  // );
 }
 
 export default Actions;

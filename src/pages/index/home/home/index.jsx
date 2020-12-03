@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 10:12:22
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-02 15:13:31
+ * @Last Modified time: 2020-12-03 11:11:48
  */
 import React from 'react';
 import Welcome from '../component/welcome';

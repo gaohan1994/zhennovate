@@ -1,46 +1,50 @@
 import React, { useState } from 'react';
-import { Tag, Modal, Button } from 'antd';
 import './index.less';
+import { Progress, Modal, Button } from 'antd';
+import Sort from '@/component/sort';
 import Choice from '@/component/choice';
 
-const prefix = 'component-home';
+const prefix = 'component-home-actions';
 
-function Goal() {
+function WeeklyGoal() {
   const [visible, setVisible] = useState(false);
   return (
-    <div className={`${prefix}-goal`}>
-      <h2 style={{ marginTop: 123 }}>My Learning Goals</h2>
-      <div style={{ marginTop: 18 }}>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
+    <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
+      <Sort
+        title="Weekly Goal"
+        titleStyle={{ fontSize: 16 }}
+        subTitle="MM/DD - MM/DD"
+        subTitleStyle={{ fontSize: 14, fontStyle: 'italic', marginTop: 4 }}
+        showSort={false}
+      />
+
+      <div className={`${prefix}-content`}>
+        <Progress
+          type="circle"
+          percent={0}
+          format={(percent, successPercent) => {
+            return (
+              <div style={{ display: 'flex', flexDirection: 'column' }}>
+                <span style={{ fontSize: 16, fontWeight: 'bold' }}>
+                  {`${successPercent}/${percent}`}
+                </span>
+                <span style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}>
+                  Actions
+                </span>
+              </div>
+            );
+          }}
+        />
+
+        <span style={{ marginLeft: 14 }}>
+          Complete <span style={{ fontWeight: 'bold' }}>4</span> actions to
+          reach your weekly goal.
+        </span>
       </div>
-      <span style={{ marginTop: 18, textAlign: 'center' }}>
-        This is a 95 character limit sentence. This is a 95 character limit
-        sentence. This is a 95 char
-      </span>
-      <span
-        style={{ marginTop: 8, textAlign: 'center', color: '#1890ff' }}
-        onClick={() => setVisible(true)}
-      >
+
+      <span className={`${prefix}-edit`} onClick={() => setVisible(true)}>
         edit
       </span>
-
-      <h3 style={{ marginTop: 90 }}>Quote of the day</h3>
-      <span style={{ marginTop: 18, textAlign: 'center', fontStyle: 'italic' }}>
-        “Inspiration quote will be written here. Inspiration quote will be
-        written here. Inspiration quote will be written here.”
-      </span>
-      <span>— Author Name</span>
 
       <Modal
         width={440}
@@ -67,7 +71,7 @@ function Goal() {
           </span>
 
           <Choice
-            defaultValue="3"
+            defaultValue="2"
             onChoice={(value) => {
               console.log('value', value);
             }}
@@ -95,6 +99,6 @@ function Goal() {
   );
 }
 
-export default Goal;
+export default WeeklyGoal;
 
-export { Goal };
+export { WeeklyGoal };

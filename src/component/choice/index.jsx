@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './index.less';
+import imgunchoice from '@/assets/3.数据录入-2.Radio单选框-亮色-Icon-未选@2x.png';
+import imgchoice from '@/assets/3.数据录入-2.Radio单选框-亮色-Icon-选中@2x.png';
 
 const prefix = 'component-choice';
 
@@ -37,7 +39,12 @@ function Choice(props) {
               </span>
             )}
 
-            <div className={`${prefix}-icon`} />
+            <div
+              style={{
+                backgroundImage: `url(${selected ? imgchoice : imgunchoice})`,
+              }}
+              className={`${prefix}-icon`}
+            />
           </div>
         );
       })}

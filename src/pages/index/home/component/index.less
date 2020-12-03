@@ -55,39 +55,49 @@
   }
 
   &-actions {
-    .margin(32px, t);
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    &-header {
-      width: 100%;
-      .flex(center, space-between, row);
-      display: flex;
-      flex-direction: column;
-      .margin(16px, b);
-      font-size: 14px;
-      color: @black;
-      &-left {
-        display: flex;
-        flex-direction: column;
-      }
-
-      &-title {
-        font-size: 20px;
-        font-weight: bold;
-      }
-    }
-
-    &-bar {
-      display: flex;
-      flex-direction: row;
-      align-items: center;
-    }
-
     &-card {
+      .padding(24px);
+      position: relative;
       width: 360px;
       height: 240px;
       border: solid 1px #eaeaea;
+    }
+
+    &-icon {
+      width: 48px;
+      height: 48px;
+      .bg;
+    }
+
+    &-detail {
+      display: flex;
+      flex-direction: column;
+    }
+
+    &-title {
+      .clamp(3);
+    }
+
+    &-content {
+      font-size: 14px;
+      color: @black;
+      .flex(center, space-between, row);
+    }
+
+    &-complete {
+      position: absolute;
+      bottom: 24px;
+      right: 24px;
+      cursor: pointer;
+      color: @clear-blue;
+    }
+
+    &-edit {
+      position: absolute;
+      top: 24px;
+      right: 24px;
+      cursor: pointer;
+      color: @clear-blue;
     }
   }
 
