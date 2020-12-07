@@ -18,25 +18,8 @@ import { ResponseCode } from '@/common/config';
  */
 const RenderPaperForm = (props) => {
   const { sign } = useSignSdk();
-  const { data, programData, callback, ...rest } = props;
+  const { data, programData, preview = false, callback, ...rest } = props;
   const [iframeUrl, setIframeUrl] = useState('');
-
-  // if (paperform.type === 'modal') {
-  //   return (
-  //     <div>
-  //       <Button
-  //         onClick={() => {
-  //           dispatch({
-  //             type: 'CHANGE_PAPERFORM_MODAL_VISIBLE',
-  //             payload: true,
-  //           });
-  //         }}
-  //       >
-  //         open paperform modal
-  //       </Button>
-  //     </div>
-  //   );
-  // }
 
   /**
    * 用户提交通过postmessage来获取参数 然后调用programEnd接口并执行回调跳转至下一个module
@@ -52,16 +35,22 @@ const RenderPaperForm = (props) => {
       moduleId: progressData?.module,
       recordId: progressData?.record,
     };
-    console.log('payload', payload);
-    programEnd(payload)
-      .then((result) => {
-        if (result.error_code === ResponseCode.success) {
-          callback && callback({ postMessageData, data, programData });
-        }
-      })
-      .catch((error) => {
-        notification.error(error.message);
-      });
+
+    if (!preview) {
+      // 如果是非预览模式才进行上传数据calback
+      console.log('payload', payload);
+      programEnd(payload)
+        .then((result) => {
+          if (result.error_code === ResponseCode.success) {
+            callback && callback({ postMessageData, data, programData });
+          }
+        })
+        .catch((error) => {
+          notification.error(error.message);
+        });
+    } else {
+      callback && callback();
+    }
   };
 
   /**
@@ -71,8 +60,6 @@ const RenderPaperForm = (props) => {
     window.addEventListener('message', receiveMessage, false);
     return () => window.removeEventListener('message', () => {});
   }, []);
-
-  useEffect(() => {}, []);
 
   // 进来的时候进行数据整合 提交接口
   useEffect(() => {
@@ -92,8 +79,6 @@ const RenderPaperForm = (props) => {
       programStart(payload)
         .then((result) => {
           if (result.error_code === ResponseCode.success) {
-            console.log('result', result);
-            console.log('result.data?.url', result.data?.url);
             setIframeUrl(result.data?.url);
           }
         })

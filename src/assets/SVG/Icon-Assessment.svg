@@ -1,0 +1,15 @@
+<svg id="Icon_Assessment" data-name="Icon/Assessment" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="64" height="64" viewBox="0 0 64 64">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10115" data-name="Rectangle 10115" width="48" height="48" transform="translate(8 8)" fill="none"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_9899" data-name="Rectangle 9899" width="64" height="64" fill="none"/>
+  <g id="Mask_Group_740" data-name="Mask Group 740" clip-path="url(#clip-path)">
+    <g id="pie-chart_2_" data-name="pie-chart (2)" transform="translate(8 8)">
+      <path id="Path_108321" data-name="Path 108321" d="M46.973,23.088H24.93V1.046A.956.956,0,0,0,23.974.09a23.972,23.972,0,0,0-22.642,31.8.957.957,0,0,0,1.807-.626A22.05,22.05,0,0,1,23.018,2.022V24.045a.956.956,0,0,0,.956.956H46A22.044,22.044,0,0,1,6.711,37.753a.957.957,0,0,0-1.5,1.19,23.956,23.956,0,0,0,42.715-14.9A.956.956,0,0,0,46.973,23.088Z" fill="#1b2631"/>
+      <path id="Path_108322" data-name="Path 108322" d="M27.368,19.6c0,1.363,2.425.956,3.255.956h16.4a.956.956,0,0,0,.956-.956,19.6,19.6,0,0,0-1.2-6.766A19.918,19.918,0,0,0,30.723.191c-1.212-.15-3.1-.648-3.3.96ZM29.333,1.986A17.941,17.941,0,0,1,46.044,18.642H29.281Z" fill="#1b2631"/>
+      <path id="Path_108323" data-name="Path 108323" d="M4.584,34.7a.956.956,0,1,0-.412,1.2A.964.964,0,0,0,4.584,34.7Z" fill="#1b2631"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,6 @@
+<svg id="_1.通用_2.Icon图标_Line_Exclaimination" data-name="1.通用/2.Icon图标/Line/Exclaimination" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="exclaimination">
+    <rect id="矩形" width="16" height="16" fill="#1b2631" opacity="0"/>
+    <path id="形状" d="M1,11.125a1,1,0,1,1,1-1A1,1,0,0,1,1,11.125ZM1.5,7.5H.5a.125.125,0,0,1-.125-.125V.125A.125.125,0,0,1,.5,0h1a.125.125,0,0,1,.125.125v7.25A.125.125,0,0,1,1.5,7.5Z" transform="translate(7 2.438)" fill="rgba(0,0,0,0.65)"/>
+  </g>
+</svg>

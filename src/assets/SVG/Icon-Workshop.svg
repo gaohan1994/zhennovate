@@ -1,0 +1,16 @@
+<svg id="Icon_Workshop" data-name="Icon/Workshop" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10081" data-name="Rectangle 10081" width="20" height="20" transform="translate(6950 -8855)" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_10075" data-name="Rectangle 10075" width="24" height="24" fill="none"/>
+  <g id="Mask_Group_722" data-name="Mask Group 722" transform="translate(-6948 8857)" clip-path="url(#clip-path)">
+    <g id="blackboard" transform="translate(6950.191 -8855)">
+      <path id="Path_108236" data-name="Path 108236" d="M18,0H1.617A1.617,1.617,0,0,0,0,1.612V3.1a1.607,1.607,0,0,0,1.148,1.55v8.78A1.843,1.843,0,0,0,3,15.258H9.33v1.713L6.517,19.139a.478.478,0,1,0,.584.756L9.79,17.828,12.5,19.9a.469.469,0,0,0,.292.1.5.5,0,0,0,.383-.187.475.475,0,0,0-.091-.67l-2.8-2.129V15.263h6.3a1.819,1.819,0,0,0,1.833-1.828V4.66a1.588,1.588,0,0,0,1.2-1.555V1.612A1.617,1.617,0,0,0,18,0ZM16.588,14.306H3a.887.887,0,0,1-.9-.871v-8.7H17.464v8.7a.866.866,0,0,1-.876.871ZM18.66,3.12a.662.662,0,0,1-.66.66H1.617a.662.662,0,0,1-.66-.66v-1.5a.662.662,0,0,1,.66-.66H18a.662.662,0,0,1,.66.66Zm0,0"/>
+      <path id="Path_108237" data-name="Path 108237" d="M4.45,7.512H8.756a.478.478,0,1,0,0-.957H4.45a.478.478,0,1,0,0,.957Zm0,0"/>
+      <path id="Path_108238" data-name="Path 108238" d="M15.167,8.947H4.45a.478.478,0,1,0,0,.957H15.167a.478.478,0,1,0,0-.957Zm0,0"/>
+      <path id="Path_108239" data-name="Path 108239" d="M15.167,11.34H4.45a.478.478,0,0,0,0,.957H15.167a.478.478,0,0,0,0-.957Zm0,0"/>
+    </g>
+  </g>
+</svg>

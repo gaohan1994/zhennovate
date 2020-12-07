@@ -27,7 +27,7 @@ export default function () {
   return (
     <Header
       className={`${prefix}-header`}
-      style={{ position: 'fixed', zIndex: 1 }}
+      style={{ position: 'fixed', zIndex: 200 }}
     >
       <div
         className={`${prefix}-logo`}

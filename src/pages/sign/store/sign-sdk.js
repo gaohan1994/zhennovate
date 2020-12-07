@@ -1,13 +1,18 @@
 import { store } from '@/module/redux/persist';
 import { Action_Types } from './sign-store';
 import { signin } from '../constants';
+import { useHistory } from 'react-router-dom';
 import { notification } from 'antd';
 import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
 import { useSelector } from 'react-redux';
 
 function useSignSdk() {
+  const history = useHistory();
   const sign = useSelector((state) => state.sign);
+
+  // 是否登录
+  const isSign = sign.userinfo && sign.userinfo._id;
   /**
    * 用户登录
    *
@@ -35,10 +40,22 @@ function useSignSdk() {
     }
   };
 
+  const checkSign = (callback) => {
+    console.log('sign', sign);
+    console.log('isSign', isSign);
+    if (!isSign) {
+      history.push(`/sign/signin`);
+      return;
+    }
+    callback && callback();
+  };
+
   return {
     userSignin,
+    checkSign,
     sign,
-    userId: (sign.userinfo && sign.userinfo.userId) || '',
+    isSign,
+    userId: (sign.userinfo && sign.userinfo._id) || '',
   };
 }
 

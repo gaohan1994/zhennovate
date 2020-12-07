@@ -131,7 +131,7 @@ table {
 }
 @font-face {
   font-family: 'Montserrat';
-  src: url('./assets/Montserrat.otf');
+  src: url('./assets/font/Montserrat-Medium.ttf');
 }
 
 .ant-form-item-explain {
@@ -171,4 +171,8 @@ table {
   border-radius: 3px;
   margin: 0 3px 0 3px;
   background-color: #48515a;
+}
+
+.custom-antd-menu > .ant-menu-sub > .ant-menu-item-selected {
+  background-color: #e0e0e0 !important;
 }

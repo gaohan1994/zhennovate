@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-03 11:14:14
+ * @Last Modified time: 2020-12-06 16:38:43
  */
 import React from 'react';
 // import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -15,7 +15,6 @@ import HomeProgramCard from './card';
 
 function Actions(props) {
   const renderData = (item, index) => {
-    console.log('item', item);
     if (index === 0) {
       return <WeeklyGoal />;
     }

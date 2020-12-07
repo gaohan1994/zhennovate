@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-02 10:58:23
+ * @Last Modified time: 2020-12-06 17:10:57
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -10,6 +10,7 @@ import ProgramChild from '@/pages/index/program/child';
 import './index.less';
 import { ProgramTabKeys } from './constants';
 import { formatSearch } from '@/common/request';
+import imghome from '@/assets/Banner-with-Character.svg';
 
 const prefix = 'page-program';
 
@@ -26,19 +27,19 @@ const tabsMenu = [
     key: ProgramTabKeys.progress,
     tab: 'In Progress',
     Component: ProgramChild,
-    empty: 'Programs you’ve started will appear here.',
+    empty: 'In-progress programs will be added here.',
   },
   {
     key: ProgramTabKeys.complete,
     tab: 'Completed',
     Component: ProgramChild,
-    empty: 'Completed program will be added here.',
+    empty: 'Completed programs will be added here.',
   },
   {
     key: ProgramTabKeys.save,
     tab: 'Saved',
     Component: ProgramChild,
-    empty: 'Saved program will be added here.',
+    empty: 'Saved programs will be added here.',
   },
 ];
 
@@ -94,8 +95,12 @@ export default (props) => {
 
   return (
     <div>
-      <div className={`${prefix}-banner`} ref={bannerContainer}>
-        banner
+      <div
+        className={`${prefix}-banner`}
+        ref={bannerContainer}
+        style={{ backgroundImage: `url(${imghome})` }}
+      >
+        <h1>Programs</h1>
       </div>
       <Tabs
         centered

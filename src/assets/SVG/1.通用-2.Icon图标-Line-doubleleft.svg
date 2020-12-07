@@ -1,0 +1,9 @@
+<svg id="_1.通用_2.Icon图标_Line_doubleleft" data-name="1.通用/2.Icon图标/Line/doubleleft" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="minus-square">
+    <rect id="矩形" width="16" height="16" fill="#1b2631" opacity="0"/>
+  </g>
+  <g id="doubleleft">
+    <rect id="矩形-2" data-name="矩形" width="16" height="16" fill="#1b2631" opacity="0"/>
+    <path id="形状" d="M10.25,11H9.042a.244.244,0,0,1-.2-.1L4.856,5.81a.5.5,0,0,1,0-.617L8.846.1a.252.252,0,0,1,.2-.1H10.25a.125.125,0,0,1,.113.071A.123.123,0,0,1,10.349.2L6.2,5.5l4.147,5.3a.125.125,0,0,1-.1.2ZM5.5,11H4.293a.245.245,0,0,1-.2-.1L.106,5.81a.5.5,0,0,1,0-.617L4.1.1a.253.253,0,0,1,.2-.1H5.5a.125.125,0,0,1,.1.2L1.452,5.5,5.6,10.8a.124.124,0,0,1,.014.132A.122.122,0,0,1,5.5,11Z" transform="translate(2.812 2.5)" fill="rgba(0,0,0,0.65)"/>
+  </g>
+</svg>

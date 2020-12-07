@@ -2,11 +2,11 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-03 14:12:48
+ * @Last Modified time: 2020-12-07 13:50:39
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
-import { AuditOutlined } from '@ant-design/icons';
+import { AuditOutlined, CheckCircleOutlined } from '@ant-design/icons';
 import { program } from '@/pages/index/program/constants';
 import './index.less';
 import MyHeader from './component/header';
@@ -17,6 +17,7 @@ import imgwork from '@/assets/Icon-Workshop@2x.png';
 import imgcoach from '@/assets/Icon-CoachingPAth@2x.png';
 import imgentry from '@/assets/Icon-Entry@2x.png';
 import imgabout from '@/assets/Icon-About@2x.png';
+
 import About from './about';
 import Entry from './entry';
 import Workshop from './workshop';
@@ -148,12 +149,18 @@ export default (props) => {
   return (
     <Layout
       className={`${prefix}-pos`}
-      style={{ position: 'fixed', top: 64, left: 0, right: 0, bottom: 0 }}
+      style={{
+        position: 'fixed',
+        top: 64,
+        left: 0,
+        right: 0,
+        bottom: 0,
+      }}
     >
       <Header style={{ backgroundColor: '#fff', padding: 0, height: 72 }}>
         <MyHeader data={programData} />
       </Header>
-      <Layout className={`${prefix}-pos`} style={{ marginLeft: 200 }}>
+      <Layout className={`${prefix}-pos`} style={{ marginLeft: 256 }}>
         <Sider theme="light" className={`${prefix}-slider`}>
           {programData._id && detailMenu.some((d) => d.children) && (
             <Menu
@@ -167,13 +174,17 @@ export default (props) => {
                 if (item.children) {
                   return (
                     <Menu.SubMenu
-                      title={item.title}
+                      title={`${item.title}${item.title}${item.title}${item.title}`}
                       key={item.id}
                       icon={<AuditOutlined />}
                     >
                       {item.children.map((session) => {
                         return (
-                          <Menu.SubMenu title={session.Title} key={session._id}>
+                          <Menu.SubMenu
+                            title={session.Title}
+                            key={session._id}
+                            className="custom-antd-menu"
+                          >
                             {session.Modules
                               ? session.Modules.map((module) => {
                                   return (
@@ -183,8 +194,18 @@ export default (props) => {
                                       onClick={() => onModuleClick(module)}
                                     >
                                       <div className={`${prefix}-menu`}>
-                                        <span>{module.Title}</span>
+                                        <div className={`${prefix}-menu-check`}>
+                                          <CheckCircleOutlined
+                                            style={{ color: '#2fc25b' }}
+                                          />
+                                        </div>
                                         <span
+                                          className={`${prefix}-menu-title`}
+                                        >
+                                          {module.Title}
+                                        </span>
+                                        <span
+                                          className={`${prefix}-menu-desc`}
                                           style={{ marginTop: 2, fontSize: 12 }}
                                         >
                                           {module.Type}

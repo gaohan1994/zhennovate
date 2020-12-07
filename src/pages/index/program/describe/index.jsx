@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 17:52:01
+ * @Last Modified time: 2020-12-07 15:44:21
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { notification } from 'antd';
@@ -17,7 +17,9 @@ import Skill from '../component/skill';
 import Instructor from '../component/instructor';
 import Coach from '../component/coach';
 import { formatSearch } from '@/common/request';
+import imgbg from '@/assets/Hexagon-Background-Pattern.svg';
 import { useScroll } from 'ahooks';
+import QueueAnim from 'rc-queue-anim';
 
 const prefix = 'page-program';
 
@@ -31,9 +33,10 @@ export default (props) => {
 
   // program容器距离左边的距离
   const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
+  console.log('programOffsetLeft', programOffsetLeft);
 
   const { top } = useScroll(document);
-  const isSticky = top >= 32; // 计算触发sticky的距离
+  const isSticky = top >= 150; // 计算触发sticky的距离
 
   useEffect(() => {
     if (programContainerRef.current?.offsetLeft) {
@@ -64,6 +67,10 @@ export default (props) => {
 
   return (
     <div className={`${prefix}-container`}>
+      <div
+        style={{ backgroundImage: `url(${imgbg})` }}
+        className={`${prefix}-container-bg`}
+      />
       <div className={`${prefix}-container-box`}>
         <div className={`${prefix}-container-left`} ref={programContainerRef}>
           <Bread data={programDescribe} entry={searchParams.entry || ''} />
@@ -84,25 +91,45 @@ export default (props) => {
           <Coach data={programDescribe} id={id} />
         </div>
 
-        <div
-          className={`${prefix}-container-right`}
-          style={
-            isSticky
-              ? {
-                  position: 'fixed',
-                  top: 64 + 32,
-                  left: programOffsetLeft + 744 + 24,
-                }
-              : { paddingTop: 32 + 32 }
-          }
-        >
-          <Card data={programDescribe} id={id} />
+        <div className={`${prefix}-container-right`}>
+          <QueueAnim
+            style={{
+              width: 360,
+              position: 'fixed',
+              top: 64 + 32,
+              left: programOffsetLeft + 744 + 24,
+            }}
+            type="top"
+            // animConfig={[
+            //   { opacity: [1, 0], translateY: [0, 50] },
+            //   { opacity: [1, 0], translateY: [0, -50] },
+            // ]}
+          >
+            {isSticky
+              ? [
+                  <Card
+                    key="card"
+                    isSticky={isSticky}
+                    data={programDescribe}
+                    id={id}
+                  />,
+                  <div key="dis" style={{ width: '100%', height: 32 }} />,
+                  <Outcome key="outcome" data={programDescribe} />,
+                ]
+              : null}
+          </QueueAnim>
 
-          <div style={{ width: '100%', height: 32 }} />
-
-          <Outcome data={programDescribe} />
+          {!isSticky && (
+            <div
+              style={{ paddingTop: 32 + 32 }}
+              className={`${prefix}-container-ani`}
+            >
+              <Card isSticky={isSticky} data={programDescribe} id={id} />
+              <div style={{ width: '100%', height: 32 }} />
+              <Outcome data={programDescribe} />
+            </div>
+          )}
         </div>
-        {isSticky && <div style={{ width: 360, height: 1 }} />}
       </div>
     </div>
   );

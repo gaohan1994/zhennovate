@@ -2,16 +2,30 @@ import React from 'react';
 import './index.less';
 import { ProgramTabKeys } from '@/pages/index/program/constants';
 import imgcomplete from '../../assets/Icon-CompletedProgram-Empty@2x.png';
+import imgbook from '../../assets/SVG/Icon-Bookmark-Empty.svg';
 
 const prefix = 'component-empty';
 
 function Empty(props) {
   const { tab, title, icon } = props;
+
+  const renderIcon = icon
+    ? icon
+    : tab.key === ProgramTabKeys.available
+    ? imgcomplete
+    : tab.key === ProgramTabKeys.progress
+    ? imgcomplete
+    : tab.key === ProgramTabKeys.complete
+    ? imgcomplete
+    : tab.key === ProgramTabKeys.save
+    ? imgbook
+    : '';
+
   return (
     <div className={`${prefix}`}>
       <div
         className={`${prefix}-icon`}
-        style={{ backgroundImage: `url(${icon || imgcomplete})` }}
+        style={{ backgroundImage: `url(${renderIcon})` }}
       />
       <span className={`${prefix}-title`}>
         {title
@@ -19,11 +33,11 @@ function Empty(props) {
           : tab.key === ProgramTabKeys.available
           ? 'No Available Programs here'
           : tab.key === ProgramTabKeys.progress
-          ? 'No Programs here'
+          ? 'No In-progress Programs'
           : tab.key === ProgramTabKeys.complete
-          ? 'No completed programs here'
+          ? 'No Completed Programs'
           : tab.key === ProgramTabKeys.save
-          ? 'Nothing Saved here'
+          ? 'No Saved Programs'
           : ''}
       </span>
       <span>{tab.empty || 'Programs you’ve started will appear here.'}</span>

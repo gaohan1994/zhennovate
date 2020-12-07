@@ -6,6 +6,9 @@
 
   &-pos {
     height: 100%;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: top;
   }
   &-box {
     width: 100%;
@@ -24,6 +27,9 @@
     position: fixed;
     height: 100vh;
     left: 0;
+    width: 256px !important;
+    min-width: 256px !important;
+    max-width: 256px !important;
     box-shadow: 0 0 6px 0 rgba(27, 38, 49, 0.1);
   }
 
@@ -75,6 +81,7 @@
   }
 
   &-menu {
+    position: relative;
     height: 100%;
     justify-content: center;
     display: flex;
@@ -83,9 +90,25 @@
     line-height: 1.2;
     .margin(-24px, l);
 
+    &-check {
+      position: absolute;
+      left: -20px;
+      // width: 12px;
+      // height: 12px;
+    }
+
     & > span {
       display: block;
       .clamp(1);
+    }
+
+    &-desc {
+      color: @gray-1 !important;
+      font-weight: 300;
+    }
+    &-title {
+      color: @black !important;
+      .clamp(2);
     }
   }
 }

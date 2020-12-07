@@ -8,7 +8,24 @@
   &-banner {
     width: 100%;
     height: 420px;
-    background-color: @tiffany-blue;
+    // background-color: @tiffany-blue;
+    background-repeat: no-repeat;
+    background-size: cover;
+    .flex(center, center);
+    color: @black;
+    & > h1 {
+      font-size: 32px;
+      font-weight: bold;
+    }
+    &-box {
+      position: relative;
+      height: 100%;
+
+      & > div {
+        position: absolute;
+        bottom: 0;
+      }
+    }
   }
 
   &-pos {
@@ -30,9 +47,20 @@
     width: 100%;
     height: 100%;
     display: flex;
+    position: relative;
     justify-content: center;
     background-color: #fff;
+    &-bg {
+      width: 100%;
+      height: 420px;
+      position: fixed;
+      z-index: 1;
+      background-repeat: no-repeat;
+      background-position: top;
+      background-size: cover;
+    }
     &-box {
+      z-index: 100;
       display: flex;
       flex-direction: row;
     }
@@ -41,6 +69,7 @@
       .margin(24px, r);
     }
     &-right {
+      min-height: 1;
       width: 360px;
     }
   }

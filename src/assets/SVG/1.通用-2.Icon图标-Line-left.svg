@@ -1,0 +1,9 @@
+<svg id="_1.通用_2.Icon图标_Line_left" data-name="1.通用/2.Icon图标/Line/left" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <g id="minus-square">
+    <rect id="矩形" width="16" height="16" fill="#1b2631" opacity="0"/>
+  </g>
+  <g id="left">
+    <rect id="矩形-2" data-name="矩形" width="16" height="16" fill="#1b2631" opacity="0"/>
+    <path id="路径" d="M7.438,1.333V.125a.125.125,0,0,0-.2-.1L.192,5.528a.5.5,0,0,0,0,.786l7.044,5.5a.124.124,0,0,0,.2-.1V10.51a.253.253,0,0,0-.1-.2L1.717,5.922,7.342,1.53A.253.253,0,0,0,7.438,1.333Z" transform="translate(3.875 2.078)" fill="rgba(0,0,0,0.65)"/>
+  </g>
+</svg>

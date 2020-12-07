@@ -3,25 +3,39 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-01 09:44:53
+ * @Last Modified time: 2020-12-07 11:11:45
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
+import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './index.less';
+import { ACTION_TYPES_COMMON } from '@/component/paperform-modal/store';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'program-component';
 
 export default (props) => {
   const history = useHistory();
+  const dispatch = useDispatch();
   const { data, id } = props;
   const [coachMenu, setCoachMenu] = useState([]);
   const [activeKey, setActiveKey] = useState(['']);
+  // const [defaultKeys, setDefaultKeys] = useState([]);
   const [hoverModuleId, setHoverModuleId] = useState('');
+
+  const { checkSign } = useSignSdk();
 
   useEffect(() => {
     if (data.Sessions && data.Sessions.length > 0) {
       setCoachMenu(data.Sessions);
+
+      const defaultActiveKeys =
+        data.Sessions && data.Sessions.length > 0
+          ? data.Sessions.map((session) => session.Title)
+          : [];
+
+      setActiveKey(defaultActiveKeys);
     }
   }, [data.Sessions]);
 
@@ -29,6 +43,18 @@ export default (props) => {
     history.push(`/program/detail/${id}?module_id=${item._id}`);
   };
 
+  // 阻止冒泡
+  const onPreview = (event, item) => {
+    event.stopPropagation();
+    dispatch({
+      type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE,
+      payload: {
+        data,
+        visible: true,
+        moduleData: item,
+      },
+    });
+  };
   return (
     <div>
       <div className={`${prefix}-coach-title`}>Coaching Path</div>
@@ -58,7 +84,14 @@ export default (props) => {
                       <div className={`${prefix}-coach-module-dot`} />
                       {moduleItem.Title}
                       {hoverModuleId === moduleItem._id && (
-                        <div className={`${prefix}-coach-preview`}>Preview</div>
+                        <div
+                          onClick={(event) =>
+                            checkSign(onPreview(event, moduleItem))
+                          }
+                          className={`${prefix}-coach-preview`}
+                        >
+                          Preview
+                        </div>
                       )}
                     </div>
                   );

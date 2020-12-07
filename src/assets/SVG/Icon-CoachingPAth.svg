@@ -1,0 +1,14 @@
+<svg id="Icon_CoachingPAth" data-name="Icon/CoachingPAth" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 24 24">
+  <defs>
+    <clipPath id="clip-path">
+      <rect id="Rectangle_10079" data-name="Rectangle 10079" width="20" height="20" transform="translate(6950 -8796)" stroke="#707070" stroke-width="1"/>
+    </clipPath>
+  </defs>
+  <rect id="Rectangle_10080" data-name="Rectangle 10080" width="24" height="24" fill="none"/>
+  <g id="Mask_Group_724" data-name="Mask Group 724" transform="translate(-6948 8798)" clip-path="url(#clip-path)">
+    <g id="book_7_" data-name="book (7)" transform="translate(6951.965 -8796)">
+      <path id="Path_108243" data-name="Path 108243" d="M15.627,0H2.3A2.274,2.274,0,0,0,.016,2.287v15.3c0,.009-.009.014-.009.023s0,.046,0,.065A2.319,2.319,0,0,0,2.308,20H14.644a.474.474,0,0,0,.45-.487V16.284h.534a.45.45,0,0,0,.441-.468V.441A.427.427,0,0,0,15.627,0ZM.944,2.287A1.347,1.347,0,0,1,2.3.928h.775V15.356H2.3a2.2,2.2,0,0,0-1.359.455Zm13.222,16.78H2.3a1.392,1.392,0,0,1,0-2.784H14.166Zm.974-3.711H4.006V.928H15.14Zm0,0"/>
+      <path id="Path_108244" data-name="Path 108244" d="M14.027,2.876a.465.465,0,0,0-.464-.464H5.583a.465.465,0,0,0-.464.464V7.052a.465.465,0,0,0,.464.464h7.979a.465.465,0,0,0,.464-.464ZM6.047,3.34H13.1V6.588H6.047Zm0,0"/>
+    </g>
+  </g>
+</svg>

@@ -1,14 +1,28 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Tag, Modal, Button } from 'antd';
 import './index.less';
 import Choice from '@/component/choice';
 
 const prefix = 'component-home';
 
-function Goal() {
+function Goal({ style = {} }) {
   const [visible, setVisible] = useState(false);
+
+  const [cardHeight, setCardHeight] = useState(838);
+  /**
+   * 当屏幕高度小于ui上的card高度时候则赋值为屏幕高度，并适配
+   */
+  useEffect(() => {
+    const height = document.body.clientHeight;
+    console.log('height', height);
+    const cardPositionMargin = 64 + 32 + 32;
+    if (height - cardPositionMargin < 838) {
+      setCardHeight(height - cardPositionMargin);
+    }
+  }, []);
+
   return (
-    <div className={`${prefix}-goal`}>
+    <div className={`${prefix}-goal`} style={{ ...style, height: cardHeight }}>
       <h2 style={{ marginTop: 123 }}>My Learning Goals</h2>
       <div style={{ marginTop: 18 }}>
         <Tag color="#e0e0e0">
@@ -28,10 +42,7 @@ function Goal() {
         This is a 95 character limit sentence. This is a 95 character limit
         sentence. This is a 95 char
       </span>
-      <span
-        style={{ marginTop: 8, textAlign: 'center', color: '#1890ff' }}
-        onClick={() => setVisible(true)}
-      >
+      <span style={{ marginTop: 8, textAlign: 'center', color: '#1890ff' }}>
         edit
       </span>
 

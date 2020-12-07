@@ -1,5 +1,7 @@
 export const initState = {
   visible: false,
+  data: {},
+  moduleData: {},
 };
 
 export const ACTION_TYPES_COMMON = {
@@ -10,9 +12,12 @@ export function paperformModal(state = initState, action) {
   switch (action.type) {
     case ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE: {
       const { payload } = action;
+      const { visible, data = {}, moduleData = {} } = payload;
       return {
         ...state,
-        visible: payload,
+        visible,
+        data,
+        moduleData,
       };
     }
     default:

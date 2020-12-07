@@ -1,0 +1,8 @@
+<svg id="_1.通用_2.Icon图标_Fill_More" data-name="1.通用/2.Icon图标/Fill/More" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16">
+  <rect id="Rectangle_4_Copy_3" data-name="Rectangle 4 Copy 3" width="16" height="16" fill="none"/>
+  <g id="ellipsis" transform="translate(2 7)">
+    <path id="Shape" d="M0,1A1,1,0,1,0,1,0,1,1,0,0,0,0,1Z" fill="#fff"/>
+    <path id="Shape-2" data-name="Shape" d="M0,1A1,1,0,1,0,1,0,1,1,0,0,0,0,1Z" transform="translate(5)" fill="#fff"/>
+    <path id="Shape-3" data-name="Shape" d="M0,1A1,1,0,1,0,1,0,1,1,0,0,0,0,1Z" transform="translate(10)" fill="#fff"/>
+  </g>
+</svg>
