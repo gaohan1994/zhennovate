@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-03 14:22:03
+ * @Last Modified time: 2020-12-07 17:46:05
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -62,6 +62,16 @@ function Program(props) {
     );
   }
 
+  const percent =
+    data && data._id ? data.FinishSessionTotal / data.Sessions.length : 0;
+
+  const percentText =
+    data && data._id
+      ? percent === 1
+        ? 'Completed'
+        : `${data.Sessions.length - data.FinishSessionTotal} sessions left`
+      : '';
+
   return (
     <div
       className={`${prefix} ${prefix}-fix`}
@@ -75,12 +85,17 @@ function Program(props) {
       <div className={`${prefix}-content`}>
         <span>{data.Sessions?.length || 0} sessions</span>
 
-        <span className={`${prefix}-content-title`}>{data.Name}</span>
+        <span className={`${prefix}-content-title`} style={{ minHeight: 56 }}>
+          {data.Name}
+        </span>
 
-        <span className={`${prefix}-content-status`}>Completed</span>
+        <span className={`${prefix}-content-status`}>
+          <span>{percentText}</span>
+          {percent !== 1 && <span>{`${Math.ceil(percent * 100)}%`}</span>}
+        </span>
 
         <div className={`${prefix}-content-progress`}>
-          <Progress percent={100} showInfo={false} />
+          <Progress percent={percent * 100} showInfo={false} />
         </div>
 
         <div

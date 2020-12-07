@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-06 17:10:57
+ * @Last Modified time: 2020-12-07 17:02:20
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -11,6 +11,7 @@ import './index.less';
 import { ProgramTabKeys } from './constants';
 import { formatSearch } from '@/common/request';
 import imghome from '@/assets/Banner-with-Character.svg';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'page-program';
 
@@ -53,6 +54,8 @@ export default (props) => {
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [currentTab, setCurrentTab] = useState(tabsMenu[0].key);
 
+  const { checkSign } = useSignSdk();
+
   // 获得banner高度
   useEffect(() => {
     if (bannerContainer.current) {
@@ -88,7 +91,7 @@ export default (props) => {
   useEffect(() => {
     if (searchParams.entry) {
       if (Object.keys(ProgramTabKeys).some((k) => k === searchParams.entry)) {
-        onChangeTab(searchParams.entry);
+        checkSign(() => onChangeTab(searchParams.entry));
       }
     }
   }, []);
@@ -105,7 +108,7 @@ export default (props) => {
       <Tabs
         centered
         activeKey={currentTab}
-        onChange={(key) => onChangeTab(key)}
+        onChange={(key) => checkSign(() => onChangeTab(key))}
         style={{ marginTop: 24 }}
       >
         {tabsMenu.map((item) => {

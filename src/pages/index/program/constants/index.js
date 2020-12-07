@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-27 15:29:36
+ * @Last Modified time: 2020-12-07 17:07:25
  */
 
 import { api } from '@/common/request';
@@ -25,8 +25,19 @@ export const ProgramTabTitles = {
 export const program = (id) => api.get(`/program/${id}`);
 
 export const availableList = (params) => {
-  console.log('params', params);
   return api.get(`/program/available${params ? `/${params._id}` : ''}`);
+};
+
+export const progressList = (params) => {
+  return api.get(`/program/inprogress${params ? `/${params._id}` : ''}`);
+};
+
+export const completeList = (params) => {
+  return api.get(`/program/completed${params ? `/${params._id}` : ''}`);
+};
+
+export const savedList = (params) => {
+  return api.get(`/program/saved${params ? `/${params._id}` : ''}`);
 };
 
 export const programStart = (params) => {

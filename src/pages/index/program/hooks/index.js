@@ -1,5 +1,11 @@
 import { useEffect, useReducer } from 'react';
-import { ProgramTabKeys, availableList } from '../constants';
+import {
+  ProgramTabKeys,
+  availableList,
+  progressList,
+  completeList,
+  savedList,
+} from '../constants';
 import { useRequest } from 'ahooks';
 import { ResponseCode } from '@/common/config';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
@@ -13,6 +19,9 @@ const initState = {
 
 const ReducerActions = {
   Receive_Availabel_List: 'Receive_Availabel_List',
+  Receive_Progress_List: 'Receive_Progress_List',
+  Receive_Complete_List: 'Receive_Complete_List',
+  Receive_Saved_List: 'Receive_Saved_List',
 };
 
 /**
@@ -26,6 +35,28 @@ function programReducer(state, action) {
         [ProgramTabKeys.available]: action.payload,
       };
     }
+
+    case ReducerActions.Receive_Progress_List: {
+      return {
+        ...state,
+        [ProgramTabKeys.progress]: action.payload,
+      };
+    }
+
+    case ReducerActions.Receive_Complete_List: {
+      return {
+        ...state,
+        [ProgramTabKeys.complete]: action.payload,
+      };
+    }
+
+    case ReducerActions.Receive_Saved_List: {
+      return {
+        ...state,
+        [ProgramTabKeys.save]: action.payload,
+      };
+    }
+
     default: {
       return { ...state };
     }
@@ -55,25 +86,62 @@ function useProgramHooks(type, options) {
     },
   });
 
-  // 请求availableList 拿到数据后存到hooks中
-  const fieldUsers = useRequest(availableList, {
+  // 请求 progressList 拿到数据后存到hooks中
+  const fieldProgress = useRequest(progressList, {
     manual: true,
     onSuccess: (result, params) => {
-      console.log('result', result);
-      return;
+      if (result.error_code === ResponseCode.success) {
+        dispatch({
+          type: ReducerActions.Receive_Progress_List,
+          payload: result.data,
+        });
+      }
+    },
+  });
+
+  // 请求 completeList 拿到数据后存到hooks中
+  const fieldComplete = useRequest(completeList, {
+    manual: true,
+    onSuccess: (result, params) => {
+      if (result.error_code === ResponseCode.success) {
+        dispatch({
+          type: ReducerActions.Receive_Complete_List,
+          payload: result.data,
+        });
+      }
+    },
+  });
+
+  // 请求 savedList 拿到数据后存到hooks中
+  const fieldSaved = useRequest(savedList, {
+    manual: true,
+    onSuccess: (result, params) => {
+      if (result.error_code === ResponseCode.success) {
+        dispatch({
+          type: ReducerActions.Receive_Saved_List,
+          payload: result.data,
+        });
+      }
     },
   });
 
   // 使用hooks时触发
   useEffect(() => {
-    console.log('sign', sign);
     switch (type) {
       case ProgramTabKeys.available: {
         field.run();
         break;
       }
+      case ProgramTabKeys.progress: {
+        fieldProgress.run(sign.userinfo);
+        break;
+      }
       case ProgramTabKeys.complete: {
-        fieldUsers.run(sign.userinfo);
+        fieldComplete.run(sign.userinfo);
+        break;
+      }
+      case ProgramTabKeys.save: {
+        fieldSaved.run(sign.userinfo);
         break;
       }
       default: {
@@ -81,7 +149,6 @@ function useProgramHooks(type, options) {
       }
     }
   }, [type, options, sign]);
-
   return {
     state,
     dispatch,

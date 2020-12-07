@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 11:11:45
+ * @Last Modified time: 2020-12-07 17:02:45
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
@@ -86,7 +86,7 @@ export default (props) => {
                       {hoverModuleId === moduleItem._id && (
                         <div
                           onClick={(event) =>
-                            checkSign(onPreview(event, moduleItem))
+                            checkSign(() => onPreview(event, moduleItem))
                           }
                           className={`${prefix}-coach-preview`}
                         >
