@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
 import { programStart, programEnd } from '@/pages/index/program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
-import { notification } from 'antd';
+import { notification, Spin } from 'antd';
 import { ResponseCode } from '@/common/config';
 
 /**
@@ -20,6 +20,7 @@ const RenderPaperForm = (props) => {
   const { sign } = useSignSdk();
   const { data, programData, preview = false, callback, ...rest } = props;
   const [iframeUrl, setIframeUrl] = useState('');
+  const [loading, setLoading] = useState(true);
 
   /**
    * 用户提交通过postmessage来获取参数 然后调用programEnd接口并执行回调跳转至下一个module
@@ -63,6 +64,7 @@ const RenderPaperForm = (props) => {
 
   // 进来的时候进行数据整合 提交接口
   useEffect(() => {
+    setLoading(true);
     if (programData && programData._id) {
       const { programId, sessionId, moduleId, paperformId } = formatModuleData(
         data._id,
@@ -84,11 +86,19 @@ const RenderPaperForm = (props) => {
         })
         .catch((error) => {
           notification.error(error.message);
+        })
+        .finally(() => {
+          setTimeout(() => {
+            setLoading(false);
+          }, 1000);
         });
     }
   }, [data, programData]);
-
-  return <iframe {...rest} src={iframeUrl} />;
+  return (
+    <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>
+      <iframe {...rest} src={iframeUrl} />
+    </Spin>
+  );
 };
 export default RenderPaperForm;
 

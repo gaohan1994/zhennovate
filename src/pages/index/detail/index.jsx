@@ -2,11 +2,11 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 13:50:39
+ * @Last Modified time: 2020-12-08 15:15:29
  */
 import React, { useRef, useEffect, useState } from 'react';
-import { Layout, Menu, Spin, notification } from 'antd';
-import { AuditOutlined, CheckCircleOutlined } from '@ant-design/icons';
+import { Layout, Menu, Spin, notification, message } from 'antd';
+import { AuditOutlined, CheckCircleFilled } from '@ant-design/icons';
 import { program } from '@/pages/index/program/constants';
 import './index.less';
 import MyHeader from './component/header';
@@ -35,6 +35,7 @@ export default (props) => {
   const [iframeHeight, setIframeHeight] = useState(-1);
   const [iframeWidth, setIframeWidth] = useState(-1);
 
+  const [openKeys, setOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
 
   const [detailMenu, setDetailMenu] = useState([]);
@@ -93,6 +94,11 @@ export default (props) => {
       setDetailMenu(commonMenu);
       setCurrentKey('1');
       setSelectedKeys(['1']);
+
+      if (searchParams?.module_id) {
+        const defaultOpenKeys = getDefaultKeys();
+        setOpenKeys(defaultOpenKeys);
+      }
     }
   }, [programData]);
 
@@ -125,6 +131,7 @@ export default (props) => {
 
   const onModuleClick = (item) => {
     setCurrentPaperform(item);
+    // setSelectedKeys([item._id]);
   };
 
   const getDefaultKeys = () => {
@@ -136,13 +143,47 @@ export default (props) => {
     }
   };
 
-  // 做完paperfrom的callback
-  const finishPaperformCallback = (data) => {
-    console.log('data', data);
+  /**
+   * 完成paperform之后
+   * 跳转到下一个module如果没有下一个module
+   * 则跳转到下一个session的第一个module
+   * 如果没有下一个session
+   * 则结束
+   */
+  const finishPaperformCallback = (params) => {
+    const { programData, postMessageData } = params;
+    const { session, sessionIndex, moduleIndex } = formatModuleData(
+      postMessageData.progressData.module,
+      programData,
+    );
+    console.log('sessionIndex', sessionIndex);
+    console.log('moduleIndex', moduleIndex);
+    const hasNextModule = !!session.Modules[moduleIndex + 1];
+
+    if (hasNextModule) {
+      // 跳转到下一个module
+      const nextModule = session.Modules[moduleIndex + 1];
+      onModuleClick(nextModule);
+      setSelectedKeys([nextModule._id]);
+      return;
+    }
+
+    const hasNextSession = !!programData.Sessions[sessionIndex + 1];
+    if (hasNextSession) {
+      // 跳转到下一个session
+      const nextSession = programData.Sessions[sessionIndex + 1];
+      console.log('nextSession', nextSession);
+      const nextModule = nextSession.Modules[0];
+      setSelectedKeys([nextModule._id]);
+      onModuleClick(nextSession.Modules[0]);
+      setOpenKeys(['2', nextSession._id]);
+      return;
+    }
+
+    message.success('Program Finished!');
   };
 
   const handleMenuClick = (menu) => {
-    console.log('menu', menu);
     setCurrentKey(menu.key);
   };
 
@@ -167,7 +208,9 @@ export default (props) => {
               mode="inline"
               selectedKeys={selectedKeys}
               onSelect={onSelect}
-              defaultOpenKeys={searchParams?.module_id ? getDefaultKeys() : []}
+              openKeys={openKeys}
+              onOpenChange={setOpenKeys}
+              // defaultOpenKeys={searchParams?.module_id ? getDefaultKeys() : []}
               onClick={handleMenuClick}
             >
               {detailMenu.map((item) => {
@@ -195,7 +238,7 @@ export default (props) => {
                                     >
                                       <div className={`${prefix}-menu`}>
                                         <div className={`${prefix}-menu-check`}>
-                                          <CheckCircleOutlined
+                                          <CheckCircleFilled
                                             style={{ color: '#2fc25b' }}
                                           />
                                         </div>

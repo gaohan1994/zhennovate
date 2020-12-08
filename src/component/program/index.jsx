@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 17:46:05
+ * @Last Modified time: 2020-12-08 10:52:31
  */
 import React from 'react';
 import { Progress } from 'antd';
@@ -11,12 +11,16 @@ import { useHistory } from 'react-router-dom';
 import './index.less';
 // import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
 import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import { saveProgram } from '../constants';
 
 const prefix = 'component-program';
 
 function Program(props) {
   const { data, tab, type, style = {} } = props;
   const history = useHistory();
+
+  const { userId } = useSignSdk();
 
   const onClick = () => {
     history.push(
@@ -27,6 +31,16 @@ function Program(props) {
   // 点击保存、取消保存 阻止冒泡
   const onSave = (e) => {
     e.stopPropagation();
+
+    // 说明未登录
+    if (!userId) {
+      history.push('/sign/signin');
+      return;
+    }
+
+    saveProgram({ userId, programId: data._id }).then((result) => {
+      console.log('result', result);
+    });
   };
 
   if (type === 'card') {

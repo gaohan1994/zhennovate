@@ -41,8 +41,6 @@ function useSignSdk() {
   };
 
   const checkSign = (callback) => {
-    console.log('sign', sign);
-    console.log('isSign', isSign);
     if (!isSign) {
       history.push(`/sign/signin`);
       return;
