@@ -46,7 +46,7 @@ function Goal({ style = {} }) {
         edit
       </span>
 
-      <h3 style={{ marginTop: 90 }}>Quote of the day</h3>
+      {/* <h3 style={{ marginTop: 90 }}>Quote of the day</h3> */}
       <span style={{ marginTop: 18, textAlign: 'center', fontStyle: 'italic' }}>
         “Inspiration quote will be written here. Inspiration quote will be
         written here. Inspiration quote will be written here.”

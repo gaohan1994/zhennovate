@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:28:24
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-17 14:18:32
+ * @Last Modified time: 2020-12-09 15:11:14
  */
-import React from 'react';
-import { Switch, Route, useParams } from 'react-router-dom';
+import React, { useEffect, useState } from 'react';
+import { Switch, Route } from 'react-router-dom';
 import LayoutContainer from '@/component/layout/sign-layout';
 import Signup from '@/pages/sign/sign-up';
 import Signin from '@/pages/sign/sign-in';
@@ -20,10 +20,16 @@ import Check from '@/pages/sign/check';
  * @returns
  */
 export default function () {
-  const match = useParams();
-  console.log('match', match);
+  const [entry, setEntry] = useState(false);
+
+  useEffect(() => {
+    // 这里判断右上角显示什么
+    const isSignup = window.location.href.indexOf('sign/signup') > -1;
+    setEntry(isSignup);
+  }, [window.location.href]);
+
   return (
-    <LayoutContainer>
+    <LayoutContainer entry={entry}>
       <Switch>
         <Route path="/sign/signup" component={Signup} exact={true} />
         <Route path="/sign/signin" component={Signin} exact={true} />

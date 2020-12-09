@@ -2,13 +2,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 21:46:55
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-10-20 22:30:13
+ * @Last Modified time: 2020-12-09 11:19:50
  */
-import React, { useEffect } from 'react';
+import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Home from '@/pages/index/home';
 import Sign from '@/pages/sign';
 import PaperformModal from './component/paperform-modal';
+import { useMount } from 'ahooks';
 
 const RouteMenu = [
   {
@@ -34,9 +35,10 @@ const RouteMenu = [
  * @returns
  */
 function App() {
-  useEffect(() => {
+  useMount(() => {
     // 这里校验是否登录 是否跳转注册页面
-  }, []);
+    // history.replace('/home');
+  });
 
   return (
     <div>
@@ -45,7 +47,9 @@ function App() {
         <Switch>
           {RouteMenu.map((item, index) => {
             const { path, component, ...rest } = item;
-            return <Route path={path} component={component} key={index} {...rest} />;
+            return (
+              <Route path={path} component={component} key={index} {...rest} />
+            );
           })}
         </Switch>
       </HashRouter>

@@ -2,10 +2,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-30 09:57:24
+ * @Last Modified time: 2020-12-09 11:30:00
  */
-import React from 'react';
-import { Route, useRouteMatch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, useHistory } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import LayoutContainer from '@/component/layout/home-layout';
 import LayoutFooter from '@/component/layout/home-footer';
@@ -14,6 +14,7 @@ import ProgramDescribe from '@/pages/index/program/describe';
 import ProgramDetail from '@/pages/index/detail';
 import HomePage from '@/pages/index/home/home';
 import './index.less';
+// import { useMount } from 'ahooks';
 
 const renderWithFooter = (Component, props) => {
   return (
@@ -30,9 +31,16 @@ const renderWithFooter = (Component, props) => {
  * @export
  * @returns
  */
-export default function () {
-  const match = useRouteMatch();
-  console.log('match', match);
+export default function (props) {
+  const history = useHistory();
+  // 如果是/ 跳转到home
+  useEffect(() => {
+    const { location } = props;
+    if (location.pathname === '/') {
+      history.replace('/home');
+    }
+  }, [window.location.href]);
+
   return (
     <LayoutContainer>
       <AnimatedSwitch
@@ -45,19 +53,16 @@ export default function () {
           exact={true}
           path="/program"
           render={(props) => renderWithFooter(Program, props)}
-          // component={renderWithFooter(Program)}
         />
         <Route
           exact={true}
           path="/program/describe/:id"
           render={(props) => renderWithFooter(ProgramDescribe, props)}
-          // component={ProgramDescribe}
         />
         <Route
           exact={true}
           path="/program/detail/:id"
           render={(props) => renderWithFooter(ProgramDetail, props)}
-          // component={ProgramDetail}
         />
         <Route
           exact={true}

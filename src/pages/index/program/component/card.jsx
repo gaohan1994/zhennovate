@@ -3,9 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 14:42:41
+ * @Last Modified time: 2020-12-09 17:02:58
  */
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
 // import { CaretRightOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
@@ -13,6 +13,7 @@ import { Player } from 'video-react';
 import './index.less';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import imgplay from '@/assets/SVG/Icon_Play_24x24.svg';
+import { useFormatProgramData } from '../../detail/constants';
 
 const prefix = 'program-component';
 
@@ -21,21 +22,10 @@ export default (props) => {
   const history = useHistory();
   // 视频modal显示
   const [visible, setVisible] = useState(false);
-  // 总时间
-  const [duration, setDuration] = useState(0);
 
   const { checkSign } = useSignSdk();
 
-  useEffect(() => {
-    const totalDuration = data?.Sessions
-      ? data?.Sessions.reduce(
-          (prevValue, currentValue) => currentValue.totalDuration + prevValue,
-          0,
-        )
-      : 0;
-
-    setDuration(totalDuration);
-  }, [data]);
+  const { durationString, durationDaysString } = useFormatProgramData(data);
 
   const startProgram = () => {
     history.push(`/program/detail/${id}`);
@@ -68,11 +58,11 @@ export default (props) => {
         <div className={`${prefix}-card-title`}>{data.Name}</div>
         <div className={`${prefix}-card-desc`}>
           <span>Total Time</span>
-          <span>{duration} hours to complete</span>
+          <span>{durationString} to complete</span>
         </div>
         <div className={`${prefix}-card-desc`}>
           <span>Duration</span>
-          <span>{`${data?.Sessions?.length || 0} days`}</span>
+          <span>{durationDaysString}</span>
         </div>
         <Button
           type="primary"

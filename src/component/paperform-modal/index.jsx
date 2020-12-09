@@ -25,15 +25,18 @@ function PaperfromModal(props) {
       }}
     >
       <RenderPaperForm
+        preview={true}
         width={812}
         height={452}
         data={moduleData}
         programData={data}
         callback={() => {
-          dispatch({
-            type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE,
-            payload: { visible: false },
-          });
+          setTimeout(() => {
+            dispatch({
+              type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE,
+              payload: { visible: false },
+            });
+          }, 1000);
         }}
       />
     </Modal>

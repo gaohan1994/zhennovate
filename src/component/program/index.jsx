@@ -3,24 +3,36 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-08 10:52:31
+ * @Last Modified time: 2020-12-09 17:05:58
  */
-import React from 'react';
-import { Progress } from 'antd';
+import React, { useState, useEffect } from 'react';
+import { Progress, notification } from 'antd';
 import { useHistory } from 'react-router-dom';
 import './index.less';
-// import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
+import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
 import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { saveProgram } from '../constants';
+import { ResponseCode } from '@/common/config';
+import { useFormatProgramData } from '@/pages/index/detail/constants';
 
 const prefix = 'component-program';
 
 function Program(props) {
-  const { data, tab, type, style = {} } = props;
+  const { data: programData, tab, type, style = {} } = props;
   const history = useHistory();
-
   const { userId } = useSignSdk();
+
+  const [data, setData] = useState({});
+
+  const { durationString } = useFormatProgramData(programData);
+  console.log('durationString', durationString);
+
+  useEffect(() => {
+    if (programData) {
+      setData(programData);
+    }
+  }, [programData]);
 
   const onClick = () => {
     history.push(
@@ -40,6 +52,17 @@ function Program(props) {
 
     saveProgram({ userId, programId: data._id }).then((result) => {
       console.log('result', result);
+      if (result.error_code === ResponseCode.success) {
+        notification.success({
+          message: `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
+        });
+        setData((prevData) => {
+          return {
+            ...prevData,
+            IsSaved: prevData.IsSaved === true ? false : true,
+          };
+        });
+      }
     });
   };
 
@@ -63,7 +86,7 @@ function Program(props) {
           <span className={`${prefix}-card-title`}>{data.Name}</span>
           <span style={{ marginTop: 12 }}>{teachersName}</span>
           <span style={{ marginTop: 12 }}>
-            {data.Sessions?.length || 0} sessions 3hrs
+            {data.Sessions?.length || 0} sessions {durationString}
           </span>
 
           <div
@@ -114,7 +137,11 @@ function Program(props) {
 
         <div
           className={`${prefix}-content-save`}
-          style={{ backgroundImage: `url(${imgbookunsave})` }}
+          style={{
+            backgroundImage: `url(${
+              data.IsSaved ? imgbooksaved : imgbookunsave
+            })`,
+          }}
           onClick={onSave}
         />
       </div>

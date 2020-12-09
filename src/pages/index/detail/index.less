@@ -93,6 +93,28 @@
     line-height: 1.2;
     .margin(-24px, l);
 
+    &-first-title {
+      height: 100%;
+    }
+
+    &-box {
+      height: 100%;
+      .flex(center, flex-start, row);
+      &-title {
+        white-space: normal !important;
+        word-break: break-all !important;
+        .clamp(2);
+        font-size: 14px;
+        line-height: 1.2;
+      }
+    }
+
+    &-first-title > span {
+      .clamp(2);
+      width: calc(100% + 1px);
+      white-space: normal;
+    }
+
     &-check {
       position: absolute;
       left: -20px;
@@ -100,10 +122,10 @@
       // height: 12px;
     }
 
-    & > span {
-      display: block;
-      .clamp(1);
-    }
+    // & > span {
+    //   display: block;
+    //   .clamp(1);
+    // }
 
     &-desc {
       color: @gray-1 !important;
@@ -112,6 +134,7 @@
     &-title {
       color: @black !important;
       .clamp(2);
+      white-space: normal;
     }
   }
 }

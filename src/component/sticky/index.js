@@ -1,4 +1,3 @@
-// import React from 'react';
 import { useScroll } from 'ahooks';
 import { useEffect, useState } from 'react';
 
@@ -8,11 +7,19 @@ function useStickyComponent(distance, stickyContainer) {
 
   const [offsetLeft, setOffsetleft] = useState(-1);
 
+  const onResize = () => {
+    setOffsetleft(stickyContainer.current?.offsetLeft);
+  };
+
   useEffect(() => {
     if (stickyContainer.current?.offsetLeft) {
       setOffsetleft(stickyContainer.current?.offsetLeft);
     }
-  }, stickyContainer.current);
+
+    window.addEventListener('resize', onResize);
+    return () => window.removeEventListener('resize', onResize);
+  }, [stickyContainer.current]);
+
   return {
     isSticky,
     left: offsetLeft,

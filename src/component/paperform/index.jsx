@@ -2,8 +2,11 @@ import React, { useEffect, useState } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
 import { programStart, programEnd } from '@/pages/index/program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
-import { notification, Spin } from 'antd';
+import { notification, Spin, Modal, Button } from 'antd';
 import { ResponseCode } from '@/common/config';
+import './index.less';
+
+const prefix = 'component-paperform';
 
 /**
  * @time 10 13
@@ -22,6 +25,9 @@ const RenderPaperForm = (props) => {
   const [iframeUrl, setIframeUrl] = useState('');
   const [loading, setLoading] = useState(true);
 
+  // action 完成之后显示modal
+  const [actionCompleteVisible, setActionCompleteVisible] = useState(false);
+
   /**
    * 用户提交通过postmessage来获取参数 然后调用programEnd接口并执行回调跳转至下一个module
    * @param {*} event
@@ -39,10 +45,10 @@ const RenderPaperForm = (props) => {
 
     if (!preview) {
       // 如果是非预览模式才进行上传数据calback
-      console.log('payload', payload);
       programEnd(payload)
         .then((result) => {
           if (result.error_code === ResponseCode.success) {
+            setActionCompleteVisible(true);
             callback && callback({ postMessageData, data, programData });
           }
         })
@@ -97,6 +103,28 @@ const RenderPaperForm = (props) => {
   return (
     <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>
       <iframe {...rest} src={iframeUrl} />
+
+      <Modal
+        footer={null}
+        width={550}
+        centered
+        closable={false}
+        visible={actionCompleteVisible}
+        onCancel={() => setActionCompleteVisible(false)}
+      >
+        <div className={`${prefix}-modal`}>
+          <img src="" />
+          <span className={`${prefix}-modal-title`}>Action Completed!</span>
+          <span>You completed [action name]! We’re so proud of you.</span>
+          <Button
+            type="primary"
+            style={{ marginTop: 16 }}
+            onClick={() => setActionCompleteVisible(false)}
+          >
+            Done
+          </Button>
+        </div>
+      </Modal>
     </Spin>
   );
 };

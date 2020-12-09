@@ -1,28 +1,53 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu } from 'antd';
-import { Link } from 'react-router-dom';
+import { Layout, Menu, Button, Dropdown, notification } from 'antd';
+import { Link, useHistory } from 'react-router-dom';
+import { CaretDownFilled } from '@ant-design/icons';
 import './index.less';
 import logo from '@/assets/logo@3x.png';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'component-layout';
 const { Header } = Layout;
 
 export default function () {
-  const [activeKey, setActiveKey] = useState('');
+  const history = useHistory();
+  const [activeKey, setActiveKey] = useState([]);
+
+  const { isSign, sign, userLogout } = useSignSdk();
+  console.log('sign', sign);
 
   useEffect(() => {
     const { href } = window.location;
     console.log('href', href);
     if (href.indexOf('/home') > -1) {
-      setActiveKey('home');
+      setActiveKey(['home']);
     }
     if (href.indexOf('/program') > -1) {
-      setActiveKey('program');
+      setActiveKey(['program']);
     }
     if (href.indexOf('/insights') > -1) {
-      setActiveKey('insights');
+      setActiveKey(['insights']);
     }
-  }, [window.location]);
+  }, [window.location.href]);
+
+  const onSelect = (keys) => {
+    setActiveKey([keys.key]);
+  };
+
+  const Logout = () => {
+    userLogout(() => {
+      notification.success({ message: 'Log Out' });
+    });
+  };
+
+  const dropMenu = (
+    <Menu>
+      <Menu.Item key="setting">Settings</Menu.Item>
+      <Menu.Item key="logout" onClick={Logout}>
+        Log Out
+      </Menu.Item>
+    </Menu>
+  );
 
   return (
     <Header
@@ -33,7 +58,7 @@ export default function () {
         className={`${prefix}-logo`}
         style={{ backgroundImage: `url(${logo})` }}
       />
-      <Menu mode="horizontal" activeKey={activeKey}>
+      <Menu mode="horizontal" selectedKeys={activeKey} onSelect={onSelect}>
         <Menu.Item key="home" style={{ borderBottom: 0 }}>
           <Link to="/home">Home</Link>
         </Menu.Item>
@@ -44,6 +69,33 @@ export default function () {
           <Link to="/insights">Insights</Link>
         </Menu.Item>
       </Menu>
+
+      <div className={`${prefix}-header-button`}>
+        {!isSign ? (
+          <Button
+            style={{ minWidth: 120 }}
+            onClick={() => {
+              history.push(`/sign/signup`);
+            }}
+          >
+            Sign Up
+          </Button>
+        ) : (
+          <Dropdown trigger={['click']} overlay={dropMenu}>
+            <div className={`${prefix}-user`}>
+              <div
+                className={`${prefix}-user-avatar`}
+                style={{ backgroundColor: '#1890ff' }}
+              >
+                N
+              </div>
+              <span className={`${prefix}-user-name`}>name</span>
+
+              <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
+            </div>
+          </Dropdown>
+        )}
+      </div>
     </Header>
   );
 }

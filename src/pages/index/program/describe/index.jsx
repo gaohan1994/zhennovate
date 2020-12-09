@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 15:44:21
+ * @Last Modified time: 2020-12-08 16:06:37
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { notification } from 'antd';
@@ -33,7 +33,6 @@ export default (props) => {
 
   // program容器距离左边的距离
   const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
-  console.log('programOffsetLeft', programOffsetLeft);
 
   const { top } = useScroll(document);
   const isSticky = top >= 150; // 计算触发sticky的距离

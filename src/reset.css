@@ -130,8 +130,9 @@ table {
   border-spacing: 0;
 }
 @font-face {
-  font-family: 'Montserrat';
-  src: url('./assets/font/Montserrat-Medium.ttf');
+  font-family: 'Nunito Sans', sans-serif;
+  /* src: url('./assets/font/Montserrat-Medium.ttf'); */
+  src: url('./assets/font/NunitoSans-Light.ttf');
 }
 
 .ant-form-item-explain {
@@ -183,3 +184,58 @@ table {
 .ant-dropdown-menu-item-active > a {
   color: #1890ff !important;
 }
+
+.custom-antd-menu > .ant-menu-sub > li {
+  height: 48px !important;
+  line-height: 48px !important;
+}
+
+.custom-antd-menu > .ant-menu-submenu-title > .ant-menu-submenu-arrow::before,
+.custom-antd-menu > .ant-menu-submenu-title > .ant-menu-submenu-arrow::after {
+  background-image: linear-gradient(
+    to right,
+    rgba(0, 0, 0, 0.85),
+    rgba(0, 0, 0, 0.85)
+  ) !important;
+}
+
+.custom-antd-second-menu-selected
+  > .ant-menu-submenu-title
+  > .ant-menu-submenu-arrow::before,
+.custom-antd-second-menu-selected
+  > .ant-menu-submenu-title
+  > .ant-menu-submenu-arrow::after {
+  background-image: linear-gradient(to right, #1890ff, #1890ff) !important;
+}
+
+.custom-antd-second-menu
+  > .ant-menu-sub
+  > .ant-menu-submenu-selected
+  > .ant-menu-submenu-title,
+.custom-antd-second-menu
+  > .ant-menu-sub
+  > .ant-menu-submenu-active
+  > .ant-menu-submenu-title {
+  color: #1b2631 !important;
+  font-weight: bold !important;
+}
+
+.custom-antd-second-menu > .ant-menu-submenu-title > span {
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+}
+
+/* .custom-antd-first-menu > . */
+
+/* .custom-antd-first-menu > .ant-menu-item-only-child {
+  display: -webkit-box !important;
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  line-clamp: 2 !important;
+  -webkit-line-clamp: 2 !important;
+  -webkit-box-orient: vertical !important;
+} */

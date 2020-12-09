@@ -40,9 +40,20 @@ function useSignSdk() {
     }
   };
 
+  const userLogout = (callback) => {
+    store.dispatch({
+      type: Action_Types.Receive_Userinfo,
+      payload: {},
+    });
+
+    if (callback) {
+      callback();
+    }
+  };
+
   const checkSign = (callback) => {
     if (!isSign) {
-      history.push(`/sign/signin`);
+      history.push(`/sign/signup`);
       return;
     }
     callback && callback();
@@ -51,6 +62,7 @@ function useSignSdk() {
   return {
     userSignin,
     checkSign,
+    userLogout,
     sign,
     isSign,
     userId: (sign.userinfo && sign.userinfo._id) || '',

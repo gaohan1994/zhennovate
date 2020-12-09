@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-08 15:15:29
+ * @Last Modified time: 2020-12-09 16:46:49
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification, message } from 'antd';
@@ -156,8 +156,6 @@ export default (props) => {
       postMessageData.progressData.module,
       programData,
     );
-    console.log('sessionIndex', sessionIndex);
-    console.log('moduleIndex', moduleIndex);
     const hasNextModule = !!session.Modules[moduleIndex + 1];
 
     if (hasNextModule) {
@@ -172,7 +170,6 @@ export default (props) => {
     if (hasNextSession) {
       // 跳转到下一个session
       const nextSession = programData.Sessions[sessionIndex + 1];
-      console.log('nextSession', nextSession);
       const nextModule = nextSession.Modules[0];
       setSelectedKeys([nextModule._id]);
       onModuleClick(nextSession.Modules[0]);
@@ -180,11 +177,21 @@ export default (props) => {
       return;
     }
 
+    // 结束
     message.success('Program Finished!');
   };
 
   const handleMenuClick = (menu) => {
     setCurrentKey(menu.key);
+  };
+
+  const MenuTitle = ({ title }) => {
+    return (
+      <div className={`${prefix}-menu-box`}>
+        <AuditOutlined />
+        <span className={`${prefix}-menu-box-title`}>{title}</span>
+      </div>
+    );
   };
 
   return (
@@ -210,16 +217,26 @@ export default (props) => {
               onSelect={onSelect}
               openKeys={openKeys}
               onOpenChange={setOpenKeys}
-              // defaultOpenKeys={searchParams?.module_id ? getDefaultKeys() : []}
               onClick={handleMenuClick}
+              className="custom-antd-first-menu"
             >
               {detailMenu.map((item) => {
                 if (item.children) {
+                  /**
+                   * 二级标题适配UI
+                   */
+                  const isSecondSelected =
+                    selectedKeys.findIndex((s) => s.length > 5) > -1;
                   return (
                     <Menu.SubMenu
-                      title={`${item.title}${item.title}${item.title}${item.title}`}
+                      title={<MenuTitle title={item.title} />}
                       key={item.id}
-                      icon={<AuditOutlined />}
+                      // icon={<AuditOutlined />}
+                      className={`${
+                        isSecondSelected
+                          ? 'custom-antd-second-menu-selected'
+                          : ''
+                      } custom-antd-second-menu`}
                     >
                       {item.children.map((session) => {
                         return (
@@ -268,21 +285,7 @@ export default (props) => {
                 }
                 return (
                   <Menu.Item key={item.id}>
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                      }}
-                    >
-                      {item.icon ? (
-                        <div
-                          className={`${prefix}-icon`}
-                          style={{ backgroundImage: `url(${item.icon})` }}
-                        />
-                      ) : null}
-                      {item.title}
-                    </div>
+                    <MenuTitle title={item.title} />
                   </Menu.Item>
                 );
               })}

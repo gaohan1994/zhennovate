@@ -3,9 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-18 16:55:11
+ * @Last Modified time: 2020-12-09 16:30:49
  */
-import React from 'react';
+import React, { useState } from 'react';
 import { Form, message } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
@@ -20,14 +20,19 @@ const prefix = 'sign-page';
 export default function SignIn() {
   const [form] = Form.useForm();
   const history = useHistory();
+
+  const [loading, setLoading] = useState(false);
+
   const { userSignin } = signSdk();
 
   const loginCallback = () => {
+    setLoading(false);
     history.replace(`/program`);
   };
 
   const onSubmit = async () => {
     try {
+      setLoading(true);
       const fields = await form?.validateFields();
       userSignin(
         {
@@ -37,6 +42,7 @@ export default function SignIn() {
         loginCallback,
       );
     } catch (error) {
+      setLoading(false);
       error.errorFields &&
         error.errorFields[0]?.errors[0] &&
         message.error({
@@ -67,6 +73,7 @@ export default function SignIn() {
         <FormItem
           label="Password"
           name="password"
+          style={{ marginBottom: 12 }}
           inputProps={{ type: 'password' }}
           rules={[
             {
@@ -76,7 +83,16 @@ export default function SignIn() {
           ]}
         />
 
-        <Button form={form} submit={onSubmit}>
+        <div
+          className={`${prefix}-up-forgot`}
+          onClick={() => {
+            history.push('/sign/forgot');
+          }}
+        >
+          Forgot Password?
+        </div>
+
+        <Button form={form} submit={onSubmit} loading={loading}>
           Sign in
         </Button>
       </Form>
