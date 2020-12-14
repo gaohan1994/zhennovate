@@ -2,12 +2,13 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 16:46:49
+ * @Last Modified time: 2020-12-14 16:16:45
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification, message } from 'antd';
 import { AuditOutlined, CheckCircleFilled } from '@ant-design/icons';
 import { program } from '@/pages/index/program/constants';
+import { useHistory } from 'react-router-dom';
 import './index.less';
 import MyHeader from './component/header';
 import { formatSearch } from '@/common/request';
@@ -27,9 +28,11 @@ const prefix = 'page-detail';
 const { Sider, Content, Header } = Layout;
 
 export default (props) => {
+  const history = useHistory();
   const searchParams = formatSearch(props.location.search);
   const { params } = props.match;
 
+  const [urlParams, setUrlParams] = useState({});
   // iframe相关
   const iframeContainerRef = useRef(null);
   const [iframeHeight, setIframeHeight] = useState(-1);
@@ -123,15 +126,16 @@ export default (props) => {
       setSelectedKeys([searchParams.module_id]);
       setCurrentKey(searchParams.module_id);
     }
-  }, [programData]);
+    setUrlParams(searchParams);
+  }, [programData, window.location.href]);
 
   const onSelect = (keys) => {
     setSelectedKeys([keys.key]);
   };
 
+  // 点击 menu 切换 href 重新触发渲染
   const onModuleClick = (item) => {
-    setCurrentPaperform(item);
-    // setSelectedKeys([item._id]);
+    history.push(`/program/detail/${programData._id}?module_id=${item._id}`);
   };
 
   const getDefaultKeys = () => {
@@ -162,7 +166,7 @@ export default (props) => {
       // 跳转到下一个module
       const nextModule = session.Modules[moduleIndex + 1];
       onModuleClick(nextModule);
-      setSelectedKeys([nextModule._id]);
+      // setSelectedKeys([nextModule._id]);
       return;
     }
 
@@ -170,10 +174,10 @@ export default (props) => {
     if (hasNextSession) {
       // 跳转到下一个session
       const nextSession = programData.Sessions[sessionIndex + 1];
-      const nextModule = nextSession.Modules[0];
-      setSelectedKeys([nextModule._id]);
+      // const nextModule = nextSession.Modules[0];
+      // setSelectedKeys([nextModule._id]);
+      // setOpenKeys(['2', nextSession._id]);
       onModuleClick(nextSession.Modules[0]);
-      setOpenKeys(['2', nextSession._id]);
       return;
     }
 
@@ -308,6 +312,7 @@ export default (props) => {
                     width={iframeWidth}
                     data={currentPaperform}
                     programData={programData}
+                    paperformKey={urlParams?.paperformKey}
                     callback={finishPaperformCallback}
                   />
                 ) : (

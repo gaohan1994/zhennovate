@@ -5,10 +5,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 17:03:32
+ * @Last Modified time: 2020-12-11 10:06:32
  */
 import React, { useState, useEffect, useRef } from 'react';
-import { useScroll } from 'ahooks';
+// import { useScroll } from 'ahooks';
 import ProgramItem from '@/component/program';
 import Swiper from '../component/swiper';
 import './index.less';
@@ -17,6 +17,7 @@ import useProgramHooks from '../hooks';
 import { ProgramTabKeys } from '../constants';
 import Filter from '@/component/fliter';
 import Sort from '@/component/sort';
+import useStickyComponent from '@/component/sticky';
 
 const prefix = 'program-child';
 
@@ -31,19 +32,24 @@ export default (props) => {
   // sort值
   const [sortValue, setSortValue] = useState('1');
   // program容器距离左边的距离
-  const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
+  // const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
   const [category, setCategory] = useState(['']);
   const [selectedCategory, setSelectedCategory] = useState(['']);
 
-  const { top } = useScroll(document);
-  const isSticky = top >= 420 + 24 + 24 + 10; // 计算触发sticky的距离
+  // const { top } = useScroll(document);
+  // const isSticky = top >= 420 + 24 + 24 + 10; // 计算触发sticky的距离
 
-  useEffect(() => {
-    if (programContainerRef.current?.offsetLeft) {
-      setProgramOffsetLeft(programContainerRef.current.offsetLeft);
-    }
-  }, [programContainerRef.current]);
+  const { left, isSticky } = useStickyComponent(
+    420 + 24 + 24 + 10,
+    programContainerRef,
+  );
+
+  // useEffect(() => {
+  //   if (programContainerRef.current?.offsetLeft) {
+  //     setProgramOffsetLeft(programContainerRef.current.offsetLeft);
+  //   }
+  // }, [programContainerRef.current]);
 
   // 构造数据
   useEffect(() => {
@@ -102,7 +108,7 @@ export default (props) => {
             ? {
                 position: 'fixed',
                 top: 24 + 64, // 计算距离顶部的高度 加上header
-                left: programOffsetLeft + 744 + 24, // 通过program主容器计算 filter 距离左边的距离
+                left: left + 744 + 24, // 通过program主容器计算 filter 距离左边的距离
               }
             : { position: 'relative' }
         }

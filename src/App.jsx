@@ -2,14 +2,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 21:46:55
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 11:19:50
+ * @Last Modified time: 2020-12-14 13:54:17
  */
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
 import Home from '@/pages/index/home';
 import Sign from '@/pages/sign';
 import PaperformModal from './component/paperform-modal';
-import { useMount } from 'ahooks';
+import CalendarModal from './component/calendar/calendar-modal';
 
 const RouteMenu = [
   {
@@ -35,14 +35,10 @@ const RouteMenu = [
  * @returns
  */
 function App() {
-  useMount(() => {
-    // 这里校验是否登录 是否跳转注册页面
-    // history.replace('/home');
-  });
-
   return (
     <div>
       <PaperformModal />
+      <CalendarModal />
       <HashRouter>
         <Switch>
           {RouteMenu.map((item, index) => {

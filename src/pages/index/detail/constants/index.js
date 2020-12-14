@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
 // 解析数据
-export function formatModuleData(module_id, programData) {
+export function formatModuleData(
+  module_id,
+  programData,
+  paperformKey = 'PFKey',
+) {
   /**
    * indexs[0] session index
    * indexs[1] module index
@@ -31,7 +35,7 @@ export function formatModuleData(module_id, programData) {
     moduleId: module_id,
     moduleIndex: indexs[1],
 
-    paperformId: moduleItem.PFKey,
+    paperformId: moduleItem[paperformKey],
   };
 }
 

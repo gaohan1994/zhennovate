@@ -3,67 +3,40 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-14 11:40:28
+ * @Last Modified time: 2020-12-14 14:09:28
  */
 
 import React, { useState, useEffect } from 'react';
-import { Modal, Button, Dropdown, Menu } from 'antd';
+import { Modal, Menu } from 'antd';
 import calendar from './calendar';
 import { capitalize } from 'lodash';
-import imgapple from '@/assets/SVG/Icon-AppleCalendar.svg';
-import imggoogle from '@/assets/SVG/Icon-GoogleCalendar.svg';
 import './index.less';
 import moment from 'moment';
 import urlencode from 'urlencode';
+import { prefix, CalendarType, calendarIcons } from './index';
+import { useSelector, useDispatch } from 'react-redux';
+import { CalendarActions } from './store';
 
-export const CalendarType = {
-  normal: 'normal',
-  reflect: 'reflect',
-};
-
-export const prefix = 'component-calendar';
-
-export const calendarIcons = {
-  apple: imgapple,
-  google: imggoogle,
-  outlook: imgapple,
-};
-
-/**
- * ```js
- * import Calendar from 'xx';
- *
- * <Calendar
- *  data={{
- *    title: 'hello',
- *    start: new Date(),
- *    end: new Date(),
- *    address: 'new york',
- *    description: 'description
- *  }}
- * />
- * ```
- */
-function Calendar(props) {
-  const {
-    data,
-    type = CalendarType.normal,
-    program,
-    renderType = 'drop',
-    render,
-  } = props;
-  // console.log('data', data);
-  // 是否显示calendar
-  const [visible, setVisible] = useState(false);
+function CalendarModal() {
   // const [dropVisible, setDropVisible] = useState(false);
+  const dispatch = useDispatch();
+  const state = useSelector((state) => state.calendar);
   const [calendarData, setCalendarData] = useState([]);
+  const { data } = state;
+  const { calendarType = CalendarType.normal, program } = data;
+
+  const onHide = () => {
+    dispatch({
+      type: CalendarActions.hide,
+    });
+  };
 
   useEffect(() => {
     let calendarHrefs = [];
-    if (type === CalendarType.reflect) {
+    if (calendarType === CalendarType.reflect) {
       const linkHref = urlencode(
         // http://172.30.202.179:3000 http://app.zhennovate.com
-        `http://172.30.202.179:3000/#/program/detail/${
+        `http://app.zhennovate.com/#/program/detail/${
           typeof program === 'string' ? program : program._id
         }?module_id=${data._id}&paperformKey=ReflectPFKey`,
       );
@@ -85,9 +58,6 @@ function Calendar(props) {
         address: 'The internet',
         title: data.Name,
         description: data.Detail || '',
-        // description:
-        //   '<html><body><a href="http://www.baidu.com">link</a></body></html>',
-        // ...data,
       });
     }
 
@@ -108,7 +78,13 @@ function Calendar(props) {
         calendarData.map((item) => {
           return (
             <Menu.Item key={item.type} style={{ height: 56, margin: 0 }}>
-              <a target="_blank" href={item.href} className={`${prefix}-item`}>
+              <a
+                className={`${prefix}-item`}
+                onClick={() => {
+                  window.open(item.href);
+                  onHide();
+                }}
+              >
                 {item.icon && (
                   <img src={item.icon} style={{ marginRight: 9 }} />
                 )}
@@ -119,26 +95,16 @@ function Calendar(props) {
         })}
     </Menu>
   );
-
   return (
     <div>
-      {render ? (
-        render()
-      ) : renderType === 'drop' ? (
-        <Dropdown overlay={dropMenu} trigger={['click']}>
-          <Button>Add to Calendar</Button>
-        </Dropdown>
-      ) : (
-        <Button onClick={() => setVisible(true)}>Add to Calendar</Button>
-      )}
       <Modal
         width={356}
         centered
         bodyStyle={{ padding: 0 }}
         title="Add to Calendar"
         footer={null}
-        visible={visible}
-        onCancel={() => setVisible(false)}
+        visible={state.visible}
+        onCancel={onHide}
       >
         {dropMenu}
       </Modal>
@@ -146,4 +112,5 @@ function Calendar(props) {
   );
 }
 
-export default Calendar;
+export default CalendarModal;
+export { CalendarModal };

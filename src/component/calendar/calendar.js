@@ -3,8 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:06:03
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-08 14:30:13
+ * @Last Modified time: 2020-12-11 14:29:20
  */
+// import urlencode from ''
 import moment from 'moment';
 
 class Calendar {
@@ -43,18 +44,16 @@ class Calendar {
       case 'google': {
         const startTime = this.formatTime(moment(start));
         const endTime = this.formatTime(moment(end).add(7, 'd'));
-        const href = encodeURI(
-          [
-            'https://www.google.com/calendar/render',
-            '?action=TEMPLATE',
-            '&text=' + (title || ''),
-            '&dates=' + (startTime || ''),
-            '/' + (endTime || ''),
-            '&details=' + (description || ''),
-            '&location=' + (address || ''),
-            '&sprop=&sprop=name:',
-          ].join(''),
-        );
+        const href = [
+          'https://www.google.com/calendar/render',
+          '?action=TEMPLATE',
+          '&text=' + (title || ''),
+          '&dates=' + (startTime || ''),
+          '/' + (endTime || ''),
+          '&details=' + (description || ''),
+          '&location=' + (address || ''),
+          '&sprop=&sprop=name:',
+        ].join('');
         return href;
       }
 

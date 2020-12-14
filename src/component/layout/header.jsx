@@ -13,8 +13,7 @@ export default function () {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState([]);
 
-  const { isSign, sign, userLogout } = useSignSdk();
-  console.log('sign', sign);
+  const { isSign, userLogout } = useSignSdk();
 
   useEffect(() => {
     const { href } = window.location;

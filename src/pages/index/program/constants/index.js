@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 17:07:25
+ * @Last Modified time: 2020-12-14 16:16:44
  */
 
 import { api } from '@/common/request';
@@ -46,8 +46,9 @@ export const programStart = (params) => {
   );
 };
 
-export const programEnd = (params) => {
-  return api.get(
+export const programEnd = (params, payload) => {
+  return api.post(
     `/progress/end/${params.userId}/${params.programId}/${params.sessionId}/${params.moduleId}/${params.recordId}`,
+    payload,
   );
 };

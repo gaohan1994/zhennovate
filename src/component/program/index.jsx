@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 17:05:58
+ * @Last Modified time: 2020-12-11 10:26:23
  */
 import React, { useState, useEffect } from 'react';
 import { Progress, notification } from 'antd';
@@ -26,7 +26,6 @@ function Program(props) {
   const [data, setData] = useState({});
 
   const { durationString } = useFormatProgramData(programData);
-  console.log('durationString', durationString);
 
   useEffect(() => {
     if (programData) {
@@ -91,7 +90,11 @@ function Program(props) {
 
           <div
             className={`${prefix}-content-save`}
-            style={{ backgroundImage: `url(${imgbookunsave})` }}
+            style={{
+              backgroundImage: `url(${
+                data.IsSaved ? imgbooksaved : imgbookunsave
+              })`,
+            }}
             onClick={onSave}
           />
         </div>
