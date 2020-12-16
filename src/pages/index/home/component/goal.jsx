@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Tag, Modal, Button } from 'antd';
 import './index.less';
 import Choice from '@/component/choice';
+import imgbg from '@/assets/home/Group-38510.png';
 
 const prefix = 'component-home';
 
@@ -22,7 +23,10 @@ function Goal({ style = {} }) {
   }, []);
 
   return (
-    <div className={`${prefix}-goal`} style={{ ...style, height: cardHeight }}>
+    <div
+      className={`${prefix}-goal`}
+      style={{ ...style, height: cardHeight, backgroundImage: `url(${imgbg})` }}
+    >
       <h2 style={{ marginTop: 123 }}>My Learning Goals</h2>
       <div style={{ marginTop: 18 }}>
         <Tag color="#e0e0e0">

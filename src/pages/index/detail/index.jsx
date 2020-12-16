@@ -6,7 +6,13 @@
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification, message } from 'antd';
-import { AuditOutlined, CheckCircleFilled } from '@ant-design/icons';
+import {
+  CheckCircleFilled,
+  CalendarOutlined,
+  BookOutlined,
+  SolutionOutlined,
+  IdcardOutlined,
+} from '@ant-design/icons';
 import { program } from '@/pages/index/program/constants';
 import { useHistory } from 'react-router-dom';
 import './index.less';
@@ -14,10 +20,6 @@ import MyHeader from './component/header';
 import { formatSearch } from '@/common/request';
 import { formatModuleData } from './constants';
 import RenderPaperForm from '@/component/paperform';
-import imgwork from '@/assets/Icon-Workshop@2x.png';
-import imgcoach from '@/assets/Icon-CoachingPAth@2x.png';
-import imgentry from '@/assets/Icon-Entry@2x.png';
-import imgabout from '@/assets/Icon-About@2x.png';
 
 import About from './about';
 import Entry from './entry';
@@ -75,23 +77,23 @@ export default (props) => {
         {
           id: '1',
           title: 'Workshops',
-          icon: imgwork,
+          icon: <CalendarOutlined />,
         },
         {
           id: '2',
           title: 'Coaching Path',
           children: programData.Sessions ? programData.Sessions : [],
-          icon: imgcoach,
+          icon: <BookOutlined />,
         },
         {
           id: '3',
           title: 'Entries',
-          icon: imgentry,
+          icon: <SolutionOutlined />,
         },
         {
           id: '4',
           title: 'About',
-          icon: imgabout,
+          icon: <IdcardOutlined />,
         },
       ];
       setDetailMenu(commonMenu);
@@ -189,10 +191,10 @@ export default (props) => {
     setCurrentKey(menu.key);
   };
 
-  const MenuTitle = ({ title }) => {
+  const MenuTitle = ({ title, icon }) => {
     return (
       <div className={`${prefix}-menu-box`}>
-        <AuditOutlined />
+        {icon}
         <span className={`${prefix}-menu-box-title`}>{title}</span>
       </div>
     );
@@ -233,7 +235,7 @@ export default (props) => {
                     selectedKeys.findIndex((s) => s.length > 5) > -1;
                   return (
                     <Menu.SubMenu
-                      title={<MenuTitle title={item.title} />}
+                      title={<MenuTitle title={item.title} icon={item.icon} />}
                       key={item.id}
                       // icon={<AuditOutlined />}
                       className={`${
@@ -289,7 +291,7 @@ export default (props) => {
                 }
                 return (
                   <Menu.Item key={item.id}>
-                    <MenuTitle title={item.title} />
+                    <MenuTitle title={item.title} icon={item.icon} />
                   </Menu.Item>
                 );
               })}

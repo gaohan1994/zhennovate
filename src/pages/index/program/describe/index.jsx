@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-08 16:06:37
+ * @Last Modified time: 2020-12-16 09:53:17
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { notification } from 'antd';
@@ -18,8 +18,8 @@ import Instructor from '../component/instructor';
 import Coach from '../component/coach';
 import { formatSearch } from '@/common/request';
 import imgbg from '@/assets/Hexagon-Background-Pattern.svg';
-import { useScroll } from 'ahooks';
 import QueueAnim from 'rc-queue-anim';
+import useStickyComponent from '@/component/sticky';
 
 const prefix = 'page-program';
 
@@ -31,17 +31,7 @@ export default (props) => {
   // program详情数据
   const [programDescribe, setProgramDescribe] = useState({});
 
-  // program容器距离左边的距离
-  const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
-
-  const { top } = useScroll(document);
-  const isSticky = top >= 150; // 计算触发sticky的距离
-
-  useEffect(() => {
-    if (programContainerRef.current?.offsetLeft) {
-      setProgramOffsetLeft(programContainerRef.current.offsetLeft);
-    }
-  }, [programContainerRef.current]);
+  const { isSticky, left } = useStickyComponent(150, programContainerRef);
 
   // 进入页面滑动到顶端
   useEffect(() => {
@@ -96,7 +86,7 @@ export default (props) => {
               width: 360,
               position: 'fixed',
               top: 64 + 32,
-              left: programOffsetLeft + 744 + 24,
+              left: left + 744 + 24,
             }}
             type="top"
             // animConfig={[
