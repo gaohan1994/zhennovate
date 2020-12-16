@@ -65,7 +65,7 @@ const RenderPaperForm = (props) => {
   const receiveMessage = useCallback(
     (event) => {
       const { data: postMessageData } = event;
-      const { progressData } = postMessageData;
+      const { progressData, paperformData } = postMessageData;
 
       const payload = {
         userId: sign.userinfo?._id,
@@ -80,7 +80,7 @@ const RenderPaperForm = (props) => {
       const paperformKey = paperformDataKeyRef.current;
       if (!preview) {
         // 如果是非预览模式才进行上传数据calback
-        programEnd(payload, postMessageData)
+        programEnd(payload, { paperformData })
           .then((result) => {
             if (result.error_code === ResponseCode.success) {
               /**

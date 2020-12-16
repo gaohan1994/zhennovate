@@ -14,9 +14,7 @@ function Workshop(props) {
       />
       <div className={`${prefix}-content`}>
         <span>Type of Event</span>
-        <span className={`${prefix}-content-title`}>
-          Workshop title written here. Workshop title written here.
-        </span>
+        <span className={`${prefix}-content-title`}>{data.Title || ''}</span>
         <span className={`${prefix}-content-time`}>
           Monday, Sept 20 3pm - 4pm EST
         </span>

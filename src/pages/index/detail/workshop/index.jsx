@@ -7,7 +7,8 @@ import imgwork from '@/assets/Icon-Workshop-Empty@2x.png';
 
 const prefix = 'page-program';
 
-export default () => {
+export default (props) => {
+  const { programData } = props;
   return (
     <div
       className={`${prefix}-container-box`}
@@ -21,13 +22,21 @@ export default () => {
           showSort={false}
         />
 
-        <Workshop data={{}} />
-
-        <Empty
-          icon={imgwork}
-          title="No Workshops"
-          tab={{ empty: 'Workshops will be added shortly. Check back later.' }}
-        />
+        {programData.Workshops && programData.Workshops.length > 0 ? (
+          <div>
+            {programData.Workshops.map((item) => {
+              return <Workshop data={item} key={item._id} />;
+            })}
+          </div>
+        ) : (
+          <Empty
+            icon={imgwork}
+            title="No Workshops"
+            tab={{
+              empty: 'Workshops will be added shortly. Check back later.',
+            }}
+          />
+        )}
       </div>
     </div>
   );
