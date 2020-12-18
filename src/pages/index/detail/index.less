@@ -31,6 +31,12 @@
     min-width: 256px !important;
     max-width: 256px !important;
     box-shadow: 0 0 6px 0 rgba(27, 38, 49, 0.1);
+    &-collapse {
+      overflow: auto;
+      position: fixed;
+      height: 100vh;
+      left: 0;
+    }
   }
 
   &-header {
@@ -44,6 +50,10 @@
     }
     &-buttons {
       .flex(center, center, row);
+    }
+
+    &-switch {
+      cursor: pointer;
     }
   }
 

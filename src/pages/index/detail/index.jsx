@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-15 14:28:38
+ * @Last Modified time: 2020-12-16 10:22:14
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification, message } from 'antd';
@@ -52,6 +52,8 @@ export default (props) => {
   const [currentPaperform, setCurrentPaperform] = useState({});
 
   const [currentKey, setCurrentKey] = useState('');
+
+  const [collapsed, setCollapsed] = useState(false);
 
   /**
    * 请求数据
@@ -107,16 +109,29 @@ export default (props) => {
     }
   }, [programData]);
 
+  const setSize = () => {
+    if (iframeContainerRef.current.clientHeight) {
+      setIframeHeight(iframeContainerRef.current.clientHeight - 64);
+      setIframeWidth(iframeContainerRef.current.clientWidth);
+    }
+  };
+
   /**
    * 动态设置右侧高度
    * 为剩余屏幕高度
    */
   useEffect(() => {
-    if (iframeContainerRef.current.clientHeight) {
-      setIframeHeight(iframeContainerRef.current.clientHeight - 64);
-      setIframeWidth(iframeContainerRef.current.clientWidth);
-    }
-  }, [iframeContainerRef.current]);
+    setSize();
+    window.addEventListener('resize', setSize);
+    return () => window.removeEventListener('resize', setSize);
+  }, []);
+
+  /**
+   * 监听 collapsed 如果改变了触发iframe大小改变
+   */
+  useEffect(() => {
+    setSize();
+  }, [collapsed]);
 
   useEffect(() => {
     if (searchParams.module_id && programData.Sessions) {
@@ -212,13 +227,23 @@ export default (props) => {
       }}
     >
       <Header style={{ backgroundColor: '#fff', padding: 0, height: 72 }}>
-        <MyHeader data={programData} />
+        <MyHeader data={programData} setCollapsed={setCollapsed} />
       </Header>
-      <Layout className={`${prefix}-pos`} style={{ marginLeft: 256 }}>
-        <Sider theme="light" className={`${prefix}-slider`}>
+      <Layout
+        className={`${prefix}-pos`}
+        style={{ marginLeft: collapsed ? 80 : 256 }}
+      >
+        <Sider
+          theme="light"
+          className={`${
+            collapsed ? `${prefix}-slider-collapse` : `${prefix}-slider`
+          }`}
+          collapsed={collapsed}
+        >
           {programData._id && detailMenu.some((d) => d.children) && (
             <Menu
               mode="inline"
+              // inlineCollapsed={}
               selectedKeys={selectedKeys}
               onSelect={onSelect}
               openKeys={openKeys}
