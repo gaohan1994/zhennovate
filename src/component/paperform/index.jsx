@@ -35,7 +35,7 @@ const RenderPaperForm = (props) => {
     /**
      * 渲染的paperfrom-Key
      * 常规是 PFKey
-     * reflect的key是 ReflectPFKey
+     * reflect的key是 CompletePFKey
      */
     paperformKey = 'PFKey',
     callback,
@@ -88,7 +88,7 @@ const RenderPaperForm = (props) => {
                *
                * 如果 type = action 是 reflect 则显示完成modal
                */
-              if (data.Type === 'Action' && paperformKey !== 'ReflectPFKey') {
+              if (data.Type === 'Action' && paperformKey !== 'CompletePFKey') {
                 showCalendar({
                   ...data,
                   calendarType: CalendarType.reflect,
@@ -96,7 +96,7 @@ const RenderPaperForm = (props) => {
                 });
               } else if (
                 data.Type === 'Action' &&
-                paperformKey === 'ReflectPFKey'
+                paperformKey === 'CompletePFKey'
               ) {
                 paperformModalDataRef.current = data;
                 setActionCompleteVisible(true);

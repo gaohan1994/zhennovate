@@ -10,9 +10,12 @@ import './index.less';
 
 const prefix = 'sign-component';
 export default (props) => {
+  const { style = {} } = props;
   return (
     <div className={`${prefix}`}>
-      <div className={`${prefix}-box`}>{props.children}</div>
+      <div className={`${prefix}-box`} style={style}>
+        {props.children}
+      </div>
     </div>
   );
 };

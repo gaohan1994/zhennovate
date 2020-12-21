@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-14 14:09:28
+ * @Last Modified time: 2020-12-21 11:29:32
  */
 
 import React, { useState, useEffect } from 'react';
@@ -38,7 +38,7 @@ function CalendarModal() {
         // http://172.30.202.179:3000 http://app.zhennovate.com
         `http://app.zhennovate.com/#/program/detail/${
           typeof program === 'string' ? program : program._id
-        }?module_id=${data._id}&paperformKey=ReflectPFKey`,
+        }?module_id=${data._id}&paperformKey=CompletePFKey`,
       );
       calendarHrefs = calendar.generateCalendars({
         start: new Date(moment().format('YYYY-MM-DD')),

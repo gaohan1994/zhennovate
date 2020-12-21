@@ -58,6 +58,9 @@ export default function SignUp() {
         <FormItem
           label="Full Name"
           name="name"
+          inputProps={{
+            placeholder: 'Name',
+          }}
           rules={[
             {
               required: true,
@@ -68,6 +71,9 @@ export default function SignUp() {
         <FormItem
           label="Email Address"
           name="email"
+          inputProps={{
+            placeholder: 'Email Address',
+          }}
           rules={[
             {
               required: true,
@@ -80,7 +86,7 @@ export default function SignUp() {
         <FormItem
           label="Password"
           name="password"
-          inputProps={{ type: 'password' }}
+          inputProps={{ type: 'password', placeholder: 'Password' }}
           rules={[
             {
               required: true,

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 16:30:49
+ * @Last Modified time: 2020-12-21 10:41:57
  */
 import React, { useState } from 'react';
 import { Form, message } from 'antd';
@@ -27,7 +27,7 @@ export default function SignIn() {
 
   const loginCallback = () => {
     setLoading(false);
-    history.replace(`/program`);
+    history.replace(`/home`);
   };
 
   const onSubmit = async () => {
@@ -63,6 +63,9 @@ export default function SignIn() {
         <FormItem
           label="Email Address"
           name="email"
+          inputProps={{
+            placeholder: 'Email Address',
+          }}
           rules={[
             {
               required: true,
@@ -74,7 +77,7 @@ export default function SignIn() {
           label="Password"
           name="password"
           style={{ marginBottom: 12 }}
-          inputProps={{ type: 'password' }}
+          inputProps={{ type: 'password', placeholder: 'password' }}
           rules={[
             {
               required: true,
