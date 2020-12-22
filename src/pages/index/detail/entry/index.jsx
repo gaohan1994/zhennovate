@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import '@/pages/index/program/index.less';
 import Filter from '@/component/fliter';
 import Sort from '@/component/sort';
@@ -6,12 +6,14 @@ import Markdown from '@/component/markdown';
 import '../index.less';
 import imgaction from '../../../../assets/Icon-Action@2x.png';
 import imgreflection from '../../../../assets/Icon-Reflection@2x.png';
+import { programEntry } from '../../program/constants';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import { ResponseCode } from '@/common/config';
 
 const prefix = 'page-program';
 
 function RenderHeader(props) {
   const { icon, title, subTitle } = props;
-  console.log('icon', icon);
   const prefix = 'page-detail';
   return (
     <div className={`${prefix}-custom-header ${prefix}-custom`}>
@@ -31,6 +33,24 @@ function RenderHeader(props) {
 
 export default (props) => {
   const { programData } = props;
+  const [entryData, setEntryData] = useState({});
+
+  const { userId } = useSignSdk();
+
+  useEffect(() => {
+    programEntry({
+      userId,
+      programId: programData._id,
+    }).then((result) => {
+      console.log('entry', result);
+      if (result.error_code === ResponseCode.success) {
+        setEntryData(result.data);
+      }
+    });
+  }, []);
+
+  console.log('entryData', entryData);
+
   return (
     <div
       className={`${prefix}-container-box`}

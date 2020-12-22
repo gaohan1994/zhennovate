@@ -3,11 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-15 14:28:18
+ * @Last Modified time: 2020-12-22 10:03:15
  */
 import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
-// import { CaretRightOutlined } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
 import { Player } from 'video-react';
 import './index.less';
@@ -27,8 +26,25 @@ export default (props) => {
 
   const { durationString, durationDaysString } = useFormatProgramData(data);
 
+  /**
+   * 这里如果登录了跳转到第一个module去
+   */
   const startProgram = () => {
-    history.push(`/program/detail/${id}`);
+    let firstModule;
+
+    if (
+      data?.Sessions &&
+      data?.Sessions[0] &&
+      data?.Sessions[0]?.Modules &&
+      data?.Sessions[0]?.Modules[0]
+    ) {
+      firstModule = data?.Sessions[0]?.Modules[0];
+    }
+    history.push(
+      `/program/detail/${id}${
+        firstModule._id ? `?module_id=${firstModule._id}` : ''
+      }`,
+    );
   };
 
   return (
