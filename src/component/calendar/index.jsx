@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 11:11:49
+ * @Last Modified time: 2020-12-23 17:40:53
  */
 
 import React, { useState, useEffect } from 'react';
@@ -12,6 +12,7 @@ import calendar from './calendar';
 import { capitalize } from 'lodash';
 import imgapple from '@/assets/SVG/Icon-AppleCalendar.svg';
 import imggoogle from '@/assets/SVG/Icon-GoogleCalendar.svg';
+import imgoutlook from '@/assets/Icon-Outlook@2x.png';
 import './index.less';
 import moment from 'moment';
 import urlencode from 'urlencode';
@@ -27,7 +28,7 @@ export const prefix = 'component-calendar';
 export const calendarIcons = {
   apple: imgapple,
   google: imggoogle,
-  outlook: imgapple,
+  outlook: imgoutlook,
 };
 
 /**
@@ -113,7 +114,10 @@ function Calendar(props) {
             <Menu.Item key={item.type} style={{ height: 56, margin: 0 }}>
               <a target="_blank" href={item.href} className={`${prefix}-item`}>
                 {item.icon && (
-                  <img src={item.icon} style={{ marginRight: 9 }} />
+                  <img
+                    src={item.icon}
+                    style={{ marginRight: 9, width: 24, height: 24 }}
+                  />
                 )}
                 <span>{`${capitalize(item.type)} Calendar`}</span>
               </a>

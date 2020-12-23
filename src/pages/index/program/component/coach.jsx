@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 17:02:45
+ * @Last Modified time: 2020-12-23 15:11:50
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
@@ -57,7 +57,7 @@ export default (props) => {
   };
   return (
     <div>
-      <div className={`${prefix}-coach-title`}>Coaching Path</div>
+      <div className={`${prefix}-coach-title`}>Coaching path</div>
       <Collapse activeKey={activeKey} onChange={(keys) => setActiveKey(keys)}>
         {coachMenu.map((item) => {
           return (

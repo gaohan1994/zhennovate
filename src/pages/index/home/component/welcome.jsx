@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 13:55:04
+ * @Last Modified time: 2020-12-23 17:17:12
  */
 import React from 'react';
 import moment from 'moment';
@@ -37,7 +37,7 @@ function Welcome(props) {
         <span>Ready for your daily check in?</span>
       </div>
 
-      <div className={`${prefix}-check`}>
+      <div className={`${prefix}-check`} style={{color: 'gray'}}>
         Check In
         <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
       </div>

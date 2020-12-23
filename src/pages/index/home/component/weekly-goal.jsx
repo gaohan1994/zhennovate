@@ -42,7 +42,11 @@ function WeeklyGoal() {
         </span>
       </div>
 
-      <span className={`${prefix}-edit`} onClick={() => setVisible(true)}>
+      <span 
+        className={`${prefix}-edit`} 
+        // onClick={() => setVisible(true)}
+        style={{color: 'gray'}}
+      >
         edit
       </span>
 

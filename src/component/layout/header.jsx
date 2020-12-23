@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button, Dropdown, notification } from 'antd';
+import { Layout, Menu, Button, notification } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { CaretDownFilled } from '@ant-design/icons';
 import './index.less';
@@ -13,7 +13,7 @@ export default function () {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState([]);
 
-  const { isSign, userLogout } = useSignSdk();
+  const { isSign, userLogout, sign } = useSignSdk();
 
   useEffect(() => {
     const { href } = window.location;
@@ -48,6 +48,9 @@ export default function () {
     </Menu>
   );
 
+  console.log('sign', sign);
+  console.log('dropMenu', dropMenu);
+
   return (
     <Header
       className={`${prefix}-header`}
@@ -80,19 +83,20 @@ export default function () {
             Sign Up
           </Button>
         ) : (
-          <Dropdown trigger={['click']} overlay={dropMenu}>
-            <div className={`${prefix}-user`}>
-              <div
-                className={`${prefix}-user-avatar`}
-                style={{ backgroundColor: '#1890ff' }}
-              >
-                N
-              </div>
-              <span className={`${prefix}-user-name`}>name</span>
+          // <Dropdown trigger={['click']} overlay={dropMenu}>
 
-              <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
+          // </Dropdown>
+          <div className={`${prefix}-user`}>
+            <div
+              className={`${prefix}-user-avatar`}
+              style={{ backgroundColor: '#1890ff' }}
+            >
+              N
             </div>
-          </Dropdown>
+            <span className={`${prefix}-user-name`}>name</span>
+
+            <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
+          </div>
         )}
       </div>
     </Header>

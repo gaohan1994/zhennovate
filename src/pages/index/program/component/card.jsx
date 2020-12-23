@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 10:03:15
+ * @Last Modified time: 2020-12-23 15:20:48
  */
 import React, { useState } from 'react';
 import { Card, Button, Modal } from 'antd';
@@ -60,7 +60,7 @@ export default (props) => {
             {data.VideoUrl && (
               <div
                 className={`${prefix}-card-cover-play`}
-                onClick={() => setVisible(true)}
+                // onClick={() => setVisible(true)}
               >
                 <div style={{ backgroundImage: `url(${imgplay})` }} />
                 {/* <CaretRightOutlined style={{ fontSize: 33, color: 'black' }} /> */}
@@ -73,8 +73,8 @@ export default (props) => {
       <div>
         <div className={`${prefix}-card-title`}>{data.Name}</div>
         <div className={`${prefix}-card-desc`}>
-          <span>Total Time</span>
-          <span>{durationString} to complete</span>
+          <span>Total time</span>
+          <span>{durationString}</span>
         </div>
         <div className={`${prefix}-card-desc`}>
           <span>Duration</span>
@@ -85,7 +85,7 @@ export default (props) => {
           style={{ width: '100%', marginTop: 24 }}
           onClick={() => checkSign(startProgram)}
         >
-          Start Program
+          Start program
         </Button>
       </div>
       <Modal

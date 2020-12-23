@@ -7,5 +7,5 @@ import Markdown from '@/component/markdown';
 export default (props) => {
   const { data } = props;
 
-  return <Markdown title="Program Details" data={data.Detail} />;
+  return <Markdown title="Program details" data={data.Detail} />;
 };

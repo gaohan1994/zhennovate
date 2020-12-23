@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 11:32:06
+ * @Last Modified time: 2020-12-23 17:37:19
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -16,6 +16,8 @@ import useCalendar from '../calendar/store';
 import { CalendarType } from '../calendar';
 import PaperformActionModal from './component/modal';
 import './index.less';
+import imgtodo from '@/assets/modal/Icon_Check_128x128.png';
+import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
 
 /**
  * @param RenderPaperformKeyTypes
@@ -270,6 +272,7 @@ const RenderPaperForm = (props) => {
       </Modal>
 
       <PaperformActionModal
+        icon={imgtodo}
         title="Action Added!"
         subTitle="Would you like to completed your action now?"
         visible={actionChoiceTodoVisible}
@@ -280,6 +283,7 @@ const RenderPaperForm = (props) => {
         secondCallback={choiceTodoModalsecondCallback}
       />
       <PaperformActionModal
+        icon={imgcalendar}
         title="Add to calendar"
         subTitle="Would you like to add action to your calendar as a reminder?"
         visible={actionAddCalendarVisible}

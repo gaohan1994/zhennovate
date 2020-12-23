@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:29:48
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-03 11:42:29
+ * @Last Modified time: 2020-12-23 15:13:32
  */
 import React, { useState } from 'react';
 import { Card } from 'antd';
@@ -26,7 +26,7 @@ export default (props) => {
 
   return (
     <Card>
-      <div className={`${prefix}-title`}>About the Instructor</div>
+      <div className={`${prefix}-title`}>Instructor</div>
       {renderTeacherData &&
         renderTeacherData.map((item, index) => {
           return (

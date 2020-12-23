@@ -14,6 +14,7 @@ function PaperformActionModal(props) {
     confirmCallback,
     secondButton,
     secondCallback,
+    icon,
   } = props;
 
   const onCancel = () => {
@@ -41,7 +42,13 @@ function PaperformActionModal(props) {
     >
       <div className={`${prefix}-modal`}>
         {/* <img src="" /> */}
-        <div className={`${prefix}-modal-icon`} />
+        {icon && (
+          <div
+            className={`${prefix}-modal-icon`}
+            style={{ backgroundImage: `url(${icon})` }}
+          />
+        )}
+
         <span className={`${prefix}-modal-title`}>{title}</span>
         <span className={`${prefix}-modal-subtitle`}>{subTitle}</span>
         {confirmButton && (

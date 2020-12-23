@@ -39,13 +39,15 @@ export function formatModuleData(
   };
 }
 
-export function useFormatProgramData(data) {
+export function useFormatProgramData(data, params = {}) {
   // program持续的时间
   const [duration, setDuration] = useState(0);
   const [durationString, setDurationString] = useState('');
   // program持续的天数
   const [durationDays, setDurationDays] = useState(0);
   const [durationDaysString, setDurationDaysString] = useState('');
+
+  const { daySuffix = 'days', hourSuffix = 'h', minuteSuffix = 'm' } = params;
 
   useEffect(() => {
     const totalDuration = data?.Sessions
@@ -62,18 +64,18 @@ export function useFormatProgramData(data) {
   useEffect(() => {
     if (duration !== 0) {
       const hours = moment.duration(duration, 'minutes').hours();
-      const hoursString = hours !== 0 ? `${hours} hours` : '';
+      const hoursString = hours !== 0 ? `${hours} ${hourSuffix}` : '';
 
       const minutes = moment.duration(duration, 'minutes').minutes();
-      const minutesString = `${minutes} minutes`;
+      const minutesString = `${minutes} ${minuteSuffix}`;
 
-      setDurationString(`${hoursString}${minutesString}`);
+      setDurationString(`${hoursString} ${minutesString}`);
     }
   }, [duration]);
 
   useEffect(() => {
     if (durationDays !== 0) {
-      setDurationDaysString(`${durationDays} days`);
+      setDurationDaysString(`${durationDays} ${daySuffix}`);
     }
   }, [durationDays]);
   return {

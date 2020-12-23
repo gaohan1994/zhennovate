@@ -46,7 +46,7 @@ function Goal({ style = {} }) {
         This is a 95 character limit sentence. This is a 95 character limit
         sentence. This is a 95 char
       </span>
-      <span style={{ marginTop: 8, textAlign: 'center', color: '#1890ff' }}>
+      <span style={{ marginTop: 8, textAlign: 'center', color: 'gray' }}>
         edit
       </span>
 

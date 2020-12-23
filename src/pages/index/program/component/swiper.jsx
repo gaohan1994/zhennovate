@@ -36,7 +36,11 @@ export default (props) => {
       <div className={`${prefix}-card-header`}>
         <div
           className={`${prefix}-card-title`}
-          style={cateIndex === 0 ? { marginTop: 16 } : {}}
+          style={
+            cateIndex === 0
+              ? { marginTop: 16, color: '#15C3B1' }
+              : { color: '#15C3B1' }
+          }
           onClick={onChange}
         >
           {cate} Programs to get you started

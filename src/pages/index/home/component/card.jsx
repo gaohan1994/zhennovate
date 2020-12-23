@@ -34,7 +34,7 @@ function HomeProgramCard() {
         </span>
       </div>
 
-      <span className={`${prefix}-complete`}>
+      <span className={`${prefix}-complete`} style={{color: 'gray'}}>
         Complete Action
         <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
       </span>

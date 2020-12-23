@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-07 17:02:20
+ * @Last Modified time: 2020-12-23 16:59:22
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -108,7 +108,13 @@ export default (props) => {
       <Tabs
         centered
         activeKey={currentTab}
-        onChange={(key) => checkSign(() => onChangeTab(key))}
+        onChange={(key) => {
+          console.log('key', key);
+          if (key !== 'available') {
+            return;
+          }
+          checkSign(() => onChangeTab(key))
+        }}
         style={{ marginTop: 24 }}
       >
         {tabsMenu.map((item) => {

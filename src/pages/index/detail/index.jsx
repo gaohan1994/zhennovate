@@ -2,12 +2,12 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 11:28:48
+ * @Last Modified time: 2020-12-23 17:45:41
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification, message } from 'antd';
 import {
-  CheckCircleFilled,
+  // CheckCircleFilled,
   CalendarOutlined,
   BookOutlined,
   SolutionOutlined,
@@ -231,7 +231,7 @@ export default (props) => {
       </Header>
       <Layout
         className={`${prefix}-pos`}
-        style={{ marginLeft: collapsed ? 80 : 256 }}
+        style={{ marginLeft: collapsed ? 80 : 300 }}
       >
         <Sider
           theme="light"
@@ -285,11 +285,11 @@ export default (props) => {
                                       onClick={() => onModuleClick(module)}
                                     >
                                       <div className={`${prefix}-menu`}>
-                                        <div className={`${prefix}-menu-check`}>
+                                        {/* <div className={`${prefix}-menu-check`}>
                                           <CheckCircleFilled
                                             style={{ color: '#2fc25b' }}
                                           />
-                                        </div>
+                                        </div> */}
                                         <span
                                           className={`${prefix}-menu-title`}
                                         >

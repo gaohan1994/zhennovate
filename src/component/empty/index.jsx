@@ -7,7 +7,7 @@ import imgbook from '../../assets/SVG/Icon-Bookmark-Empty.svg';
 const prefix = 'component-empty';
 
 function Empty(props) {
-  const { tab, title, icon } = props;
+  const { tab = {}, title, icon } = props;
 
   const renderIcon = icon
     ? icon

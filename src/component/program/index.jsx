@@ -3,24 +3,24 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-15 14:29:41
+ * @Last Modified time: 2020-12-23 16:55:00
  */
 import React, { useState, useEffect } from 'react';
-import { Progress, notification } from 'antd';
+import { Progress } from 'antd';
 import { useHistory } from 'react-router-dom';
 import './index.less';
 import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
 import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
-import useSignSdk from '@/pages/sign/store/sign-sdk';
-import { saveProgram } from '../constants';
-import { ResponseCode } from '@/common/config';
+// import useSignSdk from '@/pages/sign/store/sign-sdk';
+// import { saveProgram } from '../constants';
+// import { ResponseCode } from '@/common/config';
 
 const prefix = 'component-program';
 
 function Program(props) {
   const { data: programData, tab, type, style = {} } = props;
   const history = useHistory();
-  const { userId } = useSignSdk();
+  // const { userId } = useSignSdk();
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -40,25 +40,25 @@ function Program(props) {
     e.stopPropagation();
 
     // 说明未登录
-    if (!userId) {
-      history.push('/sign/signin');
-      return;
-    }
+    // if (!userId) {
+    //   history.push('/sign/signin');
+    //   return;
+    // }
 
-    saveProgram({ userId, programId: data._id }).then((result) => {
-      console.log('result', result);
-      if (result.error_code === ResponseCode.success) {
-        notification.success({
-          message: `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
-        });
-        setData((prevData) => {
-          return {
-            ...prevData,
-            IsSaved: prevData.IsSaved === true ? false : true,
-          };
-        });
-      }
-    });
+    // saveProgram({ userId, programId: data._id }).then((result) => {
+    //   console.log('result', result);
+    //   if (result.error_code === ResponseCode.success) {
+    //     notification.success({
+    //       message: `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
+    //     });
+    //     setData((prevData) => {
+    //       return {
+    //         ...prevData,
+    //         IsSaved: prevData.IsSaved === true ? false : true,
+    //       };
+    //     });
+    //   }
+    // });
   };
 
   if (type === 'card') {
@@ -82,7 +82,7 @@ function Program(props) {
           <span style={{ marginTop: 12 }}>{teachersName}</span>
           <span style={{ marginTop: 12 }}>
             {data.Sessions?.length || 0} sessions{' '}
-            {`${data.totalDuration || 0} minutes`}
+            {`${data.totalDuration || 0} m`}
           </span>
 
           <div

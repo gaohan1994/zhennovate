@@ -20,7 +20,7 @@ export default (props) => {
       <div className={`${prefix}-header-buttons`}>
         <Calendar data={data} renderType="modal" />
         {/* <Button>Add to Calendar</Button> */}
-        <Button style={{ marginLeft: 28 }} type="primary">
+        <Button style={{ marginLeft: 28 }} type="primary" disabled>
           Resume
         </Button>
       </div>
