@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 16:55:00
+ * @Last Modified time: 2020-12-25 00:20:23
  */
 import React, { useState, useEffect } from 'react';
 import { Progress } from 'antd';
@@ -109,6 +109,8 @@ function Program(props) {
         : `${data.Sessions.length - data.FinishSessionTotal} sessions left`
       : '';
 
+  const widthStyle = type !== 'home' ? { width: 312 } : { width: 520 };
+
   return (
     <div
       className={`${prefix} ${prefix}-fix`}
@@ -126,24 +128,28 @@ function Program(props) {
           {data.Name}
         </span>
 
-        <span className={`${prefix}-content-status`}>
+        <span className={`${prefix}-content-status`} style={widthStyle}>
           <span>{percentText}</span>
           {percent !== 1 && <span>{`${Math.ceil(percent * 100)}%`}</span>}
+          {/* <span>{`${Math.ceil(percent * 100)}%`}</span> */}
         </span>
 
-        <div className={`${prefix}-content-progress`}>
+        <div style={widthStyle} className={`${prefix}-content-progress`}>
           <Progress percent={percent * 100} showInfo={false} />
         </div>
 
-        <div
-          className={`${prefix}-content-save`}
-          style={{
-            backgroundImage: `url(${
-              data.IsSaved ? imgbooksaved : imgbookunsave
-            })`,
-          }}
-          onClick={onSave}
-        />
+        {type !== 'home' && (
+          <div
+            className={`${prefix}-content-save`}
+            // style={{
+            //   backgroundImage: `url(${
+            //     data.IsSaved ? imgbooksaved : imgbookunsave
+            //   })`,
+            // }}
+            style={{ backgroundImage: `url(${imgbookunsave})` }}
+            onClick={onSave}
+          />
+        )}
       </div>
     </div>
   );

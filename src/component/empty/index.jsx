@@ -3,6 +3,7 @@ import './index.less';
 import { ProgramTabKeys } from '@/pages/index/program/constants';
 import imgcomplete from '../../assets/Icon-CompletedProgram-Empty@2x.png';
 import imgbook from '../../assets/SVG/Icon-Bookmark-Empty.svg';
+import imgprogress from '../../assets/empty/Icon-Inprogress-Empty.svg';
 
 const prefix = 'component-empty';
 
@@ -14,7 +15,7 @@ function Empty(props) {
     : tab.key === ProgramTabKeys.available
     ? imgcomplete
     : tab.key === ProgramTabKeys.progress
-    ? imgcomplete
+    ? imgprogress
     : tab.key === ProgramTabKeys.complete
     ? imgcomplete
     : tab.key === ProgramTabKeys.save

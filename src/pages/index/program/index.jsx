@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 16:59:22
+ * @Last Modified time: 2020-12-24 15:24:57
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -14,7 +14,6 @@ import imghome from '@/assets/Banner-with-Character.svg';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'page-program';
-
 const { TabPane } = Tabs;
 
 const tabsMenu = [
@@ -109,11 +108,10 @@ export default (props) => {
         centered
         activeKey={currentTab}
         onChange={(key) => {
-          console.log('key', key);
           if (key !== 'available') {
             return;
           }
-          checkSign(() => onChangeTab(key))
+          checkSign(() => onChangeTab(key));
         }}
         style={{ marginTop: 24 }}
       >

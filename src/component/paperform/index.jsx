@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 17:37:19
+ * @Last Modified time: 2020-12-24 16:48:51
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -18,6 +18,7 @@ import PaperformActionModal from './component/modal';
 import './index.less';
 import imgtodo from '@/assets/modal/Icon_Check_128x128.png';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
+import ActionFlowCard from './component/action-flow';
 
 /**
  * @param RenderPaperformKeyTypes
@@ -98,6 +99,12 @@ const RenderPaperForm = (props) => {
     false,
   );
 
+  // 是否显示action flow完成之后不直接做，不添加日历的card
+  const [
+    showActionFlowCompletedCard,
+    setShowActionFlowCompletedCard,
+  ] = useState(false);
+
   const addCalendarModalconfirmCallback = () => {
     // 防止闭包错误的处理在ref中存放 数据
     const data = paperformDataRef.current;
@@ -115,16 +122,10 @@ const RenderPaperForm = (props) => {
       });
     }
   };
+  // 取消添加日历，则显示 action card
   const addCalendarModalsecondCallback = () => {
     // 防止闭包错误的处理在ref中存放 数据
-    const data = paperformDataRef.current;
-    if (callback) {
-      callback({
-        postMessageData: postMessageDataRef.current,
-        data,
-        programData,
-      });
-    }
+    setShowActionFlowCompletedCard(true);
   };
 
   useEffect(() => {
@@ -210,6 +211,9 @@ const RenderPaperForm = (props) => {
       // 存入 ref 中防止闭包错误
       paperformDataRef.current = data;
 
+      // 每次更新都重置card显示
+      setShowActionFlowCompletedCard(false);
+
       /**
        * 获取正确的要渲染的 paperfrom-key
        */
@@ -244,7 +248,11 @@ const RenderPaperForm = (props) => {
   }, [data, programData, paperformKey]);
   return (
     <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>
-      <iframe {...rest} src={iframeUrl} />
+      {showActionFlowCompletedCard === false ? (
+        <iframe {...rest} src={iframeUrl} />
+      ) : (
+        <ActionFlowCard {...rest} />
+      )}
 
       <Modal
         footer={null}
@@ -255,7 +263,7 @@ const RenderPaperForm = (props) => {
         onCancel={hideCctionCompleteModal}
       >
         <div className={`${prefix}-modal`}>
-          <img src="" />
+          <img src="https://media.giphy.com/media/5xaOcLGvzHxDKjufnLW/giphy.gif" />
           <span className={`${prefix}-modal-title`}>Action Completed!</span>
           <span>
             You completed {paperformModalDataRef.current?.Title || ''}! We’re so
@@ -263,7 +271,8 @@ const RenderPaperForm = (props) => {
           </span>
           <Button
             type="primary"
-            style={{ marginTop: 16 }}
+            size="large"
+            style={{ marginTop: 16, width: 106 }}
             onClick={hideCctionCompleteModal}
           >
             Done

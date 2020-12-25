@@ -3,28 +3,28 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 15:11:50
+ * @Last Modified time: 2020-12-24 10:23:09
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
-import { useDispatch } from 'react-redux';
+// import { useDispatch } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import './index.less';
-import { ACTION_TYPES_COMMON } from '@/component/paperform-modal/store';
-import useSignSdk from '@/pages/sign/store/sign-sdk';
+// import { ACTION_TYPES_COMMON } from '@/component/paperform-modal/store';
+// import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'program-component';
 
 export default (props) => {
   const history = useHistory();
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
   const { data, id } = props;
   const [coachMenu, setCoachMenu] = useState([]);
   const [activeKey, setActiveKey] = useState(['']);
   // const [defaultKeys, setDefaultKeys] = useState([]);
   const [hoverModuleId, setHoverModuleId] = useState('');
 
-  const { checkSign } = useSignSdk();
+  // const { checkSign } = useSignSdk();
 
   useEffect(() => {
     if (data.Sessions && data.Sessions.length > 0) {
@@ -44,17 +44,17 @@ export default (props) => {
   };
 
   // 阻止冒泡
-  const onPreview = (event, item) => {
-    event.stopPropagation();
-    dispatch({
-      type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE,
-      payload: {
-        data,
-        visible: true,
-        moduleData: item,
-      },
-    });
-  };
+  // const onPreview = (event, item) => {
+  //   event.stopPropagation();
+  //   dispatch({
+  //     type: ACTION_TYPES_COMMON.CHANGE_PAPERFORM_MODAL_VISIBLE,
+  //     payload: {
+  //       data,
+  //       visible: true,
+  //       moduleData: item,
+  //     },
+  //   });
+  // };
   return (
     <div>
       <div className={`${prefix}-coach-title`}>Coaching path</div>
@@ -62,6 +62,7 @@ export default (props) => {
         {coachMenu.map((item) => {
           return (
             <Collapse.Panel
+              className="custom-collapse"
               key={item.Title}
               style={{
                 fontWeight:
@@ -85,10 +86,14 @@ export default (props) => {
                       {moduleItem.Title}
                       {hoverModuleId === moduleItem._id && (
                         <div
-                          onClick={(event) =>
-                            checkSign(() => onPreview(event, moduleItem))
-                          }
+                          // onClick={(event) =>
+                          //   checkSign(() => onPreview(event, moduleItem))
+                          // }
+                          onClick={(event) => {
+                            event.stopPropagation();
+                          }}
                           className={`${prefix}-coach-preview`}
+                          style={{ color: 'gray' }}
                         >
                           Preview
                         </div>

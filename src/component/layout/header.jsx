@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button, notification } from 'antd';
+import { Layout, Menu, Button } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { CaretDownFilled } from '@ant-design/icons';
 import './index.less';
@@ -13,7 +13,7 @@ export default function () {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState([]);
 
-  const { isSign, userLogout, sign } = useSignSdk();
+  const { isSign, sign } = useSignSdk();
 
   useEffect(() => {
     const { href } = window.location;
@@ -33,23 +33,23 @@ export default function () {
     setActiveKey([keys.key]);
   };
 
-  const Logout = () => {
-    userLogout(() => {
-      notification.success({ message: 'Log Out' });
-    });
-  };
+  // const Logout = () => {
+  //   userLogout(() => {
+  //     notification.success({ message: 'Log Out' });
+  //   });
+  // };
 
-  const dropMenu = (
-    <Menu>
-      <Menu.Item key="setting">Settings</Menu.Item>
-      <Menu.Item key="logout" onClick={Logout}>
-        Log Out
-      </Menu.Item>
-    </Menu>
-  );
+  // const dropMenu = (
+  //   <Menu>
+  //     <Menu.Item key="setting">Settings</Menu.Item>
+  //     <Menu.Item key="logout" onClick={Logout}>
+  //       Log Out
+  //     </Menu.Item>
+  //   </Menu>
+  // );
 
-  console.log('sign', sign);
-  console.log('dropMenu', dropMenu);
+  const username = (sign && sign.userinfo && sign.userinfo.Name) || 'name';
+  const firstWord = username.substring(0, 1);
 
   return (
     <Header
@@ -91,9 +91,9 @@ export default function () {
               className={`${prefix}-user-avatar`}
               style={{ backgroundColor: '#1890ff' }}
             >
-              N
+              {firstWord.toUpperCase()}
             </div>
-            <span className={`${prefix}-user-name`}>name</span>
+            <span className={`${prefix}-user-name`}>{username}</span>
 
             <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
           </div>

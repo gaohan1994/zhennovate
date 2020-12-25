@@ -28,34 +28,53 @@ function Goal({ style = {} }) {
       style={{ ...style, height: cardHeight, backgroundImage: `url(${imgbg})` }}
     >
       <h2 style={{ marginTop: 123 }}>My Learning Goals</h2>
-      <div style={{ marginTop: 18 }}>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
-        <Tag color="#e0e0e0">
-          <span style={{ color: '#1b2631' }}>灰色</span>
-        </Tag>
+      <div
+        style={{
+          marginTop: 18,
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+          flexDirection: 'column',
+        }}
+      >
+        <p>
+          <Tag color="#e0e0e0">
+            <span style={{ color: '#1b2631' }}>Confidence</span>
+          </Tag>
+          <Tag color="#e0e0e0">
+            <span style={{ color: '#1b2631' }}>Networking</span>
+          </Tag>
+        </p>
+        <p style={{ marginTop: 8 }}>
+          <Tag color="#e0e0e0">
+            <span style={{ color: '#1b2631' }}>Productivity</span>
+          </Tag>
+          <Tag color="#e0e0e0">
+            <span style={{ color: '#1b2631' }}>Career Planning</span>
+          </Tag>
+        </p>
       </div>
-      <span style={{ marginTop: 18, textAlign: 'center' }}>
-        This is a 95 character limit sentence. This is a 95 character limit
-        sentence. This is a 95 char
+      <span style={{ marginTop: 18, fontSize: 16, textAlign: 'center' }}>
+        I’d want to speak up in meetings more, become more productive WFH, and
+        figure out my career growth plan.
       </span>
       <span style={{ marginTop: 8, textAlign: 'center', color: 'gray' }}>
         edit
       </span>
 
       {/* <h3 style={{ marginTop: 90 }}>Quote of the day</h3> */}
-      <span style={{ marginTop: 18, textAlign: 'center', fontStyle: 'italic' }}>
-        “Inspiration quote will be written here. Inspiration quote will be
-        written here. Inspiration quote will be written here.”
+      <span
+        style={{
+          marginTop: 48,
+          fontSize: 14,
+          textAlign: 'center',
+        }}
+      >
+        “The golden opportunity you are seeking is in yourself. It is not in
+        your environment; it is not in luck or chance, or the help of others; it
+        is in yourself alone.”
       </span>
-      <span>— Author Name</span>
+      <span style={{ marginTop: 8, fontSize: 14 }}>— Orison Sweet Marden</span>
 
       <Modal
         width={440}

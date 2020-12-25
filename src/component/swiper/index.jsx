@@ -18,7 +18,7 @@ function Swiper(props) {
   useEffect(() => {
     setTotal(data.length);
     setCurrent(1);
-  }, []);
+  }, [data]);
 
   const onChange = (type) => {
     if (type === 'prev' && current > 1) {

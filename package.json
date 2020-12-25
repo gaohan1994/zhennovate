@@ -82,7 +82,8 @@
     "start": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
-    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore'"
+    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@3.35.166.100::ZhennovateAPI --exclude '.git' --exclude '.gitignore'",
+    "upload:dev": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore'"
   },
   "eslintConfig": {
     "extends": "react-app"

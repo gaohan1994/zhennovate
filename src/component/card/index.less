@@ -1,0 +1,28 @@
+@import '../../common/theme.less';
+
+@prefix: component-card;
+
+.@{prefix} {
+  &-card {
+    position: relative;
+    .padding(24px);
+    position: relative;
+    width: 360px;
+    height: 240px;
+    border: solid 1px #eaeaea;
+  }
+
+  &-empty {
+    .flex(center, center, column);
+  }
+
+  &-icon {
+    width: 64px;
+    height: 64px;
+    .bg;
+  }
+
+  &-title {
+    .clamp(3);
+  }
+}
