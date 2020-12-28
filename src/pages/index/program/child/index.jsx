@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 17:43:10
+ * @Last Modified time: 2020-12-28 09:23:38
  */
 import React, { useState, useEffect, useRef } from 'react';
 // import { useScroll } from 'ahooks';
@@ -18,12 +18,18 @@ import { ProgramTabKeys } from '../constants';
 import Filter from '@/component/fliter';
 import Sort from '@/component/sort';
 import useStickyComponent from '@/component/sticky';
+import DemoEmpty from '@/component/demo/empty';
+import imgsave from '@/assets/Demo-icon/woman-sitting-office-desk-holding-pen-while-thinking_10045-492.jpg';
+import imgcomplete from '@/assets/Demo-icon/completed-concept-illustration_114360-3891.jpg';
+// import imgsave from '@/assets/Demo-icon/woman-sitting-office-desk-holding-pen-while-thinking_10045-492.png';
 
 const prefix = 'program-child';
 
 export default (props) => {
   const { tab } = props;
   const { list } = useProgramHooks(tab.key);
+
+  const [isDemo] = useState(true);
 
   // programs的容器
   const programContainerRef = useRef(null);
@@ -140,17 +146,40 @@ export default (props) => {
 
   return (
     <div className={`${prefix}`}>
-      <div style={{ marginRight: 24 }} ref={programContainerRef}>
-        {renderSort()}
-        {programs.length > 0 &&
-          programs.map((item) => {
-            return <ProgramItem key={item?._id} data={item || {}} tab={tab} />;
-          })}
-        {programs.length === 0 && <Empty tab={tab} />}
-      </div>
+      {isDemo ? (
+        <DemoEmpty
+          img={
+            tab.key === ProgramTabKeys.save
+              ? imgsave
+              : tab.key === ProgramTabKeys.complete
+              ? imgcomplete
+              : null
+          }
+          detail={
+            tab.key === ProgramTabKeys.save
+              ? "Here, you can visit the programs you've saved for later."
+              : tab.key === ProgramTabKeys.complete
+              ? 'Here, you can visit the programs you have completed.'
+              : ''
+          }
+        />
+      ) : (
+        <>
+          <div style={{ marginRight: 24 }} ref={programContainerRef}>
+            {renderSort()}
+            {programs.length > 0 &&
+              programs.map((item) => {
+                return (
+                  <ProgramItem key={item?._id} data={item || {}} tab={tab} />
+                );
+              })}
+            {programs.length === 0 && <Empty tab={tab} />}
+          </div>
 
-      {renderFilter()}
-      {isSticky && <div style={{ width: 360, height: 1 }} />}
+          {renderFilter()}
+          {isSticky && <div style={{ width: 360, height: 1 }} />}
+        </>
+      )}
     </div>
   );
 };

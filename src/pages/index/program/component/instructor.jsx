@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:29:48
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-24 14:22:03
+ * @Last Modified time: 2020-12-27 18:17:54
  */
 import React from 'react';
 // import { Card } from 'antd';
@@ -46,6 +46,7 @@ export default (props) => {
                         style={{ marginBottom: 12 }}
                       >
                         {item.Name}
+                        {item.Title && `，${item.Title}`}
                       </div>
                       <div
                         className={`${prefix}-instructor-item-text ${

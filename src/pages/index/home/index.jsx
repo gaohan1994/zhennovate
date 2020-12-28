@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 11:30:00
+ * @Last Modified time: 2020-12-27 16:42:31
  */
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
@@ -14,6 +14,7 @@ import ProgramDescribe from '@/pages/index/program/describe';
 import ProgramDetail from '@/pages/index/detail';
 import HomePage from '@/pages/index/home/home';
 import './index.less';
+import Insights from '../insights';
 // import { useMount } from 'ahooks';
 
 const renderWithFooter = (Component, props) => {
@@ -68,6 +69,11 @@ export default function (props) {
           exact={true}
           path="/home"
           render={(props) => renderWithFooter(HomePage, props)}
+        />
+        <Route
+          exact={true}
+          path="/insights"
+          render={(props) => renderWithFooter(Insights, props)}
         />
       </AnimatedSwitch>
     </LayoutContainer>

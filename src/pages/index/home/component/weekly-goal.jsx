@@ -18,7 +18,7 @@ function WeeklyGoal() {
       <Sort
         title="Weekly Goal"
         titleStyle={{ fontSize: 16 }}
-        subTitle="Nov 6 - Nov 12"
+        // subTitle="Nov 6 - Nov 12"
         subTitleStyle={{ fontSize: 12, marginTop: 2, color: '#1b2631' }}
         showSort={false}
       />

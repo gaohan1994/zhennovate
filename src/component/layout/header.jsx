@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Layout, Menu, Button } from 'antd';
+import { Layout, Menu, Button, Dropdown } from 'antd';
 import { Link, useHistory } from 'react-router-dom';
 import { CaretDownFilled } from '@ant-design/icons';
 import './index.less';
@@ -13,7 +13,7 @@ export default function () {
   const history = useHistory();
   const [activeKey, setActiveKey] = useState([]);
 
-  const { isSign, sign } = useSignSdk();
+  const { isSign, sign, userLogout } = useSignSdk();
 
   useEffect(() => {
     const { href } = window.location;
@@ -33,20 +33,20 @@ export default function () {
     setActiveKey([keys.key]);
   };
 
-  // const Logout = () => {
-  //   userLogout(() => {
-  //     notification.success({ message: 'Log Out' });
-  //   });
-  // };
+  const Logout = () => {
+    userLogout(() => {
+      // notificatin.success({ message: 'Log Out' });
+    });
+  };
 
-  // const dropMenu = (
-  //   <Menu>
-  //     <Menu.Item key="setting">Settings</Menu.Item>
-  //     <Menu.Item key="logout" onClick={Logout}>
-  //       Log Out
-  //     </Menu.Item>
-  //   </Menu>
-  // );
+  const dropMenu = (
+    <Menu>
+      <Menu.Item key="setting">Settings</Menu.Item>
+      <Menu.Item key="logout" onClick={Logout}>
+        Log out
+      </Menu.Item>
+    </Menu>
+  );
 
   const username = (sign && sign.userinfo && sign.userinfo.Name) || 'name';
   const firstWord = username.substring(0, 1);
@@ -83,20 +83,19 @@ export default function () {
             Sign Up
           </Button>
         ) : (
-          // <Dropdown trigger={['click']} overlay={dropMenu}>
+          <Dropdown trigger={['click']} overlay={dropMenu}>
+            <div className={`${prefix}-user`}>
+              <div
+                className={`${prefix}-user-avatar`}
+                style={{ backgroundColor: '#1890ff' }}
+              >
+                {firstWord.toUpperCase()}
+              </div>
+              <span className={`${prefix}-user-name`}>{username}</span>
 
-          // </Dropdown>
-          <div className={`${prefix}-user`}>
-            <div
-              className={`${prefix}-user-avatar`}
-              style={{ backgroundColor: '#1890ff' }}
-            >
-              {firstWord.toUpperCase()}
+              <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
             </div>
-            <span className={`${prefix}-user-name`}>{username}</span>
-
-            <CaretDownFilled style={{ margin: '0 16px 0 4px' }} />
-          </div>
+          </Dropdown>
         )}
       </div>
     </Header>
