@@ -21,6 +21,7 @@ export function formatModuleData(
     }
   });
   const session = programData.Sessions[indexs[0]];
+
   const moduleItem = session.Modules[indexs[1]];
 
   return {

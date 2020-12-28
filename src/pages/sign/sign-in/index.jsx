@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-21 10:41:57
+ * @Last Modified time: 2020-12-28 11:08:48
  */
 import React, { useState } from 'react';
 import { Form, message } from 'antd';
@@ -14,6 +14,7 @@ import '../index.less';
 import signSdk from '../store/sign-sdk';
 import { useHistory } from 'react-router-dom';
 import Button from '../component/button';
+import { formatSearch } from '@/common/request';
 
 const prefix = 'sign-page';
 
@@ -27,7 +28,18 @@ export default function SignIn() {
 
   const loginCallback = () => {
     setLoading(false);
-    history.replace(`/home`);
+
+    setTimeout(() => {
+      if (history.location.search.length > 0) {
+        const params = formatSearch(history.location.search);
+        if (params.forward_url) {
+          const forwardUrl = decodeURIComponent(params.forward_url);
+          history.push(forwardUrl);
+          return;
+        }
+      }
+      history.push('/home');
+    }, 1000);
   };
 
   const onSubmit = async () => {

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-24 14:20:00
+ * @Last Modified time: 2020-12-28 11:08:38
  */
 import React from 'react';
 import { Form, notification, Checkbox } from 'antd';
@@ -17,6 +17,7 @@ import SignButton from '../component/button';
 import invariant from 'invariant';
 import '../index.less';
 import { Action_Types } from '../store/sign-store';
+import { formatSearch } from '@/common/request';
 
 const prefix = 'sign-page';
 
@@ -36,15 +37,24 @@ export default function SignUp() {
         name: values.name,
         password: md5(values.password),
       };
-      console.log('payload', payload);
       const result = await register(payload);
-      console.log('result', result);
       invariant(result.error_code === 0, result.message || ' ');
 
       dispatch({
         type: Action_Types.Receive_Userinfo,
         payload: result.data,
       });
+
+      setTimeout(() => {
+        if (history.location.search.length > 0) {
+          const params = formatSearch(history.location.search);
+          if (params.forward_url) {
+            const forwardUrl = decodeURIComponent(params.forward_url);
+            history.push(forwardUrl);
+            return;
+          }
+        }
+      }, 1000);
       history.push('/home');
     } catch (error) {
       notification.error({ message: error.message });

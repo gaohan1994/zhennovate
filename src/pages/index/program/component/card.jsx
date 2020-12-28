@@ -3,9 +3,9 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 15:20:48
+ * @Last Modified time: 2020-12-28 11:11:45
  */
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { Player } from 'video-react';
@@ -21,10 +21,27 @@ export default (props) => {
   const history = useHistory();
   // 视频modal显示
   const [visible, setVisible] = useState(false);
+  const [firstModule, setFirstModule] = useState({});
 
   const { checkSign } = useSignSdk();
 
   const { durationString, durationDaysString } = useFormatProgramData(data);
+
+  useEffect(() => {
+    if (data.Sessions) {
+      // 第一个module
+      console.log('data', data);
+
+      if (
+        data?.Sessions &&
+        data?.Sessions[0] &&
+        data?.Sessions[0]?.Modules &&
+        data?.Sessions[0]?.Modules[0]
+      ) {
+        setFirstModule(data?.Sessions[0]?.Modules[0]);
+      }
+    }
+  }, [data]);
 
   /**
    * 这里如果登录了跳转到第一个module去
@@ -83,7 +100,17 @@ export default (props) => {
         <Button
           type="primary"
           style={{ width: '100%', marginTop: 24 }}
-          onClick={() => checkSign(startProgram)}
+          onClick={() =>
+            checkSign(
+              startProgram,
+              `/program/detail/${id}` +
+                `${
+                  firstModule && firstModule._id
+                    ? `?module_id=${firstModule._id}`
+                    : ''
+                }`,
+            )
+          }
         >
           Start program
         </Button>

@@ -51,9 +51,19 @@ function useSignSdk() {
     }
   };
 
-  const checkSign = (callback) => {
+  const checkSign = (callback, params) => {
     if (!isSign) {
-      history.push(`/sign/signup`);
+      history.push(
+        `/sign/signup${
+          params
+            ? `?forward_url=${
+                typeof params === 'string'
+                  ? encodeURIComponent(params)
+                  : JSON.stringify(params)
+              }`
+            : ''
+        }`,
+      );
       return;
     }
     callback && callback();

@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 10:22:02
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-18 15:58:09
+ * @Last Modified time: 2020-12-28 11:02:55
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { message, Button } from 'antd';
@@ -12,6 +12,8 @@ export default (props) => {
   const { form, submit } = props;
   // 获取buttondom为了设置高度
   const buttonRef = useRef(null);
+
+  const [loading, setLoading] = useState(false);
   // message的高度
   const [messageHeight, setMessageHeight] = useState(20);
 
@@ -27,7 +29,12 @@ export default (props) => {
   const onSubmit = async () => {
     try {
       const result = await form?.validateFields();
+      setLoading(true);
       submit(result);
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 3000);
     } catch (error) {
       error.errorFields &&
         message.error({
@@ -45,7 +52,12 @@ export default (props) => {
 
   return (
     <div ref={buttonRef}>
-      <Button type="primary" style={{ width: '100%' }} onClick={onSubmit}>
+      <Button
+        type="primary"
+        loading={loading}
+        style={{ width: '100%' }}
+        onClick={onSubmit}
+      >
         {props.children}
       </Button>
     </div>

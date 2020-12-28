@@ -25,7 +25,7 @@ export default function (props) {
           <Button
             style={{ minWidth: 120 }}
             onClick={() => {
-              history.push(`/sign/signup`);
+              history.push(`/sign/signup${history.location.search}`);
             }}
           >
             Sign Up
@@ -34,7 +34,7 @@ export default function (props) {
           <Button
             style={{ minWidth: 120 }}
             onClick={() => {
-              history.push(`/sign/signin`);
+              history.push(`/sign/signin${history.location.search}`);
             }}
           >
             Sign In
