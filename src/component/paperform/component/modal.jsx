@@ -39,6 +39,7 @@ function PaperformActionModal(props) {
       closable={false}
       visible={visible}
       onCancel={onCancel}
+      bodyStyle={{ padding: '40px 90px 32px 90px' }}
     >
       <div className={`${prefix}-modal`}>
         {/* <img src="" /> */}

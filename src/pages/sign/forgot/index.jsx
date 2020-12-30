@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-21 10:41:42
+ * @Last Modified time: 2020-12-28 11:17:00
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -19,7 +19,6 @@ export default () => {
   const [loading, setLoading] = useState(false);
 
   const onSubmit = () => {
-    console.log('hello');
     setLoading(true);
   };
   return (

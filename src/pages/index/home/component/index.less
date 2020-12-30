@@ -140,4 +140,38 @@
       font-weight: bold;
     }
   }
+
+  &-checkin {
+    position: relative;
+    font-size: 18px;
+    color: @black;
+    padding: 40px 100px 80px 100px;
+    & > h1 {
+      font-size: 30px;
+      color: @clear-blue;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    & > ul > li {
+      .margin(24px, l);
+    }
+
+    & > ul,
+    h1,
+    p {
+      .margin(15px, b);
+    }
+
+    &-corner {
+      position: absolute;
+      bottom: 0;
+      right: 54px;
+      max-width: 200px;
+      max-height: 215px;
+    }
+    &-skeleton {
+      margin: 100px;
+    }
+  }
 }

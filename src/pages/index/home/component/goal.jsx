@@ -15,7 +15,6 @@ function Goal({ style = {} }) {
    */
   useEffect(() => {
     const height = document.body.clientHeight;
-    console.log('height', height);
     const cardPositionMargin = 64 + 32 + 32;
     if (height - cardPositionMargin < 838) {
       setCardHeight(height - cardPositionMargin);

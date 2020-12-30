@@ -17,7 +17,6 @@ export default function () {
 
   useEffect(() => {
     const { href } = window.location;
-    console.log('href', href);
     if (href.indexOf('/home') > -1) {
       setActiveKey(['home']);
     }

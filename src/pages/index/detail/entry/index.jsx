@@ -40,19 +40,17 @@ export default (props) => {
 
   const { userId } = useSignSdk();
 
+  console.log('entryData', entryData);
   useEffect(() => {
     programEntry({
       userId,
       programId: programData._id,
     }).then((result) => {
-      console.log('entry', result);
       if (result.error_code === ResponseCode.success) {
         setEntryData(result.data);
       }
     });
   }, []);
-
-  console.log('entryData', entryData);
 
   return (
     <div

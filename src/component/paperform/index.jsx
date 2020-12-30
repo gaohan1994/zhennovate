@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-24 16:48:51
+ * @Last Modified time: 2020-12-29 16:09:24
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -44,9 +44,27 @@ const prefix = 'component-paperform';
  */
 const RenderPaperForm = (props) => {
   const history = useHistory();
+
+  /**
+   * @param paperformDataRef 存放module数据，防止闭包等问题引发的错误
+   */
   const paperformDataRef = useRef(null);
+
+  /**
+   * @param paperformDataKeyRef 存放paperfromkey
+   */
   const paperformDataKeyRef = useRef(null);
+
+  /**
+   * @param paperformModalDataRef
+   * module1 做完之后会跳转到 module2
+   * paperformModalDataRef数据为 module1
+   */
   const paperformModalDataRef = useRef(null);
+
+  /**
+   * @param postMessageDataRef 通过iframe的postmessage返回的数据
+   */
   const postMessageDataRef = useRef(null);
 
   const { showCalendar } = useCalendar();
@@ -55,13 +73,19 @@ const RenderPaperForm = (props) => {
   const {
     data,
     programData,
+    /**
+     * @param preview 是否是预览模式 */
     preview = false,
     /**
+     * @param paperformKey
      * 渲染的paperfrom-Key
      * 常规是 PFKey
-     * reflect的key是 CompletePFKey
-     */
+     * reflect的key是 CompletePFKey */
     paperformKey = RenderPaperformKeyTypes.PFKey,
+    /**
+     * @param delay
+     * 触发回调的延时 12-29添加默认10秒 */
+    delay = 1,
     callback,
     ...rest
   } = props;
@@ -166,7 +190,6 @@ const RenderPaperForm = (props) => {
             if (result.error_code === ResponseCode.success) {
               /**
                * 如果 type = action 显示是否现在就做 complete actionChoiceTodoVisible
-               *
                * 如果 type = action 是 reflect 则显示完成modal
                */
               if (
@@ -183,7 +206,10 @@ const RenderPaperForm = (props) => {
                 paperformModalDataRef.current = data;
                 setActionCompleteVisible(true);
               }
-              callback && callback({ postMessageData, data, programData });
+
+              setTimeout(() => {
+                callback && callback({ postMessageData, data, programData });
+              }, delay * 1000);
             }
           })
           .catch((error) => {

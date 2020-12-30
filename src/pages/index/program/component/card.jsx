@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 11:11:45
+ * @Last Modified time: 2020-12-28 11:16:51
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal } from 'antd';
@@ -30,7 +30,6 @@ export default (props) => {
   useEffect(() => {
     if (data.Sessions) {
       // 第一个module
-      console.log('data', data);
 
       if (
         data?.Sessions &&

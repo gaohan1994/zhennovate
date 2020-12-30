@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-17 14:54:07
+ * @Last Modified time: 2020-12-28 11:16:55
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -24,8 +24,6 @@ export default () => {
   const [showSuffix, setShowSuffix] = useState(false);
 
   const onInput = (event) => {
-    console.log('event', event.target.value);
-
     if (event.target.value.length === 6) {
       setShowSuffix(true);
     }

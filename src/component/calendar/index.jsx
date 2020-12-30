@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-23 17:40:53
+ * @Last Modified time: 2020-12-28 11:16:19
  */
 
 import React, { useState, useEffect } from 'react';
@@ -54,7 +54,6 @@ function Calendar(props) {
     renderType = 'drop',
     render,
   } = props;
-  // console.log('data', data);
   // 是否显示calendar
   const [visible, setVisible] = useState(false);
   // const [dropVisible, setDropVisible] = useState(false);
