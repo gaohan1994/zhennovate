@@ -11,8 +11,6 @@ function CheckInComponent(props) {
 
   const { sign } = useSignSdk();
 
-  const [loading, setLoading] = useState(false);
-
   /**
    * 显示 check-in 结果 */
   // const [showCheckinResult, setShowCheckResult] = useState(false);
@@ -59,14 +57,6 @@ function CheckInComponent(props) {
     return () => window.removeEventListener('message', () => {});
   }, []);
 
-  useEffect(() => {
-    if (url && url.length > 0) {
-      setLoading(false);
-    } else {
-      setLoading(true);
-    }
-  }, [url]);
-
   return (
     <Modal
       visible={visible}
@@ -78,7 +68,7 @@ function CheckInComponent(props) {
       title={title}
       onCancel={onHide}
     >
-      <Spin className={`${prefix}-skeleton`} spinning={loading} size="large">
+      <Spin className={`${prefix}-skeleton`} spinning={!url} size="large">
         {/* {!showCheckinResult ? (
           <iframe width={812} height={452} src={url} />
         ) : (

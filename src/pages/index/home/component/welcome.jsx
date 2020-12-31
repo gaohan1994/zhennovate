@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-30 14:26:47
+ * @Last Modified time: 2020-12-30 16:57:32
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -23,7 +23,7 @@ const prefix = 'component-home-welcome';
 
 function Welcome(props) {
   // const {} = props;
-  const { sign } = useSignSdk();
+  const { sign, checkSign } = useSignSdk();
   const { userinfo } = sign;
 
   const [isCheckin, setIsCheckin] = useState(false);
@@ -50,21 +50,20 @@ function Welcome(props) {
   };
 
   useEffect(() => {
-    if (sign.userinfo) {
+    if (sign.userinfo && sign.userinfo._id) {
       fetchCheckin();
     }
-  }, [sign.userinfo]);
+  }, []);
 
   const onCheckIn = () => {
-    if (sign.userinfo) {
+    checkSign(() => {
       setVisible(true);
       checkStart({ userId: sign.userinfo._id }).then((result) => {
-        console.log('checkStart', result);
         if (result.error_code === ResponseCode.success) {
           setCheckinData(result.data);
         }
       });
-    }
+    });
   };
 
   /**

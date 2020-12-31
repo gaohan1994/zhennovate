@@ -13,7 +13,7 @@ function HomePrograms() {
   const { sign } = useSignSdk();
 
   useEffect(() => {
-    if (sign.userinfo) {
+    if (sign.userinfo && sign.userinfo._id) {
       progressList(sign.userinfo).then((result) => {
         if (result.error_code === ResponseCode.success) {
           let progressArrayList = [];
