@@ -37,3 +37,22 @@ body {
 .ant-btn:hover {
   box-shadow: 3px 6px 10px 0 rgba(34, 34, 34, 0.2) !important;
 }
+
+:root {
+  --white: #ffffff;
+  --black: #1b2631;
+  --gray-3: #babdc0;
+  --cool-green: #2fc25b;
+  --clear-blue: #1890ff;
+  --gray-4: #e0e0e0;
+  --gray-2: #8c9297;
+  --topaz: #15c3b1;
+  --duck-egg-blue: #d0f3ef;
+  --tiffany-blue: #89e1d8;
+  --sunflower: #facc14;
+  --watermelon: #f04864;
+  --gray-1: #48515a;
+  --bluish-purple: #8543e0;
+  --gray-5: #f8f8f8;
+  --pastel-red: #e86452;
+}
