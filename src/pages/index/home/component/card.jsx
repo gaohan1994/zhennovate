@@ -10,6 +10,8 @@ function HomeProgramCard(props) {
   const { data } = props;
   const isEmpty = data && data._id;
 
+  console.log('data', data);
+
   if (!isEmpty) {
     return (
       <div className={`${prefix}-card ${prefix}-empty`}>
@@ -45,7 +47,6 @@ function HomeProgramCard(props) {
       </Menu.Item>
     </Menu>
   );
-
   return (
     <div
       className={`${prefix}-card`}

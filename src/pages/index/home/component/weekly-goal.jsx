@@ -1,17 +1,52 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './index.less';
-import { Progress, Modal, Button } from 'antd';
+import { Progress, Modal, Button, message } from 'antd';
 import Sort from '@/component/sort';
 import Choice from '@/component/choice';
+import { renewactionplan } from '../constants';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import invariant from 'invariant';
+import { ResponseCode } from '@/common/config';
 // import moment from 'moment';
 
 const prefix = 'component-home-actions';
 
-function WeeklyGoal() {
+function WeeklyGoal(props) {
+  const { data = {} } = props;
+  const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
 
+  const [weeklyGoalValue, setWeeklyGoalValue] = useState(0);
+
+  const { endCount, planEndCount } = data;
   // const currentDate = moment().format('MM/DD');
   // const nextWeekDate = moment().add(7, 'days').format('MM/DD');
+
+  useEffect(() => {
+    if (planEndCount) {
+      setWeeklyGoalValue(planEndCount);
+    }
+  }, [planEndCount]);
+
+  const changeWeeklyGoal = () => {
+    try {
+      invariant(!!isSign, 'Please Sign-in');
+
+      if (weeklyGoalValue !== planEndCount) {
+        renewactionplan({
+          userId,
+          count: weeklyGoalValue,
+        }).then((result) => {
+          if (result.error_code === ResponseCode.success) {
+            console.log('result', result);
+            message.success('Weekly Action Goal Changed!');
+          }
+        });
+      }
+    } catch (error) {
+      message.error(error.message);
+    }
+  };
 
   return (
     <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
@@ -34,7 +69,7 @@ function WeeklyGoal() {
             return (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: 16, fontWeight: 'bold' }}>
-                  {`${1}/${4}`}
+                  {`${endCount || 0}/${planEndCount || 0}`}
                 </span>
                 <span style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}>
                   Actions
@@ -45,15 +80,16 @@ function WeeklyGoal() {
         />
 
         <span style={{ marginLeft: 14 }}>
-          Complete <span style={{ fontWeight: 'bold' }}>4</span> actions to
-          reach your weekly goal.
+          Complete{' '}
+          <span style={{ fontWeight: 'bold' }}>{planEndCount || 0}</span>{' '}
+          actions to reach your weekly goal.
         </span>
       </div>
 
       <span
         className={`${prefix}-edit`}
-        // onClick={() => setVisible(true)}
-        style={{ color: 'gray' }}
+        onClick={() => setVisible(true)}
+        // style={{ color: 'gray' }}
       >
         edit
       </span>
@@ -69,6 +105,7 @@ function WeeklyGoal() {
             type="primary"
             style={{ marginRight: 8 }}
             onClick={() => {
+              changeWeeklyGoal();
               setVisible(false);
             }}
           >
@@ -83,16 +120,9 @@ function WeeklyGoal() {
           </span>
 
           <Choice
-            defaultValue="2"
-            onChoice={(value) => {
-              console.log('value', value);
-            }}
+            defaultValue={weeklyGoalValue}
+            onChoice={setWeeklyGoalValue}
             options={[
-              {
-                label: 'Casual Learner',
-                subTitle: '2 Actions per week',
-                value: '1',
-              },
               {
                 label: 'Casual Learner',
                 subTitle: '2 Actions per week',
@@ -100,8 +130,19 @@ function WeeklyGoal() {
               },
               {
                 label: 'Casual Learner',
-                subTitle: '2 Actions per week',
-                value: '3',
+                subTitle: '4 Actions per week',
+                value: '4',
+              },
+              {
+                label: 'Casual Learner',
+                subTitle: '6 Actions per week',
+                value: '6',
+              },
+
+              {
+                label: 'Casual Learner',
+                subTitle: '8 Actions per week',
+                value: '8',
               },
             ]}
           />
