@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-24 14:20:00
+ * @Last Modified time: 2021-01-06 11:22:43
  */
 import React from 'react';
 import { Form, notification, Checkbox } from 'antd';
@@ -36,9 +36,8 @@ export default function SignUp() {
         name: values.name,
         password: md5(values.password),
       };
-      console.log('payload', payload);
       const result = await register(payload);
-      console.log('result', result);
+      console.log('[register result]', result);
       invariant(result.error_code === 0, result.message || ' ');
 
       dispatch({
