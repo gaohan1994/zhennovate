@@ -235,3 +235,8 @@ table {
   -webkit-line-clamp: 2 !important;
   -webkit-box-orient: vertical !important;
 } */
+
+.ant-message-notice-content {
+  background: #1b2631;
+  color: #fff;
+}

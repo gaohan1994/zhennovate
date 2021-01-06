@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 09:23:38
+ * @Last Modified time: 2021-01-06 14:30:35
  */
 import React, { useState, useEffect, useRef } from 'react';
 // import { useScroll } from 'ahooks';
@@ -29,7 +29,7 @@ export default (props) => {
   const { tab } = props;
   const { list } = useProgramHooks(tab.key);
 
-  const [isDemo] = useState(true);
+  const [isDemo] = useState(false);
 
   // programs的容器
   const programContainerRef = useRef(null);

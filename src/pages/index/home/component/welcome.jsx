@@ -4,11 +4,12 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-30 16:57:32
+ * @Last Modified time: 2021-01-06 16:18:52
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { ArrowRightOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 import './index.less';
 import imgavatar from '@/assets/Character/Component-Character-Female-A.svg';
 import imgemoji from '@/assets/Icon-Emoji-Hi@2x.png';
@@ -18,12 +19,14 @@ import { checkin, checkStart } from '../constants';
 import { ResponseCode } from '@/common/config';
 import PaperformActionModal from '@/component/paperform/component/modal';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
+import invariant from 'invariant';
+import { useHistory } from 'react-router-dom';
 
 const prefix = 'component-home-welcome';
 
 function Welcome(props) {
-  // const {} = props;
-  const { sign, checkSign } = useSignSdk();
+  const history = useHistory();
+  const { sign, isSign } = useSignSdk();
   const { userinfo } = sign;
 
   const [isCheckin, setIsCheckin] = useState(false);
@@ -56,14 +59,18 @@ function Welcome(props) {
   }, []);
 
   const onCheckIn = () => {
-    checkSign(() => {
+    try {
+      invariant(!isSign, 'Plase Sign-in');
       setVisible(true);
       checkStart({ userId: sign.userinfo._id }).then((result) => {
         if (result.error_code === ResponseCode.success) {
           setCheckinData(result.data);
         }
       });
-    });
+    } catch (error) {
+      message.info(error.message);
+      history.push('/sign/signup');
+    }
   };
 
   /**

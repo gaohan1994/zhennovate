@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 21:46:55
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-27 16:42:23
+ * @Last Modified time: 2021-01-06 16:07:22
  */
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
@@ -10,6 +10,12 @@ import Home from '@/pages/index/home';
 import Sign from '@/pages/sign';
 import PaperformModal from './component/paperform-modal';
 import CalendarModal from './component/calendar/calendar-modal';
+import { message } from 'antd';
+
+message.config({
+  duration: 2,
+  className: 'zhennovate-message',
+});
 
 const RouteMenu = [
   {

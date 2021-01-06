@@ -13,18 +13,26 @@ const prefix = 'component-home-actions';
 
 function WeeklyGoal(props) {
   const { data = {} } = props;
+  const { endCount, planEndCount } = data;
   const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
 
+  /**
+   * @param weeklyGoalValue modal 里面显示的数量
+   */
   const [weeklyGoalValue, setWeeklyGoalValue] = useState(0);
+  /**
+   * @param weeklyGoalPlanValue 进度条和文字中的分母数量
+   */
+  const [weeklyGoalPlanValue, setWeeklyGoalPlanValue] = useState(0);
 
-  const { endCount, planEndCount } = data;
   // const currentDate = moment().format('MM/DD');
   // const nextWeekDate = moment().add(7, 'days').format('MM/DD');
 
   useEffect(() => {
     if (planEndCount) {
       setWeeklyGoalValue(planEndCount);
+      setWeeklyGoalPlanValue(planEndCount);
     }
   }, [planEndCount]);
 
@@ -39,6 +47,7 @@ function WeeklyGoal(props) {
         }).then((result) => {
           if (result.error_code === ResponseCode.success) {
             console.log('result', result);
+            setWeeklyGoalPlanValue(weeklyGoalValue);
             message.success('Weekly Action Goal Changed!');
           }
         });
@@ -64,12 +73,12 @@ function WeeklyGoal(props) {
           strokeColor="#15c3b1"
           strokeWidth={8}
           strokeLinecap="square"
-          percent={25}
+          percent={(endCount || 0) / (weeklyGoalPlanValue || 0)}
           format={(percent, successPercent) => {
             return (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
                 <span style={{ fontSize: 16, fontWeight: 'bold' }}>
-                  {`${endCount || 0}/${planEndCount || 0}`}
+                  {`${endCount || 0}/${weeklyGoalPlanValue || 0}`}
                 </span>
                 <span style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}>
                   Actions
@@ -81,7 +90,7 @@ function WeeklyGoal(props) {
 
         <span style={{ marginLeft: 14 }}>
           Complete{' '}
-          <span style={{ fontWeight: 'bold' }}>{planEndCount || 0}</span>{' '}
+          <span style={{ fontWeight: 'bold' }}>{weeklyGoalPlanValue || 0}</span>{' '}
           actions to reach your weekly goal.
         </span>
       </div>
@@ -126,23 +135,23 @@ function WeeklyGoal(props) {
               {
                 label: 'Casual Learner',
                 subTitle: '2 Actions per week',
-                value: '2',
+                value: 2,
               },
               {
                 label: 'Casual Learner',
                 subTitle: '4 Actions per week',
-                value: '4',
+                value: 4,
               },
               {
                 label: 'Casual Learner',
                 subTitle: '6 Actions per week',
-                value: '6',
+                value: 6,
               },
 
               {
                 label: 'Casual Learner',
                 subTitle: '8 Actions per week',
-                value: '8',
+                value: 8,
               },
             ]}
           />
