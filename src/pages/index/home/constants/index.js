@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 13:55:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-06 14:14:10
+ * @Last Modified time: 2021-01-07 10:41:36
  */
 import { api } from '@/common/request';
 
@@ -29,4 +29,9 @@ export const checkEnd = (params) => {
 // renewactionplan 重新设置周目标
 export const renewactionplan = (params) => {
   return api.get(`/user/renewactionplan/${params.userId}/${params.count}`);
+};
+
+// homeInprogress 首页的进度中的program
+export const homeInprogress = (params) => {
+  return api.get(`/home/inprogress/${params.userId}`);
 };
