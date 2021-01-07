@@ -3,10 +3,12 @@ import './index.less';
 import { ArrowRightOutlined, EllipsisOutlined } from '@ant-design/icons';
 import imggoal from '@/assets/Icon-Action@2x.png';
 import { Menu, Dropdown } from 'antd';
+import { useHistory } from 'react-router-dom';
 
 const prefix = 'component-home-actions';
 
 function HomeProgramCard(props) {
+  const history = useHistory();
   const { data } = props;
   const isEmpty = data && data._id;
 
@@ -45,6 +47,13 @@ function HomeProgramCard(props) {
       </Menu.Item>
     </Menu>
   );
+
+  const onCompleteAction = () => {
+    history.push(
+      `/program/detail/${data.Program}?module_id=${data.Module?._id}`,
+    );
+  };
+
   return (
     <div
       className={`${prefix}-card`}
@@ -71,7 +80,11 @@ function HomeProgramCard(props) {
         </span>
       </div>
 
-      <span className={`${prefix}-complete`} style={{ color: 'gray' }}>
+      <span
+        className={`${prefix}-complete`}
+        // style={{ color: 'gray' }}
+        onClick={onCompleteAction}
+      >
         Complete Action
         <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
       </span>

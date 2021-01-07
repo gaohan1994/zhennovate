@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-05 17:49:38
+ * @Last Modified time: 2021-01-07 10:08:32
  */
 import React, { useEffect, useState } from 'react';
 // import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ import { doingaction } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
 import { chunk } from 'lodash';
+import useHomeHooks from '../hooks';
 
 const HomeActionTypes = {
   weeklyGoal: 'weeklyGoal',
@@ -30,11 +31,14 @@ function Actions(props) {
   const [data, setData] = useState({});
   const [swiperData, setSwiperData] = useState([[WeeklyGoalData, {}]]);
 
+  const { receiveWeeklyGoalCallback } = useHomeHooks();
+
   useEffect(() => {
     if (userId) {
       doingaction({ userId }).then((result) => {
         if (result.error_code === ResponseCode.success) {
           setData(result.data);
+          receiveWeeklyGoalCallback(result.data);
         }
       });
     }

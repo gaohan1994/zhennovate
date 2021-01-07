@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-29 16:09:24
+ * @Last Modified time: 2021-01-06 17:59:21
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';

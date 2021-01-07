@@ -7,6 +7,8 @@ import { renewactionplan } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
+import PaperformActionModal from '@/component/paperform/component/modal';
+import useHomeHooks from '../hooks';
 // import moment from 'moment';
 
 const prefix = 'component-home-actions';
@@ -17,6 +19,8 @@ function WeeklyGoal(props) {
   const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
 
+  const { homeStore, toogleWeeklyCompleteModal } = useHomeHooks();
+
   /**
    * @param weeklyGoalValue modal 里面显示的数量
    */
@@ -25,6 +29,11 @@ function WeeklyGoal(props) {
    * @param weeklyGoalPlanValue 进度条和文字中的分母数量
    */
   const [weeklyGoalPlanValue, setWeeklyGoalPlanValue] = useState(0);
+
+  /**
+   * @param percent 进度条
+   */
+  const [percent, setPercent] = useState(0);
 
   // const currentDate = moment().format('MM/DD');
   // const nextWeekDate = moment().add(7, 'days').format('MM/DD');
@@ -35,6 +44,14 @@ function WeeklyGoal(props) {
       setWeeklyGoalPlanValue(planEndCount);
     }
   }, [planEndCount]);
+
+  /**
+   * 计算如果做完了action则弹出弹出框庆祝
+   */
+  useEffect(() => {
+    const p = ((endCount || 0) / (weeklyGoalPlanValue || 0)) * 100;
+    setPercent(p);
+  }, [endCount, weeklyGoalPlanValue]);
 
   const changeWeeklyGoal = () => {
     try {
@@ -73,7 +90,7 @@ function WeeklyGoal(props) {
           strokeColor="#15c3b1"
           strokeWidth={8}
           strokeLinecap="square"
-          percent={(endCount || 0) / (weeklyGoalPlanValue || 0)}
+          percent={percent}
           format={(percent, successPercent) => {
             return (
               <div style={{ display: 'flex', flexDirection: 'column' }}>
@@ -95,13 +112,19 @@ function WeeklyGoal(props) {
         </span>
       </div>
 
-      <span
-        className={`${prefix}-edit`}
-        onClick={() => setVisible(true)}
-        // style={{ color: 'gray' }}
-      >
+      <span className={`${prefix}-edit`} onClick={() => setVisible(true)}>
         edit
       </span>
+
+      <PaperformActionModal
+        visible={homeStore.weeklyCompleteModalVisible}
+        title="Action Goal Reached!"
+        subTitle="You’ve completed your action goal for this week! Yipee! Pat yourself on the back for staying on track!"
+        confirmButton="Done"
+        img="https://media.giphy.com/media/5xaOcLGvzHxDKjufnLW/giphy.gif"
+        bodyStyle={{ padding: '20px 32px' }}
+        setVisible={toogleWeeklyCompleteModal}
+      />
 
       <Modal
         width={440}
