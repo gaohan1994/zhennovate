@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-06 11:18:19
+ * @Last Modified time: 2021-01-08 10:32:38
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -116,12 +116,17 @@ export default (props) => {
     }
   };
 
+  useEffect(() => {
+    if (iframeContainerRef.current) {
+      setSize();
+    }
+  }, [iframeContainerRef.current]);
+
   /**
    * 动态设置右侧高度
    * 为剩余屏幕高度
    */
   useEffect(() => {
-    setSize();
     window.addEventListener('resize', setSize);
     return () => window.removeEventListener('resize', setSize);
   }, []);
