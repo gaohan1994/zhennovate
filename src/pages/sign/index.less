@@ -34,13 +34,29 @@
 
   &-check {
     &-text {
-      font-size: 16px;
+      font-size: 15px;
       font-weight: normal;
       letter-spacing: normal;
       color: @black;
     }
     &-url {
       text-decoration: underline;
+    }
+    &-error {
+      .margin(14px, tb);
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+
+      & > span {
+        .margin(9px, l);
+        font-size: 14px;
+        color: @gray-1;
+      }
+
+      & > span[role='img'] {
+        .margin(0px, l);
+      }
     }
   }
 }

@@ -10,6 +10,7 @@ const { Header } = Layout;
 export default function (props) {
   const history = useHistory();
   const { entry } = props;
+  const isCheck = window.location.href.indexOf('sign/check') > -1;
   return (
     <Header className={`${prefix}-sign-header`}>
       <div
@@ -20,27 +21,29 @@ export default function (props) {
         <span className={`${prefix}-sign-logo-text`}>Zhennovate</span>
       </div>
 
-      <div className={`${prefix}-header-button`}>
-        {!entry ? (
-          <Button
-            style={{ minWidth: 120 }}
-            onClick={() => {
-              history.push(`/sign/signup${history.location.search}`);
-            }}
-          >
-            Sign Up
-          </Button>
-        ) : (
-          <Button
-            style={{ minWidth: 120 }}
-            onClick={() => {
-              history.push(`/sign/signin${history.location.search}`);
-            }}
-          >
-            Sign In
-          </Button>
-        )}
-      </div>
+      {!isCheck && (
+        <div className={`${prefix}-header-button`}>
+          {!entry ? (
+            <Button
+              style={{ minWidth: 120 }}
+              onClick={() => {
+                history.push(`/sign/signup${history.location.search}`);
+              }}
+            >
+              Sign Up
+            </Button>
+          ) : (
+            <Button
+              style={{ minWidth: 120 }}
+              onClick={() => {
+                history.push(`/sign/signin${history.location.search}`);
+              }}
+            >
+              Sign In
+            </Button>
+          )}
+        </div>
+      )}
     </Header>
   );
 }
