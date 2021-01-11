@@ -38,6 +38,7 @@ export default function SignUp() {
         password: md5(values.password),
       };
       const result = await register(payload);
+      console.log('[注册返回结果]', result);
       invariant(result.error_code === 0, result.message || ' ');
 
       dispatch({
@@ -64,7 +65,8 @@ export default function SignUp() {
         }`,
       );
     } catch (error) {
-      message.error({ message: error.message });
+      console.log('[报错信息]', error);
+      message.error(error.message);
     }
   };
   return (

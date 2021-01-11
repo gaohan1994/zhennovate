@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-08 10:05:05
+ * @Last Modified time: 2021-01-08 16:20:37
  */
 import React, { useState, useEffect, useRef } from 'react';
 import Container from '../component/container';
@@ -70,8 +70,16 @@ export default () => {
   const [userActiveResult, setUserActiveResult] = useState({});
   console.log('userActiveResult', userActiveResult);
 
+  /**
+   * 用户激活之后的回调
+   */
   const onUseractiveCallback = (result) => {
     try {
+      /**
+       * 如果用户成功激活
+       * 显示result页面
+       * 然后开始做paperform
+       */
       console.log(
         'result.error_code === ResponseCode.success',
         result.error_code === ResponseCode.success,
@@ -89,10 +97,11 @@ export default () => {
       setTimeout(() => {
         setRenderType(RenderCheckType.Result);
       }, 0.5 * 1000);
-      // setShowSuffix(true);
     } catch (error) {
+      /**
+       * 如果失败显示失败信息
+       */
       setValidateStatus('error');
-      // message.error(error.message);
       setErrorMessage(error.message);
     }
   };
