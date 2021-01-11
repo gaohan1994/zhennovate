@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 13:55:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-07 10:41:36
+ * @Last Modified time: 2021-01-11 16:24:43
  */
 import { api } from '@/common/request';
 
@@ -22,8 +22,8 @@ export const checkStart = (params) => {
 };
 
 // checkin 结束
-export const checkEnd = (params) => {
-  return api.post(`/checkin/end/${params.userId}`);
+export const checkEnd = (params, payload) => {
+  return api.post(`/checkin/end/${params.userId}`, payload);
 };
 
 // renewactionplan 重新设置周目标

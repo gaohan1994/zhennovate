@@ -3,23 +3,20 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-08 16:20:37
+ * @Last Modified time: 2021-01-11 16:08:11
  */
 import React, { useState, useEffect, useRef } from 'react';
-import Container from '../component/container';
 import '../index.less';
-import { Form, Input } from 'antd';
+import { Form, Input, message } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { userActive } from '../constants';
+import { userActive, userActiveInfo } from '../constants';
 import useSignSdk from '../store/sign-sdk';
 // import { formatSearch } from '@/common/request';
 import { useHistory } from 'react-router-dom';
 import { ResponseCode } from '@/common/config';
 import invariant from 'invariant';
 import imgcheck from '@/assets/modal/Icon_Check_128x128.png';
-
 import '@/component/paperform/index.less';
-import RenderPaperForm from '@/component/paperform';
 
 const prefix = 'sign-page';
 
@@ -36,6 +33,7 @@ const RenderCheckType = {
 };
 
 export default () => {
+  const iframeContainerRef = useRef(null);
   const history = useHistory();
   const inputRef = useRef(null);
   const [form] = Form.useForm();
@@ -65,10 +63,69 @@ export default () => {
    * @param {renderType} 渲染的类型
    *
    */
-  const [renderType, setRenderType] = useState(RenderCheckType.Result);
+  const [renderType, setRenderType] = useState(RenderCheckType.Check);
 
+  /**
+   * @param {userActiveResult} 用户active返回的数据
+   */
   const [userActiveResult, setUserActiveResult] = useState({});
-  console.log('userActiveResult', userActiveResult);
+  // console.log('userActiveResult', userActiveResult);
+
+  const [iframeHeight, setIframeHeight] = useState(-1);
+  const [iframeWidth, setIframeWidth] = useState(-1);
+
+  const setSize = () => {
+    if (iframeContainerRef.current && iframeContainerRef.current.clientHeight) {
+      setIframeHeight(iframeContainerRef.current.clientHeight - 64);
+      console.log(
+        '[iframeContainerRef.current.clientHeight]',
+        iframeContainerRef.current.clientHeight,
+      );
+      setIframeWidth(iframeContainerRef.current.clientWidth);
+      console.log(
+        '[iframeContainerRef.current.clientWidth]',
+        iframeContainerRef.current.clientWidth,
+      );
+    }
+  };
+
+  /**
+   * 用户提交注册的paperfrom之后跳转到首页
+   */
+  const receiveMessage = (event) => {
+    const payload = {
+      userId: sign.userinfo?._id,
+    };
+    const { data: postMessageData } = event;
+    const { paperformData } = postMessageData;
+    userActiveInfo(payload, { paperformData })
+      .then((result) => {
+        console.log('[用户active paperform提交返回数据]', result);
+        // message.success('')
+        history.push('/home');
+      })
+      .catch((error) => {
+        message.error(error.message);
+      });
+  };
+
+  /**
+   * 监听window.postmessage事件
+   */
+  useEffect(() => {
+    window.addEventListener('message', (event) => receiveMessage(event), false);
+    return () => window.removeEventListener('message', () => {});
+  }, []);
+
+  /**
+   * 动态设置右侧高度
+   * 为剩余屏幕高度
+   */
+  useEffect(() => {
+    setSize();
+    window.addEventListener('resize', setSize);
+    return () => window.removeEventListener('resize', setSize);
+  }, []);
 
   /**
    * 用户激活之后的回调
@@ -89,7 +146,7 @@ export default () => {
         result.message || ' ',
       );
       setValidateStatus('success');
-      setUserActiveResult(result);
+      setUserActiveResult(result.data);
 
       /**
        * 如果正确1秒后显示结果页
@@ -97,6 +154,10 @@ export default () => {
       setTimeout(() => {
         setRenderType(RenderCheckType.Result);
       }, 0.5 * 1000);
+
+      setTimeout(() => {
+        setRenderType(RenderCheckType.Paperform);
+      }, 1.5 * 1000);
     } catch (error) {
       /**
        * 如果失败显示失败信息
@@ -134,91 +195,103 @@ export default () => {
   };
 
   return (
-    <Container>
-      {renderType === RenderCheckType.Check && (
-        <>
-          <div className={`${prefix}-up-title`}>Check your email</div>
-          <div className={`${prefix}-check-text`}>
-            We’ve sent you a six-digit confirmation code to{' '}
-            <span style={{ fontWeight: 'bold' }}>
-              [{` ${sign.userinfo?.Email || ''} `}].
-            </span>{' '}
-            Please enter it below to confirm your email address.
-          </div>
-          <Form
-            form={form}
-            layout="vertical"
-            style={{ marginTop: 24 }}
-            onChange={onInput}
-          >
-            <Form.Item
-              name="confirmationCode"
-              validateStatus={validateStatus}
-              help={
-                validateStatus === 'error' ? (
-                  <div className={`${prefix}-check-error`}>
-                    <CloseCircleFilled style={{ color: '#e86452' }} />
-                    <span>{errorMessage}</span>
-                  </div>
-                ) : null
-              }
+    <div className="sign-component" ref={iframeContainerRef}>
+      {renderType === RenderCheckType.Paperform ? (
+        <iframe
+          height={iframeHeight}
+          width={iframeWidth}
+          src={userActiveResult.url}
+        />
+      ) : (
+        <div className="sign-component-box">
+          {renderType === RenderCheckType.Check && (
+            <>
+              <div className={`${prefix}-up-title`}>Check your email</div>
+              <div className={`${prefix}-check-text`}>
+                We’ve sent you a six-digit confirmation code to{' '}
+                <span style={{ fontWeight: 'bold' }}>
+                  [{` ${sign.userinfo?.Email || ''} `}].
+                </span>{' '}
+                Please enter it below to confirm your email address.
+              </div>
+              <Form
+                form={form}
+                layout="vertical"
+                style={{ marginTop: 24 }}
+                onChange={onInput}
+              >
+                <Form.Item
+                  name="confirmationCode"
+                  validateStatus={validateStatus}
+                  help={
+                    validateStatus === 'error' ? (
+                      <div className={`${prefix}-check-error`}>
+                        <CloseCircleFilled style={{ color: '#e86452' }} />
+                        <span>{errorMessage}</span>
+                      </div>
+                    ) : null
+                  }
+                >
+                  <Input
+                    ref={inputRef}
+                    placeholder="Enter 6 - digit code"
+                    maxLength={6}
+                    suffix={getSuffix()}
+                  />
+                </Form.Item>
+              </Form>
+              <div className={`${prefix}-check-text`}>
+                <span
+                  className={`${prefix}-check-url`}
+                  style={{ color: '#1890ff' }}
+                >
+                  Send code again
+                </span>
+                {` or find more information in`}
+                <span
+                  className={`${prefix}-check-url`}
+                  style={{ color: '#1890ff', marginLeft: 5 }}
+                >
+                  Help Center.
+                </span>
+              </div>
+            </>
+          )}
+          {renderType === RenderCheckType.Result && (
+            <div
+              style={{
+                display: 'flex',
+                flexDirection: 'column',
+                alignItems: 'center',
+              }}
             >
-              <Input
-                ref={inputRef}
-                placeholder="Enter 6 - digit code"
-                maxLength={6}
-                suffix={getSuffix()}
+              <div
+                className="component-paperform-modal-icon"
+                style={{ backgroundImage: `url(${imgcheck})` }}
               />
-            </Form.Item>
-          </Form>
-          <div className={`${prefix}-check-text`}>
-            <span
-              className={`${prefix}-check-url`}
-              style={{ color: '#1890ff' }}
-            >
-              Send code again
-            </span>
-            {` or find more information in`}
-            <span
-              className={`${prefix}-check-url`}
-              style={{ color: '#1890ff', marginLeft: 5 }}
-            >
-              Help Center.
-            </span>
-          </div>
-        </>
-      )}
-      {renderType === RenderCheckType.Result && (
-        <div
-          style={{
-            display: 'flex',
-            flexDirection: 'column',
-            alignItems: 'center',
-          }}
-        >
-          <div
-            className="component-paperform-modal-icon"
-            style={{ backgroundImage: `url(${imgcheck})` }}
-          />
-          <span
-            className="component-paperform-modal-title"
-            style={{ fontSize: 32 }}
-          >
-            Email verified
-          </span>
-          <span
-            className="component-paperform-modal-subtitle"
-            style={{ fontSize: 14 }}
-          >
-            Your email address was successfully verified!
-          </span>
+              <span
+                className="component-paperform-modal-title"
+                style={{ fontSize: 32 }}
+              >
+                Email verified
+              </span>
+              <span
+                className="component-paperform-modal-subtitle"
+                style={{ fontSize: 14 }}
+              >
+                Your email address was successfully verified!
+              </span>
+            </div>
+          )}
+          {renderType === RenderCheckType.Paperform && (
+            <iframe
+              height={iframeHeight}
+              width={iframeWidth}
+              src={userActiveResult.url}
+            />
+          )}
         </div>
       )}
-      {renderType === RenderCheckType.Paperform && (
-        <div>
-          <RenderPaperForm />
-        </div>
-      )}
-    </Container>
+    </div>
   );
 };

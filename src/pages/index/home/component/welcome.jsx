@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-07 09:39:28
+ * @Last Modified time: 2021-01-11 16:25:00
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -60,7 +60,7 @@ function Welcome(props) {
 
   const onCheckIn = () => {
     try {
-      invariant(!isSign, 'Plase Sign-in');
+      invariant(isSign, 'Plase Sign-in');
       setVisible(true);
       checkStart({ userId: sign.userinfo._id }).then((result) => {
         if (result.error_code === ResponseCode.success) {
@@ -112,11 +112,7 @@ function Welcome(props) {
             <span>Ready for your daily check in?</span>
           </div>
 
-          <div
-            className={`${prefix}-check`}
-            onClick={onCheckIn}
-            // style={{ color: 'gray' }}
-          >
+          <div className={`${prefix}-check`} onClick={onCheckIn}>
             Check In
             <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
           </div>
