@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-31 10:51:34
+ * @Last Modified time: 2021-01-07 10:08:32
  */
 import React, { useEffect, useState } from 'react';
 // import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -16,6 +16,7 @@ import { doingaction } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
 import { chunk } from 'lodash';
+import useHomeHooks from '../hooks';
 
 const HomeActionTypes = {
   weeklyGoal: 'weeklyGoal',
@@ -27,14 +28,17 @@ const WeeklyGoalData = {
 
 function Actions(props) {
   const { userId } = useSignSdk();
-  const [data, setData] = useState([]);
+  const [data, setData] = useState({});
   const [swiperData, setSwiperData] = useState([[WeeklyGoalData, {}]]);
+
+  const { receiveWeeklyGoalCallback } = useHomeHooks();
 
   useEffect(() => {
     if (userId) {
       doingaction({ userId }).then((result) => {
         if (result.error_code === ResponseCode.success) {
           setData(result.data);
+          receiveWeeklyGoalCallback(result.data);
         }
       });
     }
@@ -42,16 +46,17 @@ function Actions(props) {
 
   // 整理data数据
   useEffect(() => {
-    if (data.length > 0) {
-      data.unshift(WeeklyGoalData);
-      const chunkActionsData = chunk(data, 2);
+    const { doingActions = [] } = data;
+    if (doingActions.length > 0) {
+      const chunkDataOrigin = [WeeklyGoalData].concat(doingActions);
+      const chunkActionsData = chunk(chunkDataOrigin, 2);
       setSwiperData(chunkActionsData);
     }
   }, [data]);
 
   const renderData = (item, index) => {
     if (item.type === HomeActionTypes.weeklyGoal) {
-      return <WeeklyGoal />;
+      return <WeeklyGoal data={data} />;
     }
     return <HomeProgramCard data={item} />;
   };

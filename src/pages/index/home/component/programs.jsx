@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import Sort from '@/component/sort';
 import Empty from '@/component/empty';
-import { ProgramTabKeys, progressList } from '../../program/constants';
+import { ProgramTabKeys } from '../../program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
 import Program from '@/component/program';
+import { homeInprogress } from '../constants';
 
 function HomePrograms() {
   // 渲染的 programs
@@ -14,16 +15,9 @@ function HomePrograms() {
 
   useEffect(() => {
     if (sign.userinfo && sign.userinfo._id) {
-      progressList(sign.userinfo).then((result) => {
+      homeInprogress({ userId: sign.userinfo._id }).then((result) => {
         if (result.error_code === ResponseCode.success) {
-          let progressArrayList = [];
-
-          Object.keys(result.data).forEach((key) => {
-            const currentList = result.data[key];
-            progressArrayList = progressArrayList.concat(currentList);
-          });
-
-          setPrograms(progressArrayList);
+          setPrograms(result.data);
         }
       });
     }

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-17 15:30:18
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-11-19 10:31:57
+ * @Last Modified time: 2021-01-07 09:37:46
  */
 import { createStore, applyMiddleware, compose } from 'redux';
 import { persistStore, persistReducer } from 'redux-persist';
@@ -16,6 +16,7 @@ import { reducer } from './index';
 const persistConfig = {
   key: 'root',
   storage,
+  blacklist: ['homeStore'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);

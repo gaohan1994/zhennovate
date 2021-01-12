@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 11:08:38
+ * @Last Modified time: 2021-01-07 15:20:07
  */
 import React from 'react';
-import { Form, notification, Checkbox } from 'antd';
+import { Form, Checkbox, message } from 'antd';
 import md5 from 'blueimp-md5';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -38,6 +38,7 @@ export default function SignUp() {
         password: md5(values.password),
       };
       const result = await register(payload);
+      console.log('[注册返回结果]', result);
       invariant(result.error_code === 0, result.message || ' ');
 
       dispatch({
@@ -55,9 +56,17 @@ export default function SignUp() {
           }
         }
       }, 1000);
-      history.push('/home');
+
+      history.push(
+        `/sign/check${
+          history.location.search
+          // ? `${history.location.search}&userId=${'userId'}`
+          // : `?userId=${'userId'}`
+        }`,
+      );
     } catch (error) {
-      notification.error({ message: error.message });
+      console.log('[报错信息]', error);
+      message.error(error.message);
     }
   };
   return (

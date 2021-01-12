@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 13:55:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-30 11:54:03
+ * @Last Modified time: 2021-01-11 16:24:43
  */
 import { api } from '@/common/request';
 
@@ -22,6 +22,16 @@ export const checkStart = (params) => {
 };
 
 // checkin 结束
-export const checkEnd = (params) => {
-  return api.post(`/checkin/end/${params.userId}`);
+export const checkEnd = (params, payload) => {
+  return api.post(`/checkin/end/${params.userId}`, payload);
+};
+
+// renewactionplan 重新设置周目标
+export const renewactionplan = (params) => {
+  return api.get(`/user/renewactionplan/${params.userId}/${params.count}`);
+};
+
+// homeInprogress 首页的进度中的program
+export const homeInprogress = (params) => {
+  return api.get(`/home/inprogress/${params.userId}`);
 };

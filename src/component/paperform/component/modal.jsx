@@ -7,6 +7,7 @@ const prefix = 'component-paperform';
 function PaperformActionModal(props) {
   const {
     title,
+    width = 527,
     subTitle,
     visible,
     setVisible,
@@ -15,6 +16,8 @@ function PaperformActionModal(props) {
     secondButton,
     secondCallback,
     icon,
+    bodyStyle,
+    img,
   } = props;
 
   const onCancel = () => {
@@ -35,14 +38,14 @@ function PaperformActionModal(props) {
     <Modal
       footer={null}
       centered
-      width={527}
+      width={width}
       closable={false}
       visible={visible}
       onCancel={onCancel}
-      bodyStyle={{ padding: '40px 90px 32px 90px' }}
+      bodyStyle={bodyStyle || { padding: '40px 90px 32px 90px' }}
     >
       <div className={`${prefix}-modal`}>
-        {/* <img src="" /> */}
+        {img && <img src={img} alt="" />}
         {icon && (
           <div
             className={`${prefix}-modal-icon`}
