@@ -185,4 +185,85 @@
       }
     }
   }
+
+  &-emotion {
+    & > section {
+      display: flex;
+      flex-direction: row;
+      position: relative;
+      width: 100%;
+      .padding(8px, tb);
+    }
+
+    &-tip {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      font-size: 16px;
+      color: #1b2631;
+      .margin(26px, tb);
+
+      & > div {
+        width: 24px;
+        height: 24px;
+        .flex(center, center, row);
+        border-radius: 12px;
+        background-color: #e86452;
+        .margin(8px, r);
+      }
+    }
+
+    &-item {
+      .flex(center, center, column);
+      position: relative;
+      color: #1b2631;
+      .margin(20px, r);
+      width: 63px;
+
+      &-border {
+        width: 63px;
+        height: 3px;
+        position: absolute;
+        background-color: #e0e0e0;
+        left: 0;
+        right: 0;
+        bottom: -8px;
+        z-index: 10;
+        transition: all 0.5s;
+      }
+
+      &-border[title-active='active'] {
+        background-color: #e86452;
+      }
+
+      & > span,
+      & > h1 {
+        transition: color 0.2s;
+      }
+      & > span {
+        font-size: 14px;
+      }
+      & > span[title-active='active'] {
+        font-weight: bold;
+      }
+      & > h1 {
+        font-size: 36px;
+        .margin(8px, t);
+      }
+      & > h1[title-active='active'] {
+        font-weight: bold;
+        color: #e86452;
+      }
+    }
+
+    &-border {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      width: 100%;
+      background-color: #e0e0e0;
+    }
+  }
 }
