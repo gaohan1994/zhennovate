@@ -35,15 +35,18 @@ function CheckInComponent(props) {
    */
   const receiveMessage = useCallback((event) => {
     const { data: postMessageData } = event;
-    const { paperformData } = postMessageData;
+    console.log('[window onmessage数据]:', event);
 
-    const payload = {
-      userId: sign.userinfo?._id,
-    };
+    if (postMessageData) {
+      const { paperformData } = postMessageData;
+      const payload = {
+        userId: sign.userinfo?._id,
+      };
 
-    checkEnd(payload, { paperformData }).then((result) => {
-      setCompletedCheckin(true);
-    });
+      checkEnd(payload, { paperformData }).then((result) => {
+        setCompletedCheckin(true);
+      });
+    }
   }, []);
 
   /**
