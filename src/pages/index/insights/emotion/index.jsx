@@ -1,24 +1,71 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../index.less';
 import Sort from '@/component/sort';
 import InsightChart from '../component/chart';
-import { ArrowUpOutlined } from '@ant-design/icons';
+import { ArrowUpOutlined, ArrowDownOutlined } from '@ant-design/icons';
+import { emotion } from '../constants';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import { ResponseCode } from '@/common/config';
 
 const prefix = 'page-insights';
 
-const data = [
-  { title: 'Mad', value: 36, data: 1 },
-  { title: 'Calm', value: 39, data: 10 },
-  { title: 'Brave', value: 13, data: 20 },
-  { title: 'Sad', value: 42, data: 30 },
-];
-
 function Emotion() {
-  const [activeTitle, setActiveTitle] = useState(data[0]);
+  /**
+   * charts的表头
+   */
+  const [summary, setSummary] = useState([]);
+
+  /**
+   * 选中的表头
+   */
+  const [selectedSummary, setSelectedSummary] = useState({});
+
+  /**
+   * charts的表单数据
+   */
+  const [emotionData, setEmotionData] = useState({});
+
+  const { isSign, userId } = useSignSdk();
 
   const onClickTab = (item) => {
-    setActiveTitle(item);
+    setSelectedSummary(item);
   };
+
+  /**
+   * 请求数据
+   * 初始化表头数据 summary
+   * 初始化选中表头
+   */
+  useEffect(() => {
+    if (isSign) {
+      const payload = {
+        userId,
+        duration: 4,
+      };
+      emotion(payload).then((result) => {
+        console.log('[表单数据]:', result);
+        if (result.error_code === ResponseCode.success) {
+          const { summary } = result.data;
+          let summaryData = [];
+          for (let key in summary) {
+            if (key) {
+              summaryData.push({ title: key, value: summary[key] });
+            }
+          }
+          setSummary(summaryData);
+          setSelectedSummary(summaryData[0]);
+        }
+        setEmotionData(result.data);
+      });
+    }
+  }, []);
+
+  const isDecrease =
+    emotionData.ratio &&
+    selectedSummary &&
+    selectedSummary.title &&
+    emotionData.ratio[selectedSummary.title] &&
+    emotionData.ratio[selectedSummary.title].indexOf('-') >= 0;
 
   return (
     <div>
@@ -32,8 +79,8 @@ function Emotion() {
 
         <section className={`${prefix}-emotion`}>
           <section>
-            {data.map((item) => {
-              const active = item.title === activeTitle.title;
+            {summary.map((item) => {
+              const active = item.title === selectedSummary.title;
               return (
                 <div
                   className={`${prefix}-emotion-item`}
@@ -55,13 +102,28 @@ function Emotion() {
           </section>
 
           <div className={`${prefix}-emotion-tip`}>
-            <div>
-              <ArrowUpOutlined style={{ color: '#fff', fontSize: 12 }} />
+            <div
+              style={{
+                backgroundColor: isDecrease ? '#15c3b1' : '#e86452',
+              }}
+            >
+              {isDecrease ? (
+                <ArrowDownOutlined style={{ color: '#fff', fontSize: 12 }} />
+              ) : (
+                <ArrowUpOutlined style={{ color: '#fff', fontSize: 12 }} />
+              )}
             </div>
-            Mad emotions increased by 20% in the last 14 days.
+            {selectedSummary.title || ''} emotions
+            {isDecrease ? ' decrease ' : ' increased '}
+            by {emotionData.ratio && emotionData.ratio[selectedSummary.title]}%
+            in the last 14 days.
           </div>
         </section>
-        <InsightChart data={activeTitle.data} />
+        <InsightChart
+          data={emotionData.line || []}
+          selectedSummary={selectedSummary}
+          summary={summary}
+        />
       </div>
     </div>
   );
