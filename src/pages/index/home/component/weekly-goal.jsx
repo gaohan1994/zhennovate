@@ -112,7 +112,11 @@ function WeeklyGoal(props) {
         </span>
       </div>
 
-      <span className={`${prefix}-edit`} onClick={() => setVisible(true)}>
+      <span
+        className={`${prefix}-edit`}
+        onClick={() => setVisible(true)}
+        common-touch="touch"
+      >
         edit
       </span>
 

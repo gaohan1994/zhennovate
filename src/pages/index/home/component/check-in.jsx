@@ -1,7 +1,7 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Modal, Spin } from 'antd';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
-import { checkEnd } from '../constants';
+import { checkEnd, RECEIVE_MESSAGE_TYPE } from '../constants';
 // import imgchar from '@/assets/Character/Component-Character-Female-A.svg';
 
 const prefix = 'component-home';
@@ -36,8 +36,10 @@ function CheckInComponent(props) {
   const receiveMessage = useCallback((event) => {
     const { data: postMessageData } = event;
     console.log('[window onmessage数据]:', event);
-
-    if (postMessageData) {
+    if (
+      postMessageData &&
+      postMessageData.type === RECEIVE_MESSAGE_TYPE.CHECKIN
+    ) {
       const { paperformData } = postMessageData;
       const payload = {
         userId: sign.userinfo?._id,
@@ -53,7 +55,11 @@ function CheckInComponent(props) {
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener('message', (event) => receiveMessage(event), false);
+    window.addEventListener(
+      'message',
+      (event) => receiveMessage(event, RECEIVE_MESSAGE_TYPE.CHECKIN),
+      false,
+    );
     return () => window.removeEventListener('message', () => {});
   }, []);
 

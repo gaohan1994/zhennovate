@@ -3,9 +3,16 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 13:55:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-11 16:24:43
+ * @Last Modified time: 2021-01-22 14:16:22
  */
 import { api } from '@/common/request';
+
+export const RECEIVE_MESSAGE_TYPE = {
+  CHANGE_GOAL: 'goal',
+  CHECKIN: 'checkin',
+  WORKSHOP: 'workshop',
+  MODULE: 'module',
+};
 
 export const doingaction = (params) => {
   return api.get(`/user/doingaction/${params.userId}`);
@@ -34,4 +41,23 @@ export const renewactionplan = (params) => {
 // homeInprogress 首页的进度中的program
 export const homeInprogress = (params) => {
   return api.get(`/home/inprogress/${params.userId}`);
+};
+
+// home 首页的进度中右侧的 goal
+export const goalEnd = (params, payload) => {
+  return api.post(`/goal/end/${params.userId}`, payload);
+};
+
+// home 首页的进度中右侧的 goal
+export const goalStart = (params, payload) => {
+  return api.get(`/goal/start/${params.userId}`, payload);
+};
+
+// home 首页的进度中右侧的 goal
+export const goal = (params) => {
+  return api.get(`/goal/${params.userId}`);
+};
+
+export const quotes = () => {
+  return api.get(`/quotes/2`);
 };

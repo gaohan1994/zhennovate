@@ -55,3 +55,12 @@ body {
   --gray-5: #f8f8f8;
   --pastel-red: #e86452;
 }
+
+div[common-touch='touch'],
+span[common-touch='touch'],
+section[common-touch='touch'],
+h1[common-touch='touch'],
+h2[common-touch='touch'],
+h3[common-touch='touch'] {
+  cursor: pointer;
+}
