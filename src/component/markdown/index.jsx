@@ -6,7 +6,7 @@ import '@/pages/index/program/component/index.less';
 const prefix = 'program-component';
 
 function Markdown(props) {
-  const { data, title, renderHeader } = props;
+  const { data, title, renderHeader, children } = props;
 
   const [status, setStatus] = useState(false);
 
@@ -18,13 +18,25 @@ function Markdown(props) {
         <div className={`${prefix}-title`}>{title}</div>
       ) : null}
 
-      <div
-        className={`${prefix}-markdown ${
-          status === false ? `${prefix}-markdown-overflow` : ''
-        }`}
-      >
-        <ReactMarkdown unwrapDisallowed={true}>{data}</ReactMarkdown>
-      </div>
+      {data && (
+        <div
+          className={`${prefix}-markdown ${
+            status === false ? `${prefix}-markdown-overflow` : ''
+          }`}
+        >
+          <ReactMarkdown unwrapDisallowed={true}>{data}</ReactMarkdown>
+        </div>
+      )}
+
+      {children && (
+        <div
+          className={`${prefix}-markdown ${
+            status === false ? `${prefix}-markdown-overflow` : ''
+          }`}
+        >
+          {children}
+        </div>
+      )}
 
       <div
         className={`${prefix}-markdown-more`}

@@ -8,7 +8,7 @@ import imgprogress from '../../assets/empty/Icon-Inprogress-Empty.svg';
 const prefix = 'component-empty';
 
 function Empty(props) {
-  const { tab = {}, title, icon } = props;
+  const { tab = {}, title, subTitle, icon } = props;
 
   const renderIcon = icon
     ? icon
@@ -41,7 +41,9 @@ function Empty(props) {
           ? 'No Saved Programs'
           : ''}
       </span>
-      <span>{tab.empty || 'Programs you’ve started will appear here.'}</span>
+      <span>
+        {tab.empty || subTitle || 'Programs you’ve started will appear here.'}
+      </span>
     </div>
   );
 }

@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import moment from 'moment';
+import { api } from '@/common/request';
 // 解析数据
 export function formatModuleData(
   module_id,
@@ -86,3 +87,7 @@ export function useFormatProgramData(data, params = {}) {
     durationDaysString,
   };
 }
+
+export const programEntry = (params) => {
+  return api.get(`/program/entry/${params.userId}/${params.programId}`);
+};
