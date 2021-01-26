@@ -2,10 +2,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-26 11:42:57
+ * @Last Modified time: 2021-01-26 11:45:33
  */
 import React, { useRef, useEffect, useState } from 'react';
-import { Layout, Menu, Spin, notification, message } from 'antd';
+import { Layout, Menu, Spin, notification } from 'antd';
 import {
   // CheckCircleFilled,
   CalendarOutlined,
@@ -115,12 +115,18 @@ export default (props) => {
       setIframeWidth(iframeContainerRef.current.clientWidth);
     }
   };
+
+  useEffect(() => {
+    if (iframeContainerRef.current) {
+      setSize();
+    }
+  }, [iframeContainerRef.current]);
+
   /**
    * 动态设置右侧高度
    * 为剩余屏幕高度
    */
   useEffect(() => {
-    setSize();
     window.addEventListener('resize', setSize);
     return () => window.removeEventListener('resize', setSize);
   }, []);
@@ -169,6 +175,8 @@ export default (props) => {
    * 则跳转到下一个session的第一个module
    * 如果没有下一个session
    * 则结束
+   *
+   * @time 01-06 取消自动跳转
    */
   const finishPaperformCallback = (params) => {
     const { programData, postMessageData } = params;
@@ -180,8 +188,8 @@ export default (props) => {
 
     if (hasNextModule) {
       // 跳转到下一个module
-      const nextModule = session.Modules[moduleIndex + 1];
-      onModuleClick(nextModule);
+      // const nextModule = session.Modules[moduleIndex + 1];
+      // onModuleClick(nextModule);
       // setSelectedKeys([nextModule._id]);
       return;
     }
@@ -189,16 +197,16 @@ export default (props) => {
     const hasNextSession = !!programData.Sessions[sessionIndex + 1];
     if (hasNextSession) {
       // 跳转到下一个session
-      const nextSession = programData.Sessions[sessionIndex + 1];
+      // const nextSession = programData.Sessions[sessionIndex + 1];
       // const nextModule = nextSession.Modules[0];
       // setSelectedKeys([nextModule._id]);
       // setOpenKeys(['2', nextSession._id]);
-      onModuleClick(nextSession.Modules[0]);
+      // onModuleClick(nextSession.Modules[0]);
       return;
     }
 
     // 结束
-    message.success('Program Finished!');
+    // message.success('Program Finished!');
   };
 
   const handleMenuClick = (menu) => {
