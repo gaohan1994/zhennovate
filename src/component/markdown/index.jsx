@@ -6,7 +6,7 @@ import '@/pages/index/program/component/index.less';
 const prefix = 'program-component';
 
 function Markdown(props) {
-  const { data, title, renderHeader, children } = props;
+  const { data, title, renderHeader, children, more = true } = props;
 
   const [status, setStatus] = useState(false);
 
@@ -38,12 +38,14 @@ function Markdown(props) {
         </div>
       )}
 
-      <div
-        className={`${prefix}-markdown-more`}
-        onClick={() => setStatus(!status)}
-      >
-        Show {status === true ? 'less' : 'more'}
-      </div>
+      {more && (
+        <div
+          className={`${prefix}-markdown-more`}
+          onClick={() => setStatus(!status)}
+        >
+          Show {status === true ? 'less' : 'more'}
+        </div>
+      )}
     </Card>
   );
 }

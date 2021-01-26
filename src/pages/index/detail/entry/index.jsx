@@ -9,9 +9,78 @@ import imgreflection from '../../../../assets/Icon-Reflection@2x.png';
 import { programEntry } from '../../program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
-import { Skeleton } from 'antd';
+import { Skeleton, Card } from 'antd';
 import moment from 'moment';
 import Empty from '@/component/empty';
+import { ArrowRightOutlined } from '@ant-design/icons';
+
+const prefix = 'page-program';
+
+function RenderEntryData({ data, type }) {
+  // 如果是Assessment 则点击查看pdf
+  const isAssessment = type === EntryFilter.Assessment;
+
+  return (
+    <>
+      {data.map((item) => {
+        const { Module = {}, PFDatas = [], EndAt = '' } = item;
+
+        if (isAssessment) {
+          return (
+            <section key={item._id} style={{ marginBottom: 32 }}>
+              <Card>
+                <RenderHeader
+                  title={Module.Title}
+                  subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+                  icon={imgaction}
+                  border={false}
+                >
+                  <div
+                    className="component-home-welcome-check"
+                    common-touch="touch"
+                    style={{ bottom: '0px', right: '0px' }}
+                  >
+                    View Report
+                    <ArrowRightOutlined
+                      style={{ fontSize: 12, marginLeft: 8 }}
+                    />
+                  </div>
+                </RenderHeader>
+              </Card>
+            </section>
+          );
+        }
+
+        return (
+          <section key={item._id} style={{ marginBottom: 32 }}>
+            <Markdown
+              renderHeader={() => (
+                <RenderHeader
+                  title={Module.Title}
+                  subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+                  icon={imgaction}
+                />
+              )}
+              title="Action Name Written Here"
+            >
+              {PFDatas.map((data, index) => {
+                return (
+                  <p key={data.title} style={{ marginBottom: 20 }}>
+                    <p>
+                      {`${index + 1}. `}
+                      {data.title}
+                    </p>
+                    <p>{data.value}</p>
+                  </p>
+                );
+              })}
+            </Markdown>
+          </section>
+        );
+      })}
+    </>
+  );
+}
 
 export const EntryFilter = {
   Action: 'Action',
@@ -19,13 +88,14 @@ export const EntryFilter = {
   Reflect: 'Reflect',
 };
 
-const prefix = 'page-program';
-
 function RenderHeader(props) {
-  const { icon, title, subTitle } = props;
+  const { icon, title, subTitle, border = true, children } = props;
   const prefix = 'page-detail';
   return (
-    <div className={`${prefix}-custom-header ${prefix}-custom`}>
+    <div
+      className={`${prefix}-custom-header  ${border && `${prefix}-custom`} `}
+      zhennovate-border={border ? 'bottom' : ''}
+    >
       {icon && (
         <div
           className={`${prefix}-custom-icon`}
@@ -36,6 +106,8 @@ function RenderHeader(props) {
         <h1 className={`${prefix}-custom-title`}>{title}</h1>
         <span>{subTitle}</span>
       </div>
+
+      {children}
     </div>
   );
 }
@@ -103,39 +175,7 @@ export default (props) => {
       return null;
     }
 
-    return (
-      <>
-        {Action.map((item) => {
-          const { Module = {}, PFDatas = [], EndAt = '' } = item;
-          return (
-            <section key={item._id}>
-              <Markdown
-                renderHeader={() => (
-                  <RenderHeader
-                    title={Module.Title}
-                    subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-                    icon={imgaction}
-                  />
-                )}
-                title="Action Name Written Here"
-              >
-                {PFDatas.map((data, index) => {
-                  return (
-                    <p key={data.title} style={{ marginBottom: 20 }}>
-                      <p>
-                        {`${index + 1}. `}
-                        {data.title}
-                      </p>
-                      <p>{data.value}</p>
-                    </p>
-                  );
-                })}
-              </Markdown>
-            </section>
-          );
-        })}
-      </>
-    );
+    return <RenderEntryData data={Action} />;
   };
 
   /**
@@ -152,17 +192,21 @@ export default (props) => {
     if (!hasAssessment) {
       return null;
     }
-    return <div />;
+    return <RenderEntryData data={Assessment} type={EntryFilter.Assessment} />;
   };
 
   /**
    * @param renderEntryReflect 渲染Reflect
    */
   const renderEntryReflect = () => {
+    const showReflect = selectedCategory.some((s) => s === EntryFilter.Reflect);
     if (!hasReflect) {
       return null;
     }
-    return <div />;
+    if (!showReflect) {
+      return null;
+    }
+    return <RenderEntryData data={Reflect} />;
   };
 
   return (
@@ -195,12 +239,8 @@ export default (props) => {
         ) : (
           <>
             {renderEntryAction()}
-
-            <div style={{ width: '100%', height: 32 }} />
-            {renderEntryAssessment()}
-
-            <div style={{ width: '100%', height: 32 }} />
             {renderEntryReflect()}
+            {renderEntryAssessment()}
           </>
         )}
       </div>

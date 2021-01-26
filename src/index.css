@@ -64,3 +64,20 @@ h2[common-touch='touch'],
 h3[common-touch='touch'] {
   cursor: pointer;
 }
+
+div[zhennovate-border='bottom'] {
+  position: relative;
+}
+div[zhennovate-border='bottom']::after {
+  content: '';
+  position: absolute;
+  transform-origin: center;
+  box-sizing: border-box;
+  pointer-events: none;
+  top: auto;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  transform: scaleY(0.5);
+  border-bottom: 1px solid #d6d6d6;
+}
