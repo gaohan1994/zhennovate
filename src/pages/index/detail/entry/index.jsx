@@ -75,6 +75,7 @@ export default (props) => {
   }, []);
 
   const { Action, Assessment, Reflect } = entryData;
+  console.log('entryData', entryData);
 
   /**
    *

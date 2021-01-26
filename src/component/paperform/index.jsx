@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-06 17:59:21
+ * @Last Modified time: 2021-01-26 11:42:22
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -19,6 +19,7 @@ import './index.less';
 import imgtodo from '@/assets/modal/Icon_Check_128x128.png';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
 import ActionFlowCard from './component/action-flow';
+import { RECEIVE_MESSAGE_TYPE } from '@/pages/index/home/constants';
 
 /**
  * @param RenderPaperformKeyTypes
@@ -170,6 +171,14 @@ const RenderPaperForm = (props) => {
   const receiveMessage = useCallback(
     (event) => {
       const { data: postMessageData } = event;
+
+      if (!postMessageData) {
+        return;
+      }
+
+      if (postMessageData.type !== RECEIVE_MESSAGE_TYPE.MODULE) {
+        return;
+      }
       const { progressData, paperformData } = postMessageData;
 
       const payload = {
