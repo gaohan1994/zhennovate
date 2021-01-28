@@ -83,7 +83,7 @@ export default function () {
           </Button>
         ) : (
           <Dropdown trigger={['click']} overlay={dropMenu}>
-            <div className={`${prefix}-user`}>
+            <div className={`${prefix}-user`} common-touch="touch">
               <div
                 className={`${prefix}-user-avatar`}
                 style={{ backgroundColor: '#1890ff' }}

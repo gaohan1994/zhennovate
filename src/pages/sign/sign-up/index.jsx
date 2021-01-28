@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-26 11:46:03
+ * @Last Modified time: 2021-01-28 16:27:04
  */
 import React from 'react';
-import { Form, Checkbox, message } from 'antd';
+import { Form, Checkbox, message, Input } from 'antd';
 import md5 from 'blueimp-md5';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -18,6 +18,7 @@ import invariant from 'invariant';
 import '../index.less';
 import { Action_Types } from '../store/sign-store';
 import { formatSearch } from '@/common/request';
+import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const prefix = 'sign-page';
 
@@ -105,7 +106,6 @@ export default function SignUp() {
         <FormItem
           label="Password"
           name="password"
-          inputProps={{ type: 'password', placeholder: 'Password' }}
           rules={[
             {
               required: true,
@@ -114,6 +114,16 @@ export default function SignUp() {
               message: 'Please use 8+ characters for secure password.',
             },
           ]}
+          render={() => {
+            return (
+              <Input.Password
+                placeholder="password"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+            );
+          }}
         />
         <FormItem
           name="policy"

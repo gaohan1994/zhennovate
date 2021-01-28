@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import './index.less';
-import { Progress, Modal, Button, message } from 'antd';
+import { Progress, Modal, Button, message, Spin } from 'antd';
 import Sort from '@/component/sort';
 import Choice from '@/component/choice';
 import { renewactionplan } from '../constants';
@@ -18,6 +18,10 @@ function WeeklyGoal(props) {
   const { endCount, planEndCount } = data;
   const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
+  /**
+   * @param loading 是否加载中
+   */
+  const [loading, setLoading] = useState(false);
 
   const { homeStore, toogleWeeklyCompleteModal } = useHomeHooks();
 
@@ -56,69 +60,78 @@ function WeeklyGoal(props) {
   const changeWeeklyGoal = () => {
     try {
       invariant(!!isSign, 'Please Sign-in');
+      setLoading(true);
 
-      if (weeklyGoalValue !== planEndCount) {
-        renewactionplan({
-          userId,
-          count: weeklyGoalValue,
-        }).then((result) => {
-          if (result.error_code === ResponseCode.success) {
-            console.log('result', result);
-            setWeeklyGoalPlanValue(weeklyGoalValue);
-            message.success('Weekly Action Goal Changed!');
-          }
-        });
-      }
+      renewactionplan({
+        userId,
+        count: weeklyGoalValue,
+      }).then((result) => {
+        if (result.error_code === ResponseCode.success) {
+          setWeeklyGoalPlanValue(weeklyGoalValue);
+          message.success('Weekly Action Goal Changed!');
+        }
+
+        setLoading(false);
+      });
     } catch (error) {
       message.error(error.message);
+      setLoading(false);
     }
   };
 
   return (
-    <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
-      <Sort
-        title="Weekly Goal"
-        titleStyle={{ fontSize: 16 }}
-        // subTitle="Nov 6 - Nov 12"
-        subTitleStyle={{ fontSize: 12, marginTop: 2, color: '#1b2631' }}
-        showSort={false}
-      />
+    <div>
+      <Spin spinning={loading}>
+        <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
+          <Sort
+            title="Weekly Goal"
+            titleStyle={{ fontSize: 16 }}
+            // subTitle="Nov 6 - Nov 12"
+            subTitleStyle={{ fontSize: 12, marginTop: 2, color: '#1b2631' }}
+            showSort={false}
+          />
 
-      <div className={`${prefix}-content`}>
-        <Progress
-          type="circle"
-          strokeColor="#15c3b1"
-          strokeWidth={8}
-          strokeLinecap="square"
-          percent={percent}
-          format={(percent, successPercent) => {
-            return (
-              <div style={{ display: 'flex', flexDirection: 'column' }}>
-                <span style={{ fontSize: 16, fontWeight: 'bold' }}>
-                  {`${endCount || 0}/${weeklyGoalPlanValue || 0}`}
-                </span>
-                <span style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}>
-                  Actions
-                </span>
-              </div>
-            );
-          }}
-        />
+          <div className={`${prefix}-content`}>
+            <Progress
+              type="circle"
+              strokeColor="#15c3b1"
+              strokeWidth={8}
+              strokeLinecap="square"
+              percent={percent}
+              format={(percent, successPercent) => {
+                return (
+                  <div style={{ display: 'flex', flexDirection: 'column' }}>
+                    <span style={{ fontSize: 16, fontWeight: 'bold' }}>
+                      {`${endCount || 0}/${weeklyGoalPlanValue || 0}`}
+                    </span>
+                    <span
+                      style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}
+                    >
+                      Actions
+                    </span>
+                  </div>
+                );
+              }}
+            />
 
-        <span style={{ marginLeft: 14 }}>
-          Complete{' '}
-          <span style={{ fontWeight: 'bold' }}>{weeklyGoalPlanValue || 0}</span>{' '}
-          actions to reach your weekly goal.
-        </span>
-      </div>
+            <span style={{ marginLeft: 14 }}>
+              Complete{' '}
+              <span style={{ fontWeight: 'bold' }}>
+                {weeklyGoalPlanValue || 0}
+              </span>{' '}
+              actions to reach your weekly goal.
+            </span>
+          </div>
 
-      <span
-        className={`${prefix}-edit`}
-        onClick={() => setVisible(true)}
-        common-touch="touch"
-      >
-        edit
-      </span>
+          <span
+            className={`${prefix}-edit`}
+            onClick={() => setVisible(true)}
+            common-touch="touch"
+          >
+            edit
+          </span>
+        </div>
+      </Spin>
 
       <PaperformActionModal
         visible={homeStore.weeklyCompleteModalVisible}

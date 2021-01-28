@@ -4,6 +4,8 @@ import { ArrowRightOutlined, EllipsisOutlined } from '@ant-design/icons';
 import imggoal from '@/assets/Icon-Action@2x.png';
 import { Menu, Dropdown } from 'antd';
 import { useHistory } from 'react-router-dom';
+import useCalendar from '@/component/calendar/store';
+import { CalendarType } from '@/component/calendar';
 
 const prefix = 'component-home-actions';
 
@@ -34,15 +36,49 @@ function HomeProgramCard(props) {
 
   const { Module } = data;
 
+  console.log('data', data);
+
+  const { showCalendar } = useCalendar();
+
+  const onViewProgram = () => {
+    history.push(`/program/describe/${data.Program}`);
+  };
+
+  const onDeleteAction = () => {
+    console.log('onDeleteAction');
+  };
+
+  const onAddCalendar = () => {
+    console.log('onAddCalendar');
+
+    showCalendar({
+      ...data,
+      calendarType: CalendarType.reflect,
+      program: data?.Program,
+    });
+  };
+
   const dropMenu = (
     <Menu>
-      <Menu.Item key="calendar" style={{ color: 'rgba(0, 0, 0, 0.65)' }}>
+      <Menu.Item
+        key="calendar"
+        style={{ color: 'rgba(0, 0, 0, 0.65)' }}
+        onClick={onAddCalendar}
+      >
         Add to Calendar
       </Menu.Item>
-      <Menu.Item key="program" style={{ color: 'rgba(0, 0, 0, 0.65)' }}>
+      <Menu.Item
+        key="program"
+        style={{ color: 'rgba(0, 0, 0, 0.65)' }}
+        onClick={onViewProgram}
+      >
         View Program
       </Menu.Item>
-      <Menu.Item key="delete" style={{ color: 'rgba(0, 0, 0, 0.65)' }}>
+      <Menu.Item
+        key="delete"
+        style={{ color: 'rgba(0, 0, 0, 0.65)' }}
+        onClick={onDeleteAction}
+      >
         Delete Action
       </Menu.Item>
     </Menu>

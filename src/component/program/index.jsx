@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-25 00:20:23
+ * @Last Modified time: 2021-01-28 12:22:25
  */
 import React, { useState, useEffect } from 'react';
 import { Progress } from 'antd';
@@ -92,6 +92,7 @@ function Program(props) {
                 data.IsSaved ? imgbooksaved : imgbookunsave
               })`,
             }}
+            common-touch="touch"
             onClick={onSave}
           />
         </div>

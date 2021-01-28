@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-27 16:57:49
+ * @Last Modified time: 2021-01-28 12:31:19
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -69,12 +69,6 @@ export default (props) => {
       }, 500);
     }
   }, [showSkeleton]);
-
-  useEffect(() => {
-    // availableList().then((result) => {
-    //   console.log('result', result);
-    // });
-  }, []);
 
   // 切换tab显示骨架屏 滑动到tabs顶部
   const onChangeTab = (key) => {

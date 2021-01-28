@@ -67,8 +67,8 @@ function CheckInComponent(props) {
     <Modal
       visible={visible}
       footer={null}
-      width={860}
-      height={558}
+      width={1000}
+      height={650}
       centered
       bodyStyle={{ height: '100%', padding: '0px' }}
       title={title}
@@ -101,7 +101,7 @@ function CheckInComponent(props) {
             <img src={imgchar} className={`${prefix}-checkin-corner`} />
           </div>
         )} */}
-        <iframe width={812} height={452} src={url} />
+        <iframe width={950} height={600} src={url} />
       </Spin>
     </Modal>
   );

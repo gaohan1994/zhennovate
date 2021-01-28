@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 11:08:48
+ * @Last Modified time: 2021-01-28 16:26:44
  */
 import React, { useState } from 'react';
-import { Form, message } from 'antd';
+import { Form, message, Input } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
@@ -15,6 +15,7 @@ import signSdk from '../store/sign-sdk';
 import { useHistory } from 'react-router-dom';
 import Button from '../component/button';
 import { formatSearch } from '@/common/request';
+import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const prefix = 'sign-page';
 
@@ -89,13 +90,22 @@ export default function SignIn() {
           label="Password"
           name="password"
           style={{ marginBottom: 12 }}
-          inputProps={{ type: 'password', placeholder: 'password' }}
           rules={[
             {
               required: true,
               message: 'Please enter your password.',
             },
           ]}
+          render={() => {
+            return (
+              <Input.Password
+                placeholder="password"
+                iconRender={(visible) =>
+                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                }
+              />
+            );
+          }}
         />
 
         <div
