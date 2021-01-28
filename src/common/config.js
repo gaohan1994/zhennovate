@@ -20,3 +20,7 @@ export const BASE_URL = !isProduction() ? 'http://app.zhennovate.com' : '/api';
 export const ResponseCode = {
   success: 0,
 };
+
+export const getPaperfromUrl = (id) => {
+  return `http://admin.zhennovate.com/paperform.html?id=${id}`;
+};

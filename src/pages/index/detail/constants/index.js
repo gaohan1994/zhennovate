@@ -91,3 +91,18 @@ export function useFormatProgramData(data, params = {}) {
 export const programEntry = (params) => {
   return api.get(`/program/entry/${params.userId}/${params.programId}`);
 };
+
+export const programWorkshop = (params) => {
+  return api.get(`/program/workshops/${params.userId}/${params.programId}`);
+};
+
+export const programWorkshopEnd = (params, payload) => {
+  return api.post(
+    `/workshop/end/${params.userId}/${params.workshopId}`,
+    payload,
+  );
+};
+
+export const programWorkshopsHome = (params) => {
+  return api.get(`/home/workshops/${params.userId}`);
+};

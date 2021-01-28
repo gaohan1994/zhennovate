@@ -1,0 +1,66 @@
+@import '../../common/theme.less';
+
+@prefix: component-workshop;
+
+.@{prefix} {
+  width: 360px;
+  height: 340px;
+  margin: 16px 24px 24px 0px;
+  border: solid 1px var(--gray-4);
+  background-color: var(--white);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+
+  &-cover {
+    width: 100%;
+    height: 180px;
+    max-width: 100%;
+    max-height: 180px;
+  }
+
+  &-corner {
+    position: absolute;
+    top: 24px;
+    right: 24px;
+    font-size: 12px;
+    border-radius: 4px;
+    padding: 4px 8px;
+    font-weight: bold;
+  }
+
+  &-corner[corner-type='registered'] {
+    background-color: var(--gray-1);
+    color: #fff;
+  }
+  &-corner[corner-type='free'],
+  &-corner[corner-type='Sponsored'] {
+    background-color: var(--topaz);
+    color: #fff;
+  }
+  &-corner[corner-type='money'] {
+    background-color: #fff;
+    color: var(--black);
+  }
+
+  & > section {
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+
+    & > h2 {
+      font-size: 14px;
+      color: var(--topaz);
+      font-weight: bold;
+      .margin(10px, b);
+    }
+
+    & > h1 {
+      font-size: 20px;
+      font-weight: bold;
+      color: var(--black);
+      .clamp(3);
+    }
+  }
+}
