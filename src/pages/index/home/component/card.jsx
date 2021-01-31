@@ -2,17 +2,22 @@ import React from 'react';
 import './index.less';
 import { ArrowRightOutlined, EllipsisOutlined } from '@ant-design/icons';
 import imggoal from '@/assets/Icon-Action@2x.png';
-import { Menu, Dropdown } from 'antd';
+import { Menu, Dropdown, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import useCalendar from '@/component/calendar/store';
 import { CalendarType } from '@/component/calendar';
+import { entryDelete } from '../constants';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import invariant from 'invariant';
+import { ResponseCode } from '@/common/config';
 
 const prefix = 'component-home-actions';
 
 function HomeProgramCard(props) {
   const history = useHistory();
-  const { data } = props;
+  const { data, callback } = props;
   const isEmpty = data && data._id;
+  const { isSign, userId } = useSignSdk();
 
   if (!isEmpty) {
     return (
@@ -44,8 +49,22 @@ function HomeProgramCard(props) {
     history.push(`/program/describe/${data.Program}`);
   };
 
-  const onDeleteAction = () => {
-    console.log('onDeleteAction');
+  const onQuitAction = () => {
+    try {
+      invariant(isSign, 'Please Sign in');
+      const payload = {
+        userId,
+        entryId: '',
+      };
+      entryDelete(payload).then((result) => {
+        if (result.error_code === ResponseCode.success) {
+          message.success('Quit Action !');
+          callback && callback();
+        }
+      });
+    } catch (error) {
+      message.error(error.message);
+    }
   };
 
   const onAddCalendar = () => {
@@ -77,9 +96,9 @@ function HomeProgramCard(props) {
       <Menu.Item
         key="delete"
         style={{ color: 'rgba(0, 0, 0, 0.65)' }}
-        onClick={onDeleteAction}
+        onClick={onQuitAction}
       >
-        Delete Action
+        Quit Action
       </Menu.Item>
     </Menu>
   );

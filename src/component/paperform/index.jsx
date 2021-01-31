@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-26 11:42:22
+ * @Last Modified time: 2021-01-31 16:23:15
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -18,7 +18,7 @@ import PaperformActionModal from './component/modal';
 import './index.less';
 import imgtodo from '@/assets/modal/Icon_Check_128x128.png';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
-import ActionFlowCard from './component/action-flow';
+import ActionFlowCompleteCard from './component/action-flow';
 import { RECEIVE_MESSAGE_TYPE } from '@/pages/index/home/constants';
 
 /**
@@ -75,17 +75,20 @@ const RenderPaperForm = (props) => {
     data,
     programData,
     /**
-     * @param preview 是否是预览模式 */
+     * @param preview 是否是预览模式
+     */
     preview = false,
     /**
      * @param paperformKey
      * 渲染的paperfrom-Key
      * 常规是 PFKey
-     * reflect的key是 CompletePFKey */
+     * reflect的key是 CompletePFKey
+     */
     paperformKey = RenderPaperformKeyTypes.PFKey,
     /**
      * @param delay
-     * 触发回调的延时 12-29添加默认10秒 */
+     * 触发回调的延时 12-29添加默认10秒
+     */
     delay = 1,
     callback,
     ...rest
@@ -104,8 +107,7 @@ const RenderPaperForm = (props) => {
   const [actionChoiceTodoVisible, setActionChoiceTodoVisible] = useState(false);
 
   /**
-   * 用户选择直接做
-   * 跳转到当前action 的completePFKey
+   * 跳转至当前module的Complete Paperfrom
    */
   const choiceTodoModalconfirmCallback = () => {
     history.push(
@@ -281,12 +283,29 @@ const RenderPaperForm = (props) => {
         });
     }
   }, [data, programData, paperformKey]);
+
+  /**
+   * @param actionFlowCompleteCardProps 添加action结果的页面
+   *
+   * @param completeStatus 当前是否是 complete 状态
+   *
+   * @param onComplete 如果是未完成状态点击 complete action 跳转至 complete 的paperform
+   */
+  const actionFlowCompleteCardProps = {
+    ...rest,
+    completeStatus:
+      paperformDataKeyRef.current === RenderPaperformKeyTypes.CompletePFKey,
+    onComplete: choiceTodoModalconfirmCallback,
+  };
+
+  console.log('[actionFlowCompleteCardProps]:', actionFlowCompleteCardProps);
+
   return (
     <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>
       {showActionFlowCompletedCard === false ? (
         <iframe {...rest} src={iframeUrl} />
       ) : (
-        <ActionFlowCard {...rest} />
+        <ActionFlowCompleteCard {...actionFlowCompleteCardProps} />
       )}
 
       <Modal

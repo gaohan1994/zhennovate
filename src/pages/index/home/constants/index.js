@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 13:55:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-22 14:16:22
+ * @Last Modified time: 2021-01-31 15:35:33
  */
 import { api } from '@/common/request';
 
@@ -60,4 +60,9 @@ export const goal = (params) => {
 
 export const quotes = () => {
   return api.get(`/quotes/2`);
+};
+
+// 删除首页的action
+export const entryDelete = (params) => {
+  return api.get(`/entry/del/${params.userId}/${params.entryId}`);
 };

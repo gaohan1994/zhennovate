@@ -85,7 +85,7 @@ function Goal({ style = {} }) {
       .then((result) => {
         console.log('[请求goal的paperfrom地址]', result);
         if (result.error_code === ResponseCode.success) {
-          setUrl(`${result.data?.url}&${Math.random()}`);
+          setUrl(`${result.data?.url}&num=${Math.random()}`);
         }
 
         setLoading(false);
@@ -145,7 +145,7 @@ function Goal({ style = {} }) {
       goalStart({ userId }).then((result) => {
         console.log('[请求goal的paperfrom地址]', result);
         if (result.error_code === ResponseCode.success) {
-          setUrl(result.data?.url);
+          setUrl(`${result.data?.url}&time=${Math.round(new Date() / 1000)}`);
         }
       });
       setVisible(true);
@@ -274,11 +274,11 @@ function Goal({ style = {} }) {
       <Modal
         visible={visible}
         footer={null}
-        width={860}
+        width={812}
         height={558}
         centered
         bodyStyle={{ height: '100%', padding: '0px' }}
-        title="Goal"
+        title="My Learning Goal"
         onCancel={onHide}
       >
         <iframe width={812} height={452} src={url} />

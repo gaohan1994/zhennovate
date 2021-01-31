@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-07 10:08:32
+ * @Last Modified time: 2021-01-31 15:39:12
  */
 import React, { useEffect, useState } from 'react';
 // import { LeftOutlined, RightOutlined } from '@ant-design/icons';
@@ -33,14 +33,18 @@ function Actions(props) {
 
   const { receiveWeeklyGoalCallback } = useHomeHooks();
 
+  const fetchDoingAction = () => {
+    doingaction({ userId }).then((result) => {
+      if (result.error_code === ResponseCode.success) {
+        setData(result.data);
+        receiveWeeklyGoalCallback(result.data);
+      }
+    });
+  };
+
   useEffect(() => {
     if (userId) {
-      doingaction({ userId }).then((result) => {
-        if (result.error_code === ResponseCode.success) {
-          setData(result.data);
-          receiveWeeklyGoalCallback(result.data);
-        }
-      });
+      fetchDoingAction();
     }
   }, [userId]);
 
@@ -58,7 +62,7 @@ function Actions(props) {
     if (item.type === HomeActionTypes.weeklyGoal) {
       return <WeeklyGoal data={data} />;
     }
-    return <HomeProgramCard data={item} />;
+    return <HomeProgramCard data={item} callback={fetchDoingAction} />;
   };
 
   return (

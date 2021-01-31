@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 11:17:00
+ * @Last Modified time: 2021-01-31 17:16:39
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -44,6 +44,22 @@ export default () => {
         <Button form={form} submit={onSubmit} loading={loading}>
           Reset Password
         </Button>
+
+        <div
+          className={`${prefix}-up-forgot`}
+          onClick={() => {
+            history.back();
+          }}
+          style={{
+            textAlign: 'center',
+            color: '#1b2631',
+            marginTop: 24,
+            fontSize: 14,
+          }}
+          common-touch="touch"
+        >
+          Back to sign in
+        </div>
       </Form>
     </Container>
   );

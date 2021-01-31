@@ -68,7 +68,7 @@ function WeeklyGoal(props) {
       }).then((result) => {
         if (result.error_code === ResponseCode.success) {
           setWeeklyGoalPlanValue(weeklyGoalValue);
-          message.success('Weekly Action Goal Changed!');
+          message.success('Weekly Goal Successfully Updated');
         }
 
         setLoading(false);

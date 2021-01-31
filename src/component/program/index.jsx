@@ -3,24 +3,24 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-28 12:22:25
+ * @Last Modified time: 2021-01-31 16:36:58
  */
 import React, { useState, useEffect } from 'react';
-import { Progress } from 'antd';
+import { Progress, message } from 'antd';
 import { useHistory } from 'react-router-dom';
 import './index.less';
 import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
 import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
-// import useSignSdk from '@/pages/sign/store/sign-sdk';
-// import { saveProgram } from '../constants';
-// import { ResponseCode } from '@/common/config';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
+import { saveProgram } from '../constants';
+import { ResponseCode } from '@/common/config';
 
 const prefix = 'component-program';
 
 function Program(props) {
   const { data: programData, tab, type, style = {} } = props;
   const history = useHistory();
-  // const { userId } = useSignSdk();
+  const { userId } = useSignSdk();
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -40,25 +40,25 @@ function Program(props) {
     e.stopPropagation();
 
     // 说明未登录
-    // if (!userId) {
-    //   history.push('/sign/signin');
-    //   return;
-    // }
+    if (!userId) {
+      history.push('/sign/signin');
+      return;
+    }
 
-    // saveProgram({ userId, programId: data._id }).then((result) => {
-    //   console.log('result', result);
-    //   if (result.error_code === ResponseCode.success) {
-    //     notification.success({
-    //       message: `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
-    //     });
-    //     setData((prevData) => {
-    //       return {
-    //         ...prevData,
-    //         IsSaved: prevData.IsSaved === true ? false : true,
-    //       };
-    //     });
-    //   }
-    // });
+    saveProgram({ userId, programId: data._id }).then((result) => {
+      console.log('result', result);
+      if (result.error_code === ResponseCode.success) {
+        message.success(
+          `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
+        );
+        setData((prevData) => {
+          return {
+            ...prevData,
+            IsSaved: prevData.IsSaved === true ? false : true,
+          };
+        });
+      }
+    });
   };
 
   if (type === 'card') {
@@ -76,6 +76,7 @@ function Program(props) {
         <div
           className={`${prefix}-card-cover`}
           style={{ backgroundImage: `url(${data.Cover})` }}
+          common-touch="touch"
         />
         <div className={`${prefix}-card-detail`}>
           <span className={`${prefix}-card-title`}>{data.Name}</span>
@@ -121,6 +122,7 @@ function Program(props) {
       <div
         className={`${prefix}-cover`}
         style={{ backgroundImage: `url(${data.Cover})` }}
+        common-touch="touch"
       />
       <div className={`${prefix}-content`}>
         <span>{data.Sessions?.length || 0} sessions</span>
@@ -141,13 +143,13 @@ function Program(props) {
 
         {type !== 'home' && (
           <div
+            common-touch="touch"
             className={`${prefix}-content-save`}
-            // style={{
-            //   backgroundImage: `url(${
-            //     data.IsSaved ? imgbooksaved : imgbookunsave
-            //   })`,
-            // }}
-            style={{ backgroundImage: `url(${imgbookunsave})` }}
+            style={{
+              backgroundImage: `url(${
+                data.IsSaved ? imgbooksaved : imgbookunsave
+              })`,
+            }}
             onClick={onSave}
           />
         )}
