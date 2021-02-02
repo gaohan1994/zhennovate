@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-11 16:09:44
+ * @Last Modified time: 2021-02-02 12:18:31
  */
 
 import { api } from '@/common/request';
@@ -17,3 +17,8 @@ export const userActive = (params) =>
 
 export const userActiveInfo = (params, payload) =>
   api.post(`/user/info/${params.userId}`, payload);
+
+export const forgotEmail = (params) => api.get(`/user/forgot/${params.email}`);
+
+export const resetPassword = (params) =>
+  api.get(`/user/resetpassword/${params.forgotId}/${params.password}`);

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:28:24
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-09 15:11:14
+ * @Last Modified time: 2021-02-01 14:18:34
  */
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -12,6 +12,7 @@ import Signup from '@/pages/sign/sign-up';
 import Signin from '@/pages/sign/sign-in';
 import Forgot from '@/pages/sign/forgot';
 import Check from '@/pages/sign/check';
+import ResetPage from './forgot/reset';
 /**
  * 主页布局
  * 包括顶部导航栏 以及路由配置
@@ -34,6 +35,11 @@ export default function () {
         <Route path="/sign/signup" component={Signup} exact={true} />
         <Route path="/sign/signin" component={Signin} exact={true} />
         <Route path="/sign/forgot" component={Forgot} exact={true} />
+        <Route
+          path="/sign/resetpassword/:forgotId"
+          component={ResetPage}
+          exact={true}
+        />
         <Route path="/sign/check" component={Check} exact={true} />
       </Switch>
     </LayoutContainer>
