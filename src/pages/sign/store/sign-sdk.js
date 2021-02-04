@@ -2,7 +2,7 @@ import { store } from '@/module/redux/persist';
 import { Action_Types } from './sign-store';
 import { signin } from '../constants';
 import { useHistory } from 'react-router-dom';
-import { notification } from 'antd';
+import { message } from 'antd';
 import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
 import { useSelector } from 'react-redux';
@@ -27,6 +27,11 @@ function useSignSdk() {
         result.message || ' ',
       );
 
+      invariant(
+        result.data && result.data !== undefined,
+        'Please enter the correct Email and Password',
+      );
+
       store.dispatch({
         type: Action_Types.Receive_Userinfo,
         payload: result.data,
@@ -36,7 +41,7 @@ function useSignSdk() {
         callback();
       }
     } catch (error) {
-      notification.warn({ message: error.message });
+      message.error(error.message);
     }
   };
 
