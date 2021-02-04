@@ -153,6 +153,10 @@ function useProgramHooks(type, options) {
     state,
     dispatch,
     list: state[type],
+    field,
+    fieldProgress,
+    fieldComplete,
+    fieldSaved,
   };
 }
 

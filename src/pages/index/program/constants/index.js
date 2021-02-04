@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-24 11:34:55
+ * @Last Modified time: 2021-02-04 15:43:40
  */
 
 import { api } from '@/common/request';
@@ -23,6 +23,9 @@ export const ProgramTabTitles = {
 };
 
 export const program = (id) => api.get(`/program/${id}`);
+
+export const userProgram = (params) =>
+  api.get(`/program/${params.userId}/${params.programId}`);
 
 export const availableList = (params) => {
   return api.get(`/program/available${params ? `/${params._id}` : ''}`);

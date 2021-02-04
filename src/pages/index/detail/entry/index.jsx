@@ -146,8 +146,24 @@ export default (props) => {
     });
   }, []);
 
-  const { Action, Assessment, Reflect } = entryData;
-  console.log('entryData', entryData);
+  // const { Action, Assessment, Reflect } = entryData;
+
+  /**
+   * @param Action 渲染用的 Action 数据
+   * @param Assessment 渲染用的 Assessment 数据
+   * @param Reflect 渲染用的 Reflect 数据
+   */
+  const [Action, setAction] = useState([]);
+  const [Assessment, setAssessment] = useState([]);
+  const [Reflect, setReflect] = useState([]);
+
+  useEffect(() => {
+    if (entryData) {
+      setAction(entryData.Action);
+      setAssessment(entryData.Assessment);
+      setReflect(entryData.Reflect);
+    }
+  }, [entryData]);
 
   /**
    *
@@ -219,9 +235,9 @@ export default (props) => {
         <Sort
           title="Entries"
           subTitle="Micro copy for entries"
-          value="1"
-          onChange={() => {}}
-          options={[{ label: 'Sort by: Newest to oldest', value: '1' }]}
+          dataSource={entryData}
+          setDataSourceHook={setEntryData}
+          setSortKey="EndAt"
         />
 
         {loading ? (

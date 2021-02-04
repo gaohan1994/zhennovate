@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-26 14:34:23
+ * @Last Modified time: 2021-02-04 17:32:28
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -79,7 +79,6 @@ function Welcome(props) {
    * 显示completed check-in modal
    *  */
   const onCompleteHideCallback = () => {
-    console.log('[check-in callback start]');
     setIsCheckin(true);
     showAfterCheckinModal();
   };

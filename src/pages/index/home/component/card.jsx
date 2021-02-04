@@ -41,8 +41,6 @@ function HomeProgramCard(props) {
 
   const { Module } = data;
 
-  console.log('data', data);
-
   const { showCalendar } = useCalendar();
 
   const onViewProgram = () => {
@@ -68,8 +66,6 @@ function HomeProgramCard(props) {
   };
 
   const onAddCalendar = () => {
-    console.log('onAddCalendar');
-
     showCalendar({
       ...data,
       calendarType: CalendarType.reflect,

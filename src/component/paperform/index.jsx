@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-31 16:23:15
+ * @Last Modified time: 2021-02-04 11:42:15
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import { formatModuleData } from '@/pages/index/detail/constants';
@@ -297,8 +297,6 @@ const RenderPaperForm = (props) => {
       paperformDataKeyRef.current === RenderPaperformKeyTypes.CompletePFKey,
     onComplete: choiceTodoModalconfirmCallback,
   };
-
-  console.log('[actionFlowCompleteCardProps]:', actionFlowCompleteCardProps);
 
   return (
     <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>

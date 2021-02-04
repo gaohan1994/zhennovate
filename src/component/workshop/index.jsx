@@ -55,7 +55,6 @@ function Workshop(props) {
     };
 
     programWorkshopEnd(payload, { paperformData }).then((result) => {
-      console.log('[workshop报名结束]', result);
       message.success('Workshop registered!');
       onHide();
     });

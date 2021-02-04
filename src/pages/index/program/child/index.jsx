@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-28 12:29:50
+ * @Last Modified time: 2021-02-04 15:30:00
  */
 import React, { useState, useEffect, useRef } from 'react';
 // import { useScroll } from 'ahooks';
@@ -27,7 +27,7 @@ const prefix = 'program-child';
 
 export default (props) => {
   const { tab } = props;
-  const { list } = useProgramHooks(tab.key);
+  const { list, fieldSaved } = useProgramHooks(tab.key);
 
   const [isDemo] = useState(false);
 
@@ -171,7 +171,12 @@ export default (props) => {
             {programs.length > 0 &&
               programs.map((item) => {
                 return (
-                  <ProgramItem key={item?._id} data={item || {}} tab={tab} />
+                  <ProgramItem
+                    key={item?._id}
+                    data={item || {}}
+                    tab={tab}
+                    fieldSaved={fieldSaved}
+                  />
                 );
               })}
             {programs.length === 0 && <Empty tab={tab} />}

@@ -2,18 +2,18 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-26 11:45:33
+ * @Last Modified time: 2021-02-04 15:19:25
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
 import {
-  // CheckCircleFilled,
   CalendarOutlined,
   BookOutlined,
   SolutionOutlined,
   IdcardOutlined,
+  CheckCircleFilled,
 } from '@ant-design/icons';
-import { program } from '@/pages/index/program/constants';
+import { userProgram } from '@/pages/index/program/constants';
 import { useHistory } from 'react-router-dom';
 import './index.less';
 import MyHeader from './component/header';
@@ -24,6 +24,7 @@ import RenderPaperForm from '@/component/paperform';
 import About from './about';
 import Entry from './entry';
 import Workshop from './workshop';
+import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'page-detail';
 
@@ -55,12 +56,17 @@ export default (props) => {
 
   const [collapsed, setCollapsed] = useState(false);
 
+  const { userId } = useSignSdk();
+
   /**
    * 请求数据
    */
   useEffect(() => {
     if (params.id) {
-      program(params.id)
+      userProgram({
+        userId,
+        programId: params.id,
+      })
         .then((result) => {
           setProgramData(result.data);
         })
@@ -285,6 +291,14 @@ export default (props) => {
                           >
                             {session.Modules
                               ? session.Modules.map((module) => {
+                                  const { FinishedModules } = session;
+                                  const isFinished =
+                                    FinishedModules &&
+                                    FinishedModules.some(
+                                      // eslint-disable-next-line max-nested-callbacks
+                                      (m) => m === module._id,
+                                    );
+
                                   return (
                                     <Menu.Item
                                       style={{ paddingLeft: 48 }}
@@ -292,11 +306,15 @@ export default (props) => {
                                       onClick={() => onModuleClick(module)}
                                     >
                                       <div className={`${prefix}-menu`}>
-                                        {/* <div className={`${prefix}-menu-check`}>
-                                          <CheckCircleFilled
-                                            style={{ color: '#2fc25b' }}
-                                          />
-                                        </div> */}
+                                        {isFinished && (
+                                          <div
+                                            className={`${prefix}-menu-check`}
+                                          >
+                                            <CheckCircleFilled
+                                              style={{ color: '#2fc25b' }}
+                                            />
+                                          </div>
+                                        )}
                                         <span
                                           className={`${prefix}-menu-title`}
                                         >

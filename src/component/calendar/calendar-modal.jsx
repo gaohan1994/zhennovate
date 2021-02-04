@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-22 11:11:58
+ * @Last Modified time: 2021-02-04 11:41:57
  */
 
 import React, { useState, useEffect } from 'react';
@@ -19,7 +19,6 @@ import { CalendarActions } from './store';
 import { RenderPaperformKeyTypes } from '../paperform';
 
 function CalendarModal() {
-  // const [dropVisible, setDropVisible] = useState(false);
   const dispatch = useDispatch();
   const state = useSelector((state) => state.calendar);
   const [calendarData, setCalendarData] = useState([]);
@@ -33,6 +32,8 @@ function CalendarModal() {
   };
 
   useEffect(() => {
+    console.log('[Rrflect Calendar Data:]', data);
+
     let calendarHrefs = [];
     if (calendarType === CalendarType.reflect) {
       const linkHref = urlencode(
@@ -51,7 +52,7 @@ function CalendarModal() {
         description:
           '<!DOCTYPE html><html lang="en"><body>' +
           `${data.Detail || ''}` +
-          `<a href="${linkHref}">Action Reflect</a>` +
+          `<a href="${linkHref}">${data.Title}</a>` +
           '</body></html>',
       });
     } else {

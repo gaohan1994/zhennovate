@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-28 16:26:44
+ * @Last Modified time: 2021-02-04 15:00:57
  */
 import React, { useState } from 'react';
 import { Form, message, Input } from 'antd';
@@ -19,7 +19,7 @@ import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 
 const prefix = 'sign-page';
 
-export default function SignIn() {
+export default function SignIn(props) {
   const [form] = Form.useForm();
   const history = useHistory();
 
@@ -39,6 +39,13 @@ export default function SignIn() {
           return;
         }
       }
+
+      // 说明从别的路由来的
+      if (props.location.state && props.location.state.from) {
+        history.push(`${props.location.state.from.pathname}`);
+        return;
+      }
+
       history.push('/home');
     }, 1000);
   };

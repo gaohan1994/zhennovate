@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-27 16:42:31
+ * @Last Modified time: 2021-02-04 15:11:47
  */
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ import ProgramDetail from '@/pages/index/detail';
 import HomePage from '@/pages/index/home/home';
 import './index.less';
 import Insights from '../insights';
+import AuthRoute from '@/component/auth/auth';
 // import { useMount } from 'ahooks';
 
 const renderWithFooter = (Component, props) => {
@@ -25,6 +26,7 @@ const renderWithFooter = (Component, props) => {
     </div>
   );
 };
+
 /**
  * 主页布局
  * 包括顶部导航栏 以及路由配置
@@ -32,11 +34,13 @@ const renderWithFooter = (Component, props) => {
  * @export
  * @returns
  */
-export default function (props) {
+export default function (componentProps) {
   const history = useHistory();
-  // 如果是/ 跳转到home
+  /**
+   * @todo 如果是/ 跳转到home
+   */
   useEffect(() => {
-    const { location } = props;
+    const { location } = componentProps;
     if (location.pathname === '/') {
       history.replace('/home');
     }
@@ -52,28 +56,28 @@ export default function (props) {
       >
         <Route
           exact={true}
-          path="/program"
-          render={(props) => renderWithFooter(Program, props)}
-        />
-        <Route
-          exact={true}
-          path="/program/describe/:id"
-          render={(props) => renderWithFooter(ProgramDescribe, props)}
-        />
-        <Route
-          exact={true}
-          path="/program/detail/:id"
-          render={(props) => renderWithFooter(ProgramDetail, props)}
-        />
-        <Route
-          exact={true}
           path="/home"
           render={(props) => renderWithFooter(HomePage, props)}
         />
-        <Route
+        <AuthRoute
+          path="/program"
+          exact={true}
+          component={(props) => renderWithFooter(Program, props)}
+        />
+        <AuthRoute
+          exact={true}
+          path="/program/describe/:id"
+          component={(props) => renderWithFooter(ProgramDescribe, props)}
+        />
+        <AuthRoute
+          exact={true}
+          path="/program/detail/:id"
+          component={(props) => renderWithFooter(ProgramDetail, props)}
+        />
+        <AuthRoute
           exact={true}
           path="/insights"
-          render={(props) => renderWithFooter(Insights, props)}
+          component={(props) => renderWithFooter(Insights, props)}
         />
       </AnimatedSwitch>
     </LayoutContainer>

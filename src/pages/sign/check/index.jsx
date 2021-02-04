@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-11 16:08:11
+ * @Last Modified time: 2021-02-04 17:32:36
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
@@ -77,15 +77,7 @@ export default () => {
   const setSize = () => {
     if (iframeContainerRef.current && iframeContainerRef.current.clientHeight) {
       setIframeHeight(iframeContainerRef.current.clientHeight - 64);
-      console.log(
-        '[iframeContainerRef.current.clientHeight]',
-        iframeContainerRef.current.clientHeight,
-      );
       setIframeWidth(iframeContainerRef.current.clientWidth);
-      console.log(
-        '[iframeContainerRef.current.clientWidth]',
-        iframeContainerRef.current.clientWidth,
-      );
     }
   };
 
@@ -137,10 +129,6 @@ export default () => {
        * 显示result页面
        * 然后开始做paperform
        */
-      console.log(
-        'result.error_code === ResponseCode.success',
-        result.error_code === ResponseCode.success,
-      );
       invariant(
         result.error_code === ResponseCode.success,
         result.message || ' ',
@@ -178,7 +166,6 @@ export default () => {
     if (event.target.value.length === 6) {
       inputRef.current?.blur();
       userActive({ userId, code: event.target.value }).then((result) => {
-        console.log('[userActive]', result);
         onUseractiveCallback(result);
       });
     }

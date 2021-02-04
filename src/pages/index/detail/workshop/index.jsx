@@ -20,7 +20,6 @@ export default (props) => {
   useEffect(() => {
     if (programData._id && isSign) {
       programWorkshop({ userId, programId: programData._id }).then((result) => {
-        console.log('[program的workshop：] ', result);
         if (result.error_code === ResponseCode.success) {
           setWorkshops(result.data);
         }

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-01 15:37:14
+ * @Last Modified time: 2021-02-04 17:32:55
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -28,7 +28,6 @@ export default () => {
     try {
       // setLoading(true);
       forgotEmail(values).then((result) => {
-        console.log('[result]', result);
         if (result.error_code !== ResponseCode.success) {
           message.error(result.msg || ' ');
           return;

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-02 10:23:32
+ * @Last Modified time: 2021-02-04 17:32:59
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -22,23 +22,17 @@ const prefix = 'sign-page';
 
 function ResetPage(props) {
   const { forgotId } = props.match.params;
-  console.log('[重置密码的forgotId]', forgotId);
   const [form] = Form.useForm();
   const history = useHistory();
-  console.log('history', history);
 
   const [showResult, setShowResult] = useState(false);
 
   const onSubmit = (values) => {
-    console.log('onSubmit');
-
     const payload = {
       forgotId,
       password: md5(values.password),
     };
     resetPassword(payload).then((result) => {
-      console.log('[result]', result);
-
       /**
        * 如果失败显示错误信息
        */

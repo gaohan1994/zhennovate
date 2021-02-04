@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-31 16:36:58
+ * @Last Modified time: 2021-02-04 15:34:53
  */
 import React, { useState, useEffect } from 'react';
 import { Progress, message } from 'antd';
@@ -14,13 +14,14 @@ import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { saveProgram } from '../constants';
 import { ResponseCode } from '@/common/config';
+import { ProgramTabKeys } from '@/pages/index/program/constants';
 
 const prefix = 'component-program';
 
 function Program(props) {
-  const { data: programData, tab, type, style = {} } = props;
+  const { data: programData, tab, type, style = {}, fieldSaved } = props;
   const history = useHistory();
-  const { userId } = useSignSdk();
+  const { userId, sign } = useSignSdk();
   const [data, setData] = useState({});
 
   useEffect(() => {
@@ -46,7 +47,6 @@ function Program(props) {
     }
 
     saveProgram({ userId, programId: data._id }).then((result) => {
-      console.log('result', result);
       if (result.error_code === ResponseCode.success) {
         message.success(
           `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
@@ -57,6 +57,13 @@ function Program(props) {
             IsSaved: prevData.IsSaved === true ? false : true,
           };
         });
+
+        /**
+         * @todo 如果在saved中取消保存则在页面中删除这个
+         */
+        if (tab.key === ProgramTabKeys.save) {
+          fieldSaved.run(sign.userinfo);
+        }
       }
     });
   };
