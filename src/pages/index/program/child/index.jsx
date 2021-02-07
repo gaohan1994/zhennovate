@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:30:00
+ * @Last Modified time: 2021-02-05 10:21:41
  */
 import React, { useState, useEffect, useRef } from 'react';
 // import { useScroll } from 'ahooks';
@@ -35,8 +35,6 @@ export default (props) => {
   const programContainerRef = useRef(null);
   // programs数据
   const [programs, setPrograms] = useState([]);
-  // sort值
-  const [sortValue, setSortValue] = useState('1');
   // program容器距离左边的距离
   // const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
@@ -90,9 +88,8 @@ export default (props) => {
     return (
       <Sort
         title={tab.tab}
-        value={sortValue}
-        onChange={setSortValue}
-        options={[{ label: 'Sort by: Newest to oldest', value: '1' }]}
+        dataSource={programs}
+        setDataSourceHook={setPrograms}
       />
     );
   };

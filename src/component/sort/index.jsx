@@ -1,7 +1,15 @@
+/**
+ * @todo 日期排序组件
+ * @Author: centerm.gaohan
+ * @Date: 2021-02-05 15:37:04
+ * @Last Modified by:   centerm.gaohan
+ * @Last Modified time: 2021-02-05 15:37:04
+ */
 import React, { useState } from 'react';
 import '@/pages/index/program/child/index.less';
 import { Select } from 'antd';
 import moment from 'moment';
+import { merge } from 'lodash';
 
 const prefix = 'program-child';
 
@@ -25,7 +33,7 @@ function Sort(props) {
      */
     setDataSourceHook = () => {},
     dataSource,
-    setSortKey = 'create_at',
+    setSortKey = 'CreateAt',
   } = props;
 
   function sortDataByTimeByNewest(time1, time2) {
@@ -56,20 +64,19 @@ function Sort(props) {
    */
   const [selectValue, setSelectValue] = useState(SortSelectValue.Newest);
 
-  const getAfterSortArray = (data) => {
+  const getAfterSortArray = (items) => {
+    const data = merge([], items);
     const afterSortData = data.sort(
       selectValue === SortSelectValue.Newest
         ? sortDataByTimeByNewest
         : sortDataByTimeByOldest,
     );
-    // console.log('afterSortData', afterSortData);
     return afterSortData;
   };
 
   const sortDataSource = (data) => {
     if (Array.isArray(data)) {
       const afterSortDatasource = getAfterSortArray(data);
-      // console.log('[afterSortDatasource]', afterSortDatasource);
       setDataSourceHook(afterSortDatasource);
       return;
     }
@@ -79,11 +86,9 @@ function Sort(props) {
       if (data[key]) {
         const currentData = data[key];
         const afterSortDatasource = getAfterSortArray(currentData);
-        // console.log('[afterSortDatasource]', afterSortDatasource);
         newData[key] = afterSortDatasource;
       }
     }
-    // console.log('[newData]', newData);
     setDataSourceHook(newData);
   };
 

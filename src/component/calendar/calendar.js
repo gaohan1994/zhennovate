@@ -1,9 +1,12 @@
 /**
  * 分享日历
+ * 参考 https://gist.github.com/jakebellacera/635416
+ * 参考 https://segmentfault.com/q/1010000016761731
+ *
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:06:03
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-11 14:29:20
+ * @Last Modified time: 2021-02-05 17:27:56
  */
 // import urlencode from ''
 import moment from 'moment';
@@ -61,22 +64,25 @@ class Calendar {
       case 'apple': {
         const startTime = this.formatTime(moment(start));
         const endTime = this.formatTime(moment(end).add(7, 'd'));
-        const href = encodeURI(
-          'data:text/calendar;charset=utf8,',
+        // const startTime = moment().format('YYYYMMDDTHHMMSSZ');
+        // const endTime = moment().format('YYYYMMDDTHHMMSSZ');
+
+        const href =
+          'data:text/calendar;charset=utf8,' +
           [
             'BEGIN:VCALENDAR',
             'VERSION:2.0',
             'BEGIN:VEVENT',
-            'URL:' + document.URL,
+            'UID:' + `${Math.round(new Date())}`,
+            'URL:' + 'https://www.baidu.com',
             'DTSTART:' + (startTime || ''),
             'DTEND:' + (endTime || ''),
             'SUMMARY:' + (title || ''),
             'DESCRIPTION:' + (description || ''),
-            'LOCATION:' + (address || ''),
             'END:VEVENT',
             'END:VCALENDAR',
-          ].join('\n'),
-        );
+          ].join('\n');
+
         return href;
       }
     }
