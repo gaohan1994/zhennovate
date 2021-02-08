@@ -67,7 +67,7 @@ function HomeProgramCard(props) {
 
   const onAddCalendar = () => {
     showCalendar({
-      ...data,
+      ...data.Module,
       calendarType: CalendarType.reflect,
       program: data?.Program,
     });

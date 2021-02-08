@@ -3,17 +3,19 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:11:35
+ * @Last Modified time: 2021-02-08 10:24:34
  */
 
 import React from 'react';
 import { Modal, Menu } from 'antd';
 import { capitalize } from 'lodash';
 import './index.less';
-import { prefix, CalendarType, calendarIcons } from './index';
+import { CalendarType, calendarIcons } from './index';
 import { useSelector, useDispatch } from 'react-redux';
 import { CalendarActions } from './store';
 import calendarHelper from './calendar-helper';
+
+const prefix = 'component-calendar';
 
 export const calendarItems = [
   { type: 'google', icon: calendarIcons['google'] },
@@ -41,6 +43,7 @@ function CalendarModal() {
       .setCalendarData(data)
       .createCalendarData(type);
 
+    console.log('href', href);
     window.open(href, 'calendar');
   };
 

@@ -3,12 +3,11 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:11:39
+ * @Last Modified time: 2021-02-08 10:15:43
  */
 
 import React, { useState } from 'react';
 import { Modal, Button, Dropdown, Menu } from 'antd';
-// import calendar from './calendar';
 import { capitalize } from 'lodash';
 import imgapple from '@/assets/SVG/Icon-AppleCalendar.svg';
 import imggoogle from '@/assets/SVG/Icon-GoogleCalendar.svg';

@@ -2,12 +2,12 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:19:25
+ * @Last Modified time: 2021-02-08 10:14:32
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
 import {
-  CalendarOutlined,
+  // CalendarOutlined,
   BookOutlined,
   SolutionOutlined,
   IdcardOutlined,
@@ -23,7 +23,7 @@ import RenderPaperForm from '@/component/paperform';
 
 import About from './about';
 import Entry from './entry';
-import Workshop from './workshop';
+// import Workshop from './workshop';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 
 const prefix = 'page-detail';
@@ -82,11 +82,11 @@ export default (props) => {
   useEffect(() => {
     if (programData) {
       const commonMenu = [
-        {
-          id: '1',
-          title: 'Workshops',
-          icon: <CalendarOutlined />,
-        },
+        // {
+        //   id: '1',
+        //   title: 'Workshops',
+        //   icon: <CalendarOutlined />,
+        // },
         {
           id: '2',
           title: 'Coaching Path',
@@ -351,7 +351,7 @@ export default (props) => {
 
         <Content className={`${prefix}`}>
           <div ref={iframeContainerRef} className={`${prefix}-box`}>
-            {currentKey === '1' && <Workshop programData={programData} />}
+            {/* {currentKey === '1' && <Workshop programData={programData} />} */}
             {currentKey === '3' && <Entry programData={programData} />}
             {currentKey === '4' && <About programData={programData} />}
             {currentKey && currentKey.length > 5 && (

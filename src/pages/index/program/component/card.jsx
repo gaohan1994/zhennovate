@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:32:16
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2020-12-28 11:16:51
+ * @Last Modified time: 2021-02-08 10:16:43
  */
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Modal } from 'antd';
@@ -56,11 +56,14 @@ export default (props) => {
     ) {
       firstModule = data?.Sessions[0]?.Modules[0];
     }
-    history.push(
-      `/program/detail/${id}${
-        firstModule._id ? `?module_id=${firstModule._id}` : ''
-      }`,
-    );
+
+    firstModule &&
+      firstModule._id &&
+      history.push(
+        `/program/detail/${id}${
+          firstModule._id ? `?module_id=${firstModule._id}` : ''
+        }`,
+      );
   };
 
   return (

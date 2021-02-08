@@ -1,6 +1,7 @@
 export const isDevelopment = () => process.env.PROJECT_ENV === 'development';
 
 export const isProduction = () => {
+  console.log('process.env.REACT_APP_ENV', process.env.REACT_APP_ENV);
   switch (process.env.REACT_APP_ENV) {
     case 'production':
       return true;
