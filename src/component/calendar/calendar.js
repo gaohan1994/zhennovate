@@ -6,10 +6,8 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:06:03
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-05 17:27:56
+ * @Last Modified time: 2021-02-08 10:12:23
  */
-// import urlencode from ''
-import moment from 'moment';
 
 class Calendar {
   /**
@@ -42,17 +40,15 @@ class Calendar {
    * @memberof Calendar
    */
   calendarGenerators(calendarData, calendarType) {
-    const { start, end, title, address, description } = calendarData;
+    const { start, end, title, address, description, url } = calendarData;
     switch (calendarType) {
       case 'google': {
-        const startTime = this.formatTime(moment(start));
-        const endTime = this.formatTime(moment(end).add(7, 'd'));
         const href = [
           'https://www.google.com/calendar/render',
           '?action=TEMPLATE',
           '&text=' + (title || ''),
-          '&dates=' + (startTime || ''),
-          '/' + (endTime || ''),
+          '&dates=' + (start || ''),
+          '/' + (end || ''),
           '&details=' + (description || ''),
           '&location=' + (address || ''),
           '&sprop=&sprop=name:',
@@ -62,11 +58,6 @@ class Calendar {
 
       case 'outlook':
       case 'apple': {
-        const startTime = this.formatTime(moment(start));
-        const endTime = this.formatTime(moment(end).add(7, 'd'));
-        // const startTime = moment().format('YYYYMMDDTHHMMSSZ');
-        // const endTime = moment().format('YYYYMMDDTHHMMSSZ');
-
         const href =
           'data:text/calendar;charset=utf8,' +
           [
@@ -74,9 +65,9 @@ class Calendar {
             'VERSION:2.0',
             'BEGIN:VEVENT',
             'UID:' + `${Math.round(new Date())}`,
-            'URL:' + 'https://www.baidu.com',
-            'DTSTART:' + (startTime || ''),
-            'DTEND:' + (endTime || ''),
+            'URL:' + url,
+            'DTSTART:' + (start || ''),
+            'DTEND:' + (end || ''),
             'SUMMARY:' + (title || ''),
             'DESCRIPTION:' + (description || ''),
             'END:VEVENT',

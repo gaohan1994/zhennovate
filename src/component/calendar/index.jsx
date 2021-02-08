@@ -3,20 +3,30 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:18:04
+ * @Last Modified time: 2021-02-08 10:11:39
  */
 
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { Modal, Button, Dropdown, Menu } from 'antd';
-import calendar from './calendar';
+// import calendar from './calendar';
 import { capitalize } from 'lodash';
 import imgapple from '@/assets/SVG/Icon-AppleCalendar.svg';
 import imggoogle from '@/assets/SVG/Icon-GoogleCalendar.svg';
 import imgoutlook from '@/assets/Icon-Outlook@2x.png';
 import './index.less';
-import moment from 'moment';
-import urlencode from 'urlencode';
-import { RenderPaperformKeyTypes } from '../paperform';
+import calendarHelper from './calendar-helper';
+
+export const calendarIcons = {
+  apple: imgapple,
+  google: imggoogle,
+  outlook: imgoutlook,
+};
+
+export const calendarItems = [
+  { type: 'google', icon: calendarIcons['google'] },
+  { type: 'outlook', icon: calendarIcons['outlook'] },
+  { type: 'apple', icon: calendarIcons['apple'] },
+];
 
 export const CalendarType = {
   normal: 'normal',
@@ -25,104 +35,49 @@ export const CalendarType = {
 
 export const prefix = 'component-calendar';
 
-export const calendarIcons = {
-  apple: imgapple,
-  google: imggoogle,
-  outlook: imgoutlook,
+export const getCalendarHost = () => {
+  const hostname = window.location.hostname;
+
+  return hostname === 'localhost' ? 'http://demo-us.zhennovate.com' : hostname;
 };
 
-/**
- * ```js
- * import Calendar from 'xx';
- *
- * <Calendar
- *  data={{
- *    title: 'hello',
- *    start: new Date(),
- *    end: new Date(),
- *    address: 'new york',
- *    description: 'description
- *  }}
- * />
- * ```
- */
 function Calendar(props) {
-  const {
-    data,
-    type = CalendarType.normal,
-    program,
-    renderType = 'drop',
-    render,
-  } = props;
+  const { data, type = 'normal', program, renderType = 'drop', render } = props;
   // 是否显示calendar
   const [visible, setVisible] = useState(false);
-  // const [dropVisible, setDropVisible] = useState(false);
-  const [calendarData, setCalendarData] = useState([]);
 
-  useEffect(() => {
-    let calendarHrefs = [];
-    if (type === CalendarType.reflect) {
-      const linkHref = urlencode(
-        // http://172.30.202.179:3000 http://app.zhennovate.com
-        `http://172.30.202.179:3000/#/program/detail/${
-          typeof program === 'string' ? program : program._id
-        }?module_id=${data._id}&paperformKey=${
-          RenderPaperformKeyTypes.CompletePFKey
-        }`,
-      );
-      calendarHrefs = calendar.generateCalendars({
-        start: new Date(moment().format('YYYY-MM-DD')),
-        end: new Date(moment().add(7, 'days').format('YYYY-MM-DD')),
-        address: '',
-        title: data.Title,
-        description:
-          '<!DOCTYPE html><html lang="en"><body>' +
-          `${data.Detail || ''}` +
-          `<a href="${linkHref}">Action Reflect</a>` +
-          '</body></html>',
-      });
-    } else {
-      calendarHrefs = calendar.generateCalendars({
-        start: new Date(moment().format('YYYY-MM-DD')),
-        end: new Date(moment().add(7, 'days').format('YYYY-MM-DD')),
-        address: 'The internet',
-        title: data.Name,
-        description: data.Detail || '',
-        // description:
-        //   '<html><body><a href="http://www.baidu.com">link</a></body></html>',
-        // ...data,
-      });
-    }
+  const onCalendarClick = (item) => {
+    console.log('program', program);
+    const href = calendarHelper
+      .setCalendarType(type)
+      .setCalendarData(data)
+      .createCalendarData(item.type);
 
-    const calenderRenderData = [];
-    Object.keys(calendarHrefs).forEach((item) => {
-      calenderRenderData.push({
-        type: item,
-        href: calendarHrefs[item],
-        icon: calendarIcons[item],
-      });
-    });
-    setCalendarData(calenderRenderData);
-  }, [data]);
+    console.log('[href]', href);
+    window.open(href, 'calendar');
+  };
 
   const dropMenu = (
     <Menu>
-      {calendarData.length > 0 &&
-        calendarData.map((item) => {
-          return (
-            <Menu.Item key={item.type} style={{ height: 56, margin: 0 }}>
-              <a target="_blank" href={item.href} className={`${prefix}-item`}>
-                {item.icon && (
-                  <img
-                    src={item.icon}
-                    style={{ marginRight: 9, width: 24, height: 24 }}
-                  />
-                )}
-                <span>{`${capitalize(item.type)} Calendar`}</span>
-              </a>
-            </Menu.Item>
-          );
-        })}
+      {calendarItems.map((item) => {
+        return (
+          <Menu.Item key={item.type} style={{ height: 56, margin: 0 }}>
+            <a
+              target="_blank"
+              className={`${prefix}-item`}
+              onClick={() => onCalendarClick(item)}
+            >
+              {item.icon && (
+                <img
+                  src={item.icon}
+                  style={{ marginRight: 9, width: 24, height: 24 }}
+                />
+              )}
+              <span>{`${capitalize(item.type)} Calendar`}</span>
+            </a>
+          </Menu.Item>
+        );
+      })}
     </Menu>
   );
 
