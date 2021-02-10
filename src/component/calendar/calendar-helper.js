@@ -21,7 +21,7 @@ export const CalendarDataType = {
  * @Author: centerm.gaohan
  * @Date: 2021-02-07 13:36:09
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:12:01
+ * @Last Modified time: 2021-02-08 10:26:03
  */
 class CalendarHelper {
   constructor() {
@@ -45,7 +45,6 @@ class CalendarHelper {
      * @param calendarDataType 创建日历的数据类型
      */
     const cad = this.getCalendarDataType();
-    console.log('[日历数据的状态是program还是action：]', cad);
     if (cad === CalendarDataType.Program) {
       return this.createProgramCalendarData(...rest);
     }
@@ -152,8 +151,6 @@ class CalendarHelper {
    * @memberof CalendarHelper
    */
   createActionCalendarData(calendarWays) {
-    console.log('[createActionCalendarData params]', calendarWays);
-
     /**
      * @param data 要添加calendar的action数据
      * @param type Action的type normal是普通 reflect是指向complete paperfrom
@@ -163,9 +160,6 @@ class CalendarHelper {
      *  */
     const data = this.getCalendarData();
     const type = this.getCalendarType();
-
-    console.log('[cacd type]', type);
-    console.log('[createActionCalendarData data]', data);
 
     const startTime = this.formatTime(moment().add(1, 'd'));
     const endTime = this.formatTime(moment().add(1, 'd').add(15, 'minutes'));

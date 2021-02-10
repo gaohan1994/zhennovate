@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:37:31
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:24:34
+ * @Last Modified time: 2021-02-08 10:25:58
  */
 
 import React from 'react';
@@ -43,7 +43,6 @@ function CalendarModal() {
       .setCalendarData(data)
       .createCalendarData(type);
 
-    console.log('href', href);
     window.open(href, 'calendar');
   };
 

@@ -84,9 +84,9 @@
     "start:pro": "dotenv -e .env.production node scripts/start.js",
     "build": "dotenv -e .env.development node scripts/build.js",
     "build:pro": "dotenv -e .env.production node scripts/build.js",
-    "test": "node scripts/test.js",
-    "upload:dev": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@3.35.166.100::ZhennovateAPI --exclude '.git' --exclude '.gitignore'",
-    "upload:master": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore'"
+    "upload": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@3.35.166.100::ZhennovateAPI --exclude '.git' --exclude '.gitignore'",
+    "upload:pro": "rsync -vzrtopg --port=61873 --progress /Users/han/Desktop/zhennovate/build root@13.209.50.102::ZhennovateAPI --exclude '.git' --exclude '.gitignore'",
+    "test": "node scripts/test.js"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -26,6 +26,9 @@ export default function () {
     if (href.indexOf('/insights') > -1) {
       setActiveKey(['insights']);
     }
+    if (href.indexOf('/workshops') > -1) {
+      setActiveKey(['workshops']);
+    }
   }, [window.location.href]);
 
   const onSelect = (keys) => {
@@ -68,6 +71,9 @@ export default function () {
         </Menu.Item>
         <Menu.Item key="insights" style={{ borderBottom: 0 }}>
           <Link to="/insights">Insights</Link>
+        </Menu.Item>
+        <Menu.Item key="workshops" style={{ borderBottom: 0 }}>
+          <Link to="/workshops">Workshops</Link>
         </Menu.Item>
       </Menu>
 

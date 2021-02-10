@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:11:47
+ * @Last Modified time: 2021-02-08 14:09:14
  */
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
@@ -15,6 +15,7 @@ import ProgramDetail from '@/pages/index/detail';
 import HomePage from '@/pages/index/home/home';
 import './index.less';
 import Insights from '../insights';
+import Workshops from '../workshop';
 import AuthRoute from '@/component/auth/auth';
 // import { useMount } from 'ahooks';
 
@@ -78,6 +79,12 @@ export default function (componentProps) {
           exact={true}
           path="/insights"
           component={(props) => renderWithFooter(Insights, props)}
+        />
+
+        <AuthRoute
+          exact={true}
+          path="/workshops"
+          component={(props) => renderWithFooter(Workshops, props)}
         />
       </AnimatedSwitch>
     </LayoutContainer>

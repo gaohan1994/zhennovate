@@ -10,6 +10,7 @@ import { entryDelete } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
+import { RenderPaperformKeyTypes } from '@/component/paperform';
 
 const prefix = 'component-home-actions';
 
@@ -101,7 +102,7 @@ function HomeProgramCard(props) {
 
   const onCompleteAction = () => {
     history.push(
-      `/program/detail/${data.Program}?module_id=${data.Module?._id}`,
+      `/program/detail/${data.Program}?module_id=${data.Module?._id}&paperformKey=${RenderPaperformKeyTypes.CompletePFKey}`,
     );
   };
 
