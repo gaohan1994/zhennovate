@@ -17,7 +17,7 @@ import { doingaction } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
 import { chunk } from 'lodash';
-import useHomeHooks from '../hooks';
+// import useHomeHooks from '../hooks';
 
 const HomeActionTypes = {
   weeklyGoal: 'weeklyGoal',
@@ -30,10 +30,10 @@ const WeeklyGoalData = {
 function Actions(props) {
   const { userId } = useSignSdk();
   const homeStore = useSelector((state) => state.homeStore);
-  const {
-    getCheckCompleteModalTimeToken,
-    showWeeklyCompleteModal,
-  } = useHomeHooks();
+  // const {
+  //   getCheckCompleteModalTimeToken,
+  //   showWeeklyCompleteModal,
+  // } = useHomeHooks();
 
   const [data, setData] = useState({});
   const [swiperData, setSwiperData] = useState([[WeeklyGoalData, {}]]);
@@ -44,16 +44,16 @@ function Actions(props) {
         setData(result.data);
       }
 
-      console.log('fetchDoingActionhomeStore', result);
-      const token = getCheckCompleteModalTimeToken(homeStore);
-      console.log('!token', !token);
-      console.log(
-        'result.endCount >= result.planEndCount',
-        result.data.endCount >= result.data.planEndCount,
-      );
-      if (!token && result.data.endCount >= result.data.planEndCount) {
-        showWeeklyCompleteModal();
-      }
+      // console.log('fetchDoingActionhomeStore', result);
+      // const token = getCheckCompleteModalTimeToken(homeStore);
+      // console.log('!token', !token);
+      // console.log(
+      //   'result.endCount >= result.planEndCount',
+      //   result.data.endCount >= result.data.planEndCount,
+      // );
+      // if (!token && result.data.endCount >= result.data.planEndCount) {
+      //   showWeeklyCompleteModal();
+      // }
     });
   }, [homeStore]);
 

@@ -134,9 +134,13 @@ class CalendarHelper {
      * 如果是outlook或者apple日历则把链接放进url
      */
     if (calendarWays === 'google') {
+      detailContent += `<p>Continue where you left off at: </p>`;
       detailContent += `<a href="${linkHref}">${nextModule.Title}</a>`;
+      detailContent += `<p>See program details: </p>`;
       detailContent += `<p>${program.Detail || ''}</p>`;
     } else {
+      detailContent += `Continue where you left off at: \n`;
+      detailContent += `See program details: \n`;
       detailContent += `\n ${program.Detail || ''}`;
     }
 
@@ -149,7 +153,7 @@ class CalendarHelper {
       start: startTime,
       end: endTime,
       title: program.Name,
-      address: '',
+      address: linkHref,
       description:
         calendarWays === 'google'
           ? '<!DOCTYPE html><html><body>' +
@@ -193,8 +197,7 @@ class CalendarHelper {
       }${suffix}`,
     );
 
-    let detailContent =
-      'Action Time - Practice what you’ve learned for mastery! ';
+    let detailContent = '';
 
     /**
      * @param {calendarWays === 'google'}
@@ -202,10 +205,12 @@ class CalendarHelper {
      * 如果是outlook或者apple日历则把链接放进url
      */
     if (calendarWays === 'google') {
+      detailContent += `<p>Action Time - Practice what you’ve learned for mastery! </p>`;
       detailContent += `<p>For tips and instructions, or to reflect on the action taken, visit:</p>`;
       detailContent += `<a href="${linkHref}">${data.Title}</a>`;
     } else {
-      detailContent += `\n For tips and instructions, or to reflect on the action taken, visit:`
+      detailContent += `Action Time - Practice what you’ve learned for mastery! \n`;
+      detailContent += `\n For tips and instructions, or to reflect on the action taken, visit:`;
       // detailContent += `\n ${data.Desc || ''}`;
     }
 
@@ -218,7 +223,7 @@ class CalendarHelper {
       start: startTime,
       end: endTime,
       title: data.Title,
-      address: '',
+      address: linkHref,
       description:
         calendarWays === 'google'
           ? '<!DOCTYPE html><html><body>' +

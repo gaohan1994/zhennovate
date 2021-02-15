@@ -44,9 +44,9 @@ function HomeProgramCard(props) {
 
   const { showCalendar } = useCalendar();
 
-  const onViewProgram = () => {
-    history.push(`/program/describe/${data.Program}`);
-  };
+  // const onViewProgram = () => {
+  //   history.push(`/program/describe/${data.Program}`);
+  // };
 
   const onQuitAction = () => {
     try {
@@ -82,13 +82,6 @@ function HomeProgramCard(props) {
         onClick={onAddCalendar}
       >
         Add to Calendar
-      </Menu.Item>
-      <Menu.Item
-        key="program"
-        style={{ color: 'rgba(0, 0, 0, 0.65)' }}
-        onClick={onViewProgram}
-      >
-        View Program
       </Menu.Item>
       <Menu.Item
         key="delete"
