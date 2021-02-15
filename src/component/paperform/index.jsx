@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /**
  * paperform 详情页
  * @Author: centerm.gaohan
@@ -174,6 +175,9 @@ const RenderPaperForm = (props) => {
     (event) => {
       const { data: postMessageData } = event;
 
+      console.log('postMessageData', postMessageData);
+      // return;
+
       if (!postMessageData) {
         return;
       }
@@ -226,6 +230,7 @@ const RenderPaperForm = (props) => {
           .catch((error) => {
             notification.error(error.message);
           });
+        // eslint-disable-next-line no-unreachable
       } else {
         callback && callback();
       }
@@ -237,8 +242,10 @@ const RenderPaperForm = (props) => {
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener('message', (event) => receiveMessage(event), false);
-    return () => window.removeEventListener('message', () => {});
+    window.addEventListener('message', receiveMessage, false);
+    return () => {
+      window.removeEventListener('message', receiveMessage);
+    };
   }, []);
 
   // 进来的时候进行数据整合 提交接口

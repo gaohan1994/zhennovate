@@ -11,27 +11,31 @@ import {
   BookOutlined,
   SolutionOutlined,
   IdcardOutlined,
-  CheckCircleFilled,
+  // CheckCircleFilled,
 } from '@ant-design/icons';
 import { userProgram } from '@/pages/index/program/constants';
-import { useHistory } from 'react-router-dom';
+// import { useHistory } from 'react-router-dom';
 import './index.less';
 import MyHeader from './component/header';
 import { formatSearch } from '@/common/request';
 import { formatModuleData } from './constants';
-import RenderPaperForm from '@/component/paperform';
-
+import RenderPaperForm, {
+  RenderPaperformKeyTypes,
+} from '@/component/paperform';
+import { merge } from 'lodash';
 import About from './about';
 import Entry from './entry';
 // import Workshop from './workshop';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
+import MenuItem from './component/menu-item';
+// import imguncheck from '@/assets/3.数据录入-2.Radio单选框-亮色-Icon-未选.png';
 
 const prefix = 'page-detail';
 
 const { Sider, Content, Header } = Layout;
 
 export default (props) => {
-  const history = useHistory();
+  // const history = useHistory();
   const searchParams = formatSearch(props.location.search);
   const { params } = props.match;
 
@@ -57,6 +61,12 @@ export default (props) => {
   const [collapsed, setCollapsed] = useState(false);
 
   const { userId } = useSignSdk();
+
+  // 当前session里完成的module数据
+  const [
+    currentSessionFinishedModules,
+    setCurrentSessionFinishedModules,
+  ] = useState([]);
 
   /**
    * 请求数据
@@ -146,13 +156,18 @@ export default (props) => {
 
   useEffect(() => {
     if (searchParams.module_id && programData.Sessions) {
-      const { moduleData } = formatModuleData(
+      const { moduleData, session } = formatModuleData(
         searchParams.module_id,
         programData,
       );
+      // 设置当前的paperform
       setCurrentPaperform(moduleData);
+      // 设置当前选中状态的menu的module
       setSelectedKeys([searchParams.module_id]);
+      // 设置当前显示的是什么类型的数据
       setCurrentKey(searchParams.module_id);
+
+      setCurrentSessionFinishedModules(session.FinishedModules);
     }
     setUrlParams(searchParams);
   }, [programData, window.location.href]);
@@ -163,7 +178,8 @@ export default (props) => {
 
   // 点击 menu 切换 href 重新触发渲染
   const onModuleClick = (item) => {
-    history.push(`/program/detail/${programData._id}?module_id=${item._id}`);
+    // history.push(`/program/detail/${programData._id}?module_id=${item._id}`);
+    window.location.href = `#/program/detail/${programData._id}?module_id=${item._id}`;
   };
 
   const getDefaultKeys = () => {
@@ -186,11 +202,33 @@ export default (props) => {
    */
   const finishPaperformCallback = (params) => {
     const { programData, postMessageData } = params;
-    const { session, sessionIndex, moduleIndex } = formatModuleData(
-      postMessageData.progressData.module,
-      programData,
-    );
+    const {
+      session,
+      sessionIndex,
+      moduleIndex,
+      moduleId,
+      moduleData,
+    } = formatModuleData(postMessageData.progressData.module, programData);
     const hasNextModule = !!session.Modules[moduleIndex + 1];
+
+    const nextFinishedModules = merge([], currentSessionFinishedModules);
+
+    if (!moduleData.CompletePFKey) {
+      // 说明没有complete的paperfrom
+      nextFinishedModules.push(moduleId);
+      setCurrentSessionFinishedModules(nextFinishedModules);
+      return;
+    }
+
+    if (
+      urlParams.paperformKey &&
+      urlParams.paperformKey === RenderPaperformKeyTypes.CompletePFKey
+    ) {
+      // 如果是complete的paperfrom则直接完成
+      nextFinishedModules.push(moduleId);
+      setCurrentSessionFinishedModules(nextFinishedModules);
+      return;
+    }
 
     if (hasNextModule) {
       // 跳转到下一个module
@@ -291,13 +329,13 @@ export default (props) => {
                           >
                             {session.Modules
                               ? session.Modules.map((module) => {
-                                  const { FinishedModules } = session;
-                                  const isFinished =
-                                    FinishedModules &&
-                                    FinishedModules.some(
-                                      // eslint-disable-next-line max-nested-callbacks
-                                      (m) => m === module._id,
-                                    );
+                                  // const { FinishedModules } = session;
+                                  // const isFinished =
+                                  //   FinishedModules &&
+                                  //   FinishedModules.some(
+                                  //     // eslint-disable-next-line max-nested-callbacks
+                                  //     (m) => m === module._id,
+                                  //   );
 
                                   return (
                                     <Menu.Item
@@ -305,32 +343,51 @@ export default (props) => {
                                       key={module._id}
                                       onClick={() => onModuleClick(module)}
                                     >
-                                      <div className={`${prefix}-menu`}>
-                                        {isFinished && (
-                                          <div
-                                            className={`${prefix}-menu-check`}
-                                          >
-                                            <CheckCircleFilled
-                                              style={{ color: '#2fc25b' }}
-                                            />
-                                          </div>
-                                        )}
-                                        <span
-                                          className={`${prefix}-menu-title`}
-                                        >
-                                          {module.Title}
-                                        </span>
-                                        <span
-                                          className={`${prefix}-menu-desc`}
-                                          style={{ marginTop: 2, fontSize: 12 }}
-                                        >
-                                          {module.Type}
-                                          <span className="dot" />
-                                          {`${module.Duration} min`}
-                                        </span>
-                                      </div>
+                                      <MenuItem
+                                        data={module}
+                                        session={session}
+                                        finishedModules={
+                                          currentSessionFinishedModules
+                                        }
+                                      />
                                     </Menu.Item>
                                   );
+                                  // return (
+                                  // <Menu.Item
+                                  //   style={{ paddingLeft: 48 }}
+                                  //   key={module._id}
+                                  //   onClick={() => onModuleClick(module)}
+                                  // >
+                                  //     <div className={`${prefix}-menu`}>
+                                  //       {isFinished ? (
+                                  //         <div
+                                  //           className={`${prefix}-menu-check`}
+                                  //         >
+                                  //           <CheckCircleFilled  style={{ color: '#2fc25b' }} />
+                                  //         </div>
+                                  //       ) : (
+                                  //         <div
+                                  //           className={`${prefix}-menu-check`}
+                                  //         >
+                                  //           <img src={imguncheck} alt='' />
+                                  //         </div>
+                                  //       )}
+                                  //       <span
+                                  //         className={`${prefix}-menu-title`}
+                                  //       >
+                                  //         {module.Title}
+                                  //       </span>
+                                  //       <span
+                                  //         className={`${prefix}-menu-desc`}
+                                  //         style={{ marginTop: 2, fontSize: 12 }}
+                                  //       >
+                                  //         {module.Type}
+                                  //         <span className="dot" />
+                                  //         {`${module.Duration} min`}
+                                  //       </span>
+                                  //     </div>
+                                  //   </Menu.Item>
+                                  // );
                                 })
                               : ''}
                           </Menu.SubMenu>

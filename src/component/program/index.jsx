@@ -12,7 +12,7 @@ import './index.less';
 import imgbooksaved from '@/assets/Icon-Bookmark-Solid.png';
 import imgbookunsave from '@/assets/Icon-Bookmark-outline@2x.png';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
-import { saveProgram } from '../constants';
+import { saveProgram, unsaveprogram } from '../constants';
 import { ResponseCode } from '@/common/config';
 import { ProgramTabKeys } from '@/pages/index/program/constants';
 
@@ -46,11 +46,31 @@ function Program(props) {
       return;
     }
 
+    if (data.IsSaved === true) {
+      unsaveprogram({ userId, programId: data._id }).then((result) => {
+        if (result.error_code === ResponseCode.success) {
+          message.success('Program Unsaved');
+          setData((prevData) => {
+            return {
+              ...prevData,
+              IsSaved: prevData.IsSaved === true ? false : true,
+            };
+          });
+
+          /**
+           * @todo 如果在saved中取消保存则在页面中删除这个
+           */
+          if (tab.key === ProgramTabKeys.save) {
+            fieldSaved.run(sign.userinfo);
+          }
+        }
+      });
+      return;
+    }
+
     saveProgram({ userId, programId: data._id }).then((result) => {
       if (result.error_code === ResponseCode.success) {
-        message.success(
-          `Program ${data.IsSaved === true ? 'Unsaved' : 'Saved'}`,
-        );
+        message.success('Program Saved');
         setData((prevData) => {
           return {
             ...prevData,

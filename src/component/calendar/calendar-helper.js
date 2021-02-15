@@ -8,7 +8,10 @@ import { RenderPaperformKeyTypes } from '../paperform';
 
 export const getCalendarHost = () => {
   const hostname = window.location.hostname;
-  return hostname === 'localhost' ? 'http://demo-us.zhennovate.com' : hostname;
+
+  const hostString =
+    hostname === 'localhost' ? 'http://demo-us.zhennovate.com' : hostname;
+  return hostString.startsWith('http') ? hostString : `http://${hostString}`;
 };
 
 export const CalendarDataType = {
@@ -98,8 +101,24 @@ class CalendarHelper {
       }
     }
 
+    console.log('program', program);
+
+    const totalDuration = program.Sessions
+      ? program?.Sessions.reduce(
+          (prevValue, currentValue) => currentValue.totalDuration + prevValue,
+          0,
+        )
+      : 0;
+    console.log('[totalDuration]', totalDuration);
+
+    /**
+     * @param {startTime} 开始时间
+     * @param {endTime} 结束时间，program的持续时间
+     */
     const startTime = this.formatTime(moment().add(1, 'd'));
-    const endTime = this.formatTime(moment().add(1, 'd').add(15, 'minutes'));
+    const endTime = this.formatTime(
+      moment().add(1, 'd').add(totalDuration, 'minutes'),
+    );
 
     const linkHref = urlencode(
       `${getCalendarHost()}/#/program/detail/${program._id}?module_id=${
@@ -174,7 +193,8 @@ class CalendarHelper {
       }${suffix}`,
     );
 
-    let detailContent = '';
+    let detailContent =
+      'Action Time - Practice what you’ve learned for mastery! ';
 
     /**
      * @param {calendarWays === 'google'}
@@ -182,10 +202,11 @@ class CalendarHelper {
      * 如果是outlook或者apple日历则把链接放进url
      */
     if (calendarWays === 'google') {
+      detailContent += `<p>For tips and instructions, or to reflect on the action taken, visit:</p>`;
       detailContent += `<a href="${linkHref}">${data.Title}</a>`;
-      detailContent += `<p>${data.Desc || ''}</p>`;
     } else {
-      detailContent += `\n ${data.Desc || ''}`;
+      detailContent += `\n For tips and instructions, or to reflect on the action taken, visit:`
+      // detailContent += `\n ${data.Desc || ''}`;
     }
 
     /**

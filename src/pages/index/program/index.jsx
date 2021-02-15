@@ -12,6 +12,7 @@ import { ProgramTabKeys } from './constants';
 import { formatSearch } from '@/common/request';
 import imghome from '@/assets/Banner-with-Character.svg';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
+import useProgramHooks from './hooks';
 
 const prefix = 'page-program';
 const { TabPane } = Tabs;
@@ -52,8 +53,10 @@ export default (props) => {
   // 是否显示加载中 防止闪烁
   const [showSkeleton, setShowSkeleton] = useState(false);
   const [currentTab, setCurrentTab] = useState(tabsMenu[0].key);
-
   const { checkSign } = useSignSdk();
+
+  const { sign } = useSignSdk();
+  const { getCurrentFields } = useProgramHooks('available');
 
   // 获得banner高度
   useEffect(() => {
@@ -79,6 +82,11 @@ export default (props) => {
     });
     setShowSkeleton(true);
     setCurrentTab(key);
+
+    const currentFields = getCurrentFields(key);
+    console.log('[p currentFields]', currentFields);
+    currentFields.run(sign.userinfo)
+    // window.location.hash = `#/program?entry=${key}`;
   };
 
   useEffect(() => {

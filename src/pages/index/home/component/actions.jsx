@@ -6,8 +6,9 @@
  * @Last Modified by: centerm.gaohan
  * @Last Modified time: 2021-01-31 15:39:12
  */
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useCallback } from 'react';
 // import { LeftOutlined, RightOutlined } from '@ant-design/icons';
+import { useSelector } from 'react-redux';
 import './index.less';
 import Swiper from '@/component/swiper';
 import WeeklyGoal from './weekly-goal';
@@ -28,19 +29,33 @@ const WeeklyGoalData = {
 
 function Actions(props) {
   const { userId } = useSignSdk();
+  const homeStore = useSelector((state) => state.homeStore);
+  const {
+    getCheckCompleteModalTimeToken,
+    showWeeklyCompleteModal,
+  } = useHomeHooks();
+
   const [data, setData] = useState({});
   const [swiperData, setSwiperData] = useState([[WeeklyGoalData, {}]]);
 
-  const { receiveWeeklyGoalCallback } = useHomeHooks();
-
-  const fetchDoingAction = () => {
+  const fetchDoingAction = useCallback(() => {
     doingaction({ userId }).then((result) => {
       if (result.error_code === ResponseCode.success) {
         setData(result.data);
-        receiveWeeklyGoalCallback(result.data);
+      }
+
+      console.log('fetchDoingActionhomeStore', result);
+      const token = getCheckCompleteModalTimeToken(homeStore);
+      console.log('!token', !token);
+      console.log(
+        'result.endCount >= result.planEndCount',
+        result.data.endCount >= result.data.planEndCount,
+      );
+      if (!token && result.data.endCount >= result.data.planEndCount) {
+        showWeeklyCompleteModal();
       }
     });
-  };
+  }, [homeStore]);
 
   useEffect(() => {
     if (userId) {

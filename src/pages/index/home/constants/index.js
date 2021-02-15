@@ -5,7 +5,10 @@
  * @Last Modified by: centerm.gaohan
  * @Last Modified time: 2021-01-31 15:35:33
  */
+import { ResponseCode } from '@/common/config';
 import { api } from '@/common/request';
+import { Home_Actions } from '../store';
+import { store } from '@/module/redux/persist';
 
 export const RECEIVE_MESSAGE_TYPE = {
   CHANGE_GOAL: 'goal',
@@ -15,7 +18,15 @@ export const RECEIVE_MESSAGE_TYPE = {
 };
 
 export const doingaction = (params) => {
-  return api.get(`/user/doingaction/${params.userId}`);
+  return api.get(`/user/doingaction/${params.userId}`).then((result) => {
+    if (result.error_code === ResponseCode.success) {
+      store.dispatch({
+        type: Home_Actions.Receive_Week_Start,
+        payload: result.data,
+      });
+    }
+    return result;
+  });
 };
 
 // 是否checkin

@@ -18,9 +18,6 @@ import { ProgramTabKeys } from '../constants';
 import Filter from '@/component/fliter';
 import Sort from '@/component/sort';
 import useStickyComponent from '@/component/sticky';
-import DemoEmpty from '@/component/demo/empty';
-import imgsave from '@/assets/Demo-icon/woman-sitting-office-desk-holding-pen-while-thinking_10045-492.jpg';
-import imgcomplete from '@/assets/Demo-icon/completed-concept-illustration_114360-3891.jpg';
 // import imgsave from '@/assets/Demo-icon/woman-sitting-office-desk-holding-pen-while-thinking_10045-492.png';
 
 const prefix = 'program-child';
@@ -29,31 +26,18 @@ export default (props) => {
   const { tab } = props;
   const { list, fieldSaved } = useProgramHooks(tab.key);
 
-  const [isDemo] = useState(false);
-
   // programs的容器
   const programContainerRef = useRef(null);
   // programs数据
   const [programs, setPrograms] = useState([]);
-  // program容器距离左边的距离
-  // const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
   const [category, setCategory] = useState(['']);
   const [selectedCategory, setSelectedCategory] = useState(['']);
-
-  // const { top } = useScroll(document);
-  // const isSticky = top >= 420 + 24 + 24 + 10; // 计算触发sticky的距离
 
   const { left, isSticky } = useStickyComponent(
     420 + 24 + 24 + 10,
     programContainerRef,
   );
-
-  // useEffect(() => {
-  //   if (programContainerRef.current?.offsetLeft) {
-  //     setProgramOffsetLeft(programContainerRef.current.offsetLeft);
-  //   }
-  // }, [programContainerRef.current]);
 
   // 构造数据
   useEffect(() => {
@@ -144,45 +128,24 @@ export default (props) => {
 
   return (
     <div className={`${prefix}`}>
-      {isDemo ? (
-        <DemoEmpty
-          img={
-            tab.key === ProgramTabKeys.save
-              ? imgsave
-              : tab.key === ProgramTabKeys.complete
-              ? imgcomplete
-              : null
-          }
-          detail={
-            tab.key === ProgramTabKeys.save
-              ? "Here, you can visit the programs you've saved for later."
-              : tab.key === ProgramTabKeys.complete
-              ? 'Here, you can visit the programs you have completed.'
-              : ''
-          }
-        />
-      ) : (
-        <>
-          <div style={{ marginRight: 24 }} ref={programContainerRef}>
-            {renderSort()}
-            {programs.length > 0 &&
-              programs.map((item) => {
-                return (
-                  <ProgramItem
-                    key={item?._id}
-                    data={item || {}}
-                    tab={tab}
-                    fieldSaved={fieldSaved}
-                  />
-                );
-              })}
-            {programs.length === 0 && <Empty tab={tab} />}
-          </div>
+      <div style={{ marginRight: 24 }} ref={programContainerRef}>
+        {renderSort()}
+        {programs.length > 0 &&
+          programs.map((item) => {
+            return (
+              <ProgramItem
+                key={item?._id}
+                data={item || {}}
+                tab={tab}
+                fieldSaved={fieldSaved}
+              />
+            );
+          })}
+        {programs.length === 0 && <Empty tab={tab} />}
+      </div>
 
-          {renderFilter()}
-          {isSticky && <div style={{ width: 360, height: 1 }} />}
-        </>
-      )}
+      {renderFilter()}
+      {isSticky && <div style={{ width: 360, height: 1 }} />}
     </div>
   );
 };

@@ -60,12 +60,8 @@ function Goal({ style = {} }) {
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener(
-      'message',
-      (event) => receiveMessage(event, RECEIVE_MESSAGE_TYPE.CHANGE_GOAL),
-      false,
-    );
-    return () => window.removeEventListener('message', () => {});
+    window.addEventListener('message', receiveMessage, false);
+    return () => window.removeEventListener('message', receiveMessage);
   }, []);
 
   // 请求 quotes

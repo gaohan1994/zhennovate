@@ -53,7 +53,7 @@ function HomeProgramCard(props) {
       invariant(isSign, 'Please Sign in');
       const payload = {
         userId,
-        entryId: '',
+        entryId: data._id,
       };
       entryDelete(payload).then((result) => {
         if (result.error_code === ResponseCode.success) {

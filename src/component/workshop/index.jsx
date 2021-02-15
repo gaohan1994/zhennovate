@@ -64,8 +64,8 @@ function Workshop(props) {
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener('message', (event) => receiveMessage(event), false);
-    return () => window.removeEventListener('message', () => {});
+    window.addEventListener('message', receiveMessage, false);
+    return () => window.removeEventListener('message', receiveMessage);
   }, []);
 
   return (

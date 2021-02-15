@@ -3,18 +3,20 @@ import './index.less';
 import { Progress, Modal, Button, message, Spin } from 'antd';
 import Sort from '@/component/sort';
 import Choice from '@/component/choice';
+import { useSelector } from 'react-redux';
 import { renewactionplan } from '../constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
 import PaperformActionModal from '@/component/paperform/component/modal';
 import useHomeHooks from '../hooks';
-// import moment from 'moment';
 
 const prefix = 'component-home-actions';
 
 function WeeklyGoal(props) {
   const { data = {} } = props;
+  const homeStore = useSelector((state) => state.homeStore);
+  // console.log('homeStore', homeStore);
   const { endCount, planEndCount } = data;
   const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
@@ -23,7 +25,12 @@ function WeeklyGoal(props) {
    */
   const [loading, setLoading] = useState(false);
 
-  const { homeStore, toogleWeeklyCompleteModal } = useHomeHooks();
+  const {
+    // homeStore,
+    toogleWeeklyCompleteModal,
+    // showWeeklyCompleteModal,
+    // getCheckCompleteModalTimeToken,
+  } = useHomeHooks();
 
   /**
    * @param weeklyGoalValue modal 里面显示的数量
@@ -55,6 +62,12 @@ function WeeklyGoal(props) {
   useEffect(() => {
     const p = ((endCount || 0) / (weeklyGoalPlanValue || 0)) * 100;
     setPercent(p);
+
+    // const token = getCheckCompleteModalTimeToken();
+    // console.log('token', token);
+    // if (endCount >= weeklyGoalPlanValue && !token) {
+    //   showWeeklyCompleteModal();
+    // }
   }, [endCount, weeklyGoalPlanValue]);
 
   const changeWeeklyGoal = () => {

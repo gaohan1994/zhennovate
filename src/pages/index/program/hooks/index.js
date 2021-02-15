@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react';
+import { useEffect } from 'react';
 import {
   ProgramTabKeys,
   availableList,
@@ -6,6 +6,7 @@ import {
   completeList,
   savedList,
 } from '../constants';
+import { useSelector, useDispatch } from 'react-redux';
 import { useRequest } from 'ahooks';
 import { ResponseCode } from '@/common/config';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
@@ -27,7 +28,7 @@ const ReducerActions = {
 /**
  * program的reducer
  */
-function programReducer(state, action) {
+export function programReducer(state = initState, action) {
   switch (action.type) {
     case ReducerActions.Receive_Availabel_List: {
       return {
@@ -68,7 +69,9 @@ function programReducer(state, action) {
  */
 function useProgramHooks(type, options) {
   // usereducer
-  const [state, dispatch] = useReducer(programReducer, initState);
+  const state = useSelector((state) => state.programs);
+  const dispatch = useDispatch();
+  // const [state, dispatch] = useReducer(programReducer, initState);
 
   // 获取用户信息
   const { sign } = useSignSdk();
@@ -149,6 +152,18 @@ function useProgramHooks(type, options) {
       }
     }
   }, [type, options, sign]);
+
+  const fields = {
+    [ProgramTabKeys.available]: field,
+    [ProgramTabKeys.complete]: fieldComplete,
+    [ProgramTabKeys.progress]: fieldProgress,
+    [ProgramTabKeys.save]: fieldSaved,
+  };
+
+  const getCurrentFields = (currentTab) => {
+    return fields[currentTab] || {};
+  };
+
   return {
     state,
     dispatch,
@@ -157,9 +172,10 @@ function useProgramHooks(type, options) {
     fieldProgress,
     fieldComplete,
     fieldSaved,
+    fields: fields || {},
+    currentFields: fields[type],
+    getCurrentFields,
   };
 }
 
 export default useProgramHooks;
-
-export { programReducer };

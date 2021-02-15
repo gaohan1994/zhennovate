@@ -55,12 +55,8 @@ function CheckInComponent(props) {
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener(
-      'message',
-      (event) => receiveMessage(event, RECEIVE_MESSAGE_TYPE.CHECKIN),
-      false,
-    );
-    return () => window.removeEventListener('message', () => {});
+    window.addEventListener('message', receiveMessage, false);
+    return () => window.removeEventListener('message', receiveMessage);
   }, []);
 
   return (

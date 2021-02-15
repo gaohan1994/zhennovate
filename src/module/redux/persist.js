@@ -16,7 +16,7 @@ import { reducer } from './index';
 const persistConfig = {
   key: 'root',
   storage,
-  blacklist: ['homeStore'],
+  // blacklist: ['homeStore'],
 };
 
 const persistedReducer = persistReducer(persistConfig, reducer);
