@@ -137,11 +137,11 @@ class CalendarHelper {
       detailContent += `<p>Continue where you left off at: </p>`;
       detailContent += `<a href="${linkHref}">${nextModule.Title}</a>`;
       detailContent += `<p>See program details: </p>`;
-      detailContent += `<p>${program.Detail || ''}</p>`;
+      detailContent += `<p>${calendar.formatDetail(program.Detail) || ''}</p>`;
     } else {
       detailContent += `Continue where you left off at: \n`;
       detailContent += `See program details: \n`;
-      detailContent += `\n ${program.Detail || ''}`;
+      detailContent += `\n ${calendar.formatDetail(program.Detail) || ''}`;
     }
 
     /**

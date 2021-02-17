@@ -21,6 +21,13 @@ class Calendar {
   }
 
   /**
+   * @todo 格式化detail防止出现错误格式
+   */
+  formatDetail(detail = '') {
+    return detail.replace(/[\\\`\*\_\[\]\#\+\-\!\>\r\n]/g, '');
+  }
+
+  /**
    * 日历生成器
    * @param {*} calendarData
    * @return {*}
