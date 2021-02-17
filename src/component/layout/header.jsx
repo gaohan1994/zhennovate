@@ -53,6 +53,9 @@ export default function () {
   const username = (sign && sign.userinfo && sign.userinfo.Name) || 'name';
   const firstWord = username.substring(0, 1);
 
+  // <Menu.Item key="insights" style={{ borderBottom: 0 }}>
+  //   <Link to="/insights">Insights</Link>
+  // </Menu.Item>;
   return (
     <Header
       className={`${prefix}-header`}
@@ -69,9 +72,7 @@ export default function () {
         <Menu.Item key="program" style={{ borderBottom: 0 }}>
           <Link to="/program">Program</Link>
         </Menu.Item>
-        <Menu.Item key="insights" style={{ borderBottom: 0 }}>
-          <Link to="/insights">Insights</Link>
-        </Menu.Item>
+
         <Menu.Item key="workshops" style={{ borderBottom: 0 }}>
           <Link to="/workshops">Workshops</Link>
         </Menu.Item>

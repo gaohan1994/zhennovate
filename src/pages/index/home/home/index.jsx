@@ -30,14 +30,6 @@ function Home(props) {
         <Actions />
 
         <HomePrograms />
-        {/* <div style={{ marginTop: 32 }}>
-          <Sort
-            title="Programs in Progress"
-            subTitle="Continue where you left off"
-            showSort={false}
-          />
-          <Program data={{}} />
-        </div> */}
       </div>
       <Goal
         style={

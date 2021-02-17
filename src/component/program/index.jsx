@@ -31,6 +31,23 @@ function Program(props) {
   }, [programData]);
 
   const onClick = () => {
+    /**
+     * @param {navigateToPaperfromToken} 正在进行或已完成的program应该跳过program简介页面
+     */
+    const navigateToPaperfromToken =
+      type === 'home' || tab.key === ProgramTabKeys.progress || tab.key === ProgramTabKeys.complete;
+
+    if (navigateToPaperfromToken) {
+      const firstModule =
+        (data?.Sessions &&
+          data?.Sessions[0] &&
+          data?.Sessions[0].Modules &&
+          data?.Sessions[0].Modules[0]) ||
+        '';
+      history.push(`/program/detail/${data._id}?module_id=${firstModule}`);
+      return;
+    }
+
     history.push(
       `/program/describe/${data._id}${tab ? `?entry=${tab.key}` : ''}`,
     );

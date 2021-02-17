@@ -8,30 +8,32 @@
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { ArrowRightOutlined } from '@ant-design/icons';
-import { message } from 'antd';
+// import { ArrowRightOutlined } from '@ant-design/icons';
+// import { message } from 'antd';
 import './index.less';
 import imgavatar from '@/assets/Character/Component-Character-Female-A.svg';
 import imgemoji from '@/assets/Icon-Emoji-Hi@2x.png';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import CheckInComponent from './check-in';
-import { checkin, checkStart } from '../constants';
+import { checkin } from '../constants';
 import { ResponseCode } from '@/common/config';
 import PaperformActionModal from '@/component/paperform/component/modal';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
-import invariant from 'invariant';
-import { useHistory } from 'react-router-dom';
+// import invariant from 'invariant';
+// import { useHistory } from 'react-router-dom';
 
 const prefix = 'component-home-welcome';
 
 function Welcome(props) {
-  const history = useHistory();
-  const { sign, isSign } = useSignSdk();
+  // const history = useHistory();
+  const { sign } = useSignSdk();
   const { userinfo } = sign;
 
   const [isCheckin, setIsCheckin] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [checkinData, setCheckinData] = useState({});
+  const [checkinData,
+    // setCheckinData
+  ] = useState({});
 
   // check in 之后的modal
   const [afterCheckinModal, setAfterCheckinModal] = useState(false);
@@ -58,20 +60,20 @@ function Welcome(props) {
     }
   }, []);
 
-  const onCheckIn = () => {
-    try {
-      invariant(isSign, 'Plase Sign-in');
-      setVisible(true);
-      checkStart({ userId: sign.userinfo._id }).then((result) => {
-        if (result.error_code === ResponseCode.success) {
-          setCheckinData(result.data);
-        }
-      });
-    } catch (error) {
-      message.info(error.message);
-      history.push('/sign/signup');
-    }
-  };
+  // const onCheckIn = () => {
+  //   try {
+  //     invariant(isSign, 'Plase Sign-in');
+  //     setVisible(true);
+  //     checkStart({ userId: sign.userinfo._id }).then((result) => {
+  //       if (result.error_code === ResponseCode.success) {
+  //         setCheckinData(result.data);
+  //       }
+  //     });
+  //   } catch (error) {
+  //     message.info(error.message);
+  //     history.push('/sign/signup');
+  //   }
+  // };
 
   /**
    * check-in 之后的 callback
@@ -83,6 +85,12 @@ function Welcome(props) {
     showAfterCheckinModal();
   };
 
+  // <span>Ready for your daily check in?</span>;
+
+  // <div className={`${prefix}-check`} onClick={onCheckIn} common-touch="touch">
+  //   Check In
+  //   <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
+  // </div>;
   return (
     <>
       {isCheckin ? (
@@ -108,16 +116,6 @@ function Welcome(props) {
                 style={{ backgroundImage: `url(${imgemoji})` }}
               />
             </span>
-            <span>Ready for your daily check in?</span>
-          </div>
-
-          <div
-            className={`${prefix}-check`}
-            onClick={onCheckIn}
-            common-touch="touch"
-          >
-            Check In
-            <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
           </div>
 
           <div

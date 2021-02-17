@@ -43,17 +43,6 @@ function Actions(props) {
       if (result.error_code === ResponseCode.success) {
         setData(result.data);
       }
-
-      // console.log('fetchDoingActionhomeStore', result);
-      // const token = getCheckCompleteModalTimeToken(homeStore);
-      // console.log('!token', !token);
-      // console.log(
-      //   'result.endCount >= result.planEndCount',
-      //   result.data.endCount >= result.data.planEndCount,
-      // );
-      // if (!token && result.data.endCount >= result.data.planEndCount) {
-      //   showWeeklyCompleteModal();
-      // }
     });
   }, [homeStore]);
 
@@ -70,6 +59,8 @@ function Actions(props) {
       const chunkDataOrigin = [WeeklyGoalData].concat(doingActions);
       const chunkActionsData = chunk(chunkDataOrigin, 2);
       setSwiperData(chunkActionsData);
+    } else {
+      setSwiperData([[WeeklyGoalData, {}]]);
     }
   }, [data]);
 

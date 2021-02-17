@@ -99,6 +99,10 @@ function HomeProgramCard(props) {
     );
   };
 
+  // <span style={{ fontSize: 14 }}>
+  //   <span style={{ fontWeight: 'bolder' }}>{`${Module.Duration || 0} +`}</span>{' '}
+  //   working on this action
+  // </span>;
   return (
     <div
       className={`${prefix}-card`}
@@ -116,12 +120,6 @@ function HomeProgramCard(props) {
           className={`${prefix}-title`}
         >
           {Module.Title || ''}
-        </span>
-        <span style={{ fontSize: 14 }}>
-          <span style={{ fontWeight: 'bolder' }}>
-            {`${Module.Duration || 0} +`}
-          </span>{' '}
-          working on this action
         </span>
       </div>
 

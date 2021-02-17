@@ -1,4 +1,110 @@
 
+168 - Missing Action Pieces on demo-us.Zhennovate https://zhennovate.atlassian.net/browse/PHASE1-168
+设计稿在bug里面
+1、用户若是离开，再点回该Action module的话，应该看到该界面 【等待接口给出当前做到哪一步】
+2、卡片内容修改【等待UI出图】
+3、动画由paperfrom做，不在自己提供gif fixed
+4、complete做完之后重新做正常显示plan，状态为做完 fixed
+
+
+224 - Cannot Add Program to Calendar https://zhennovate.atlassian.net/browse/PHASE1-224
+没修好
+1、禹哥寻找去掉markdown语法的string给分享日历用
+2、如果不行考虑加字段
+
+209 - Cannot add action to Outlook and Apple calendars https://zhennovate.atlassian.net/browse/PHASE1-209
+与224关联
+
+208 - Weekly Goal - Copywriting https://zhennovate.atlassian.net/browse/PHASE1-208
+未完成、完成、超额完成 话术
+
+🔥 🐛 🔥【高晗Bug 2/16清单】这是第一批需要尽快修好的bug, 请于周二（2月16日）完成：Han's Bug list, to be fixed on 2/16 @nagao8856 
+
+## 2021-02-17
+=================
+2/9日的剩余4个大bug:
+=================
+
+149 - Homepage Action Card dropdown options do not work https://zhennovate.atlassian.net/browse/PHASE1-149
+1、calendar fixed
+2、complete action fixed
+3、quit action fixed
+
+## 测试出的问题
+1、重复做paperfrom但是首页没有重复计数 陈禹
+2、program跳转是否需要单独判断 陈禹
+
+202 - Weekly Goal Complete - Pop-up should only happen once and never happen again after user closes the pop-up https://zhennovate.atlassian.net/browse/PHASE1-202
+A1情况介绍：
+用户设定了一星期完成2个action的目标。
+目标达到，首页weekly goal的圈圈转满。
+用户看到一个庆祝的动画。用户看完并关掉此动画。
+fixed
+
+A1情况介绍：
+在A1的基础上，用户继续做action. 
+首页weekly goal保持饱满。
+如果用户在同一周内超标多做了1个action，那么就显示3/2。如果用户超标多做了2个action，那么就显示4/2。以此类推。
+用户不会再看到多余的动画。
+fixed
+
+B情况介绍：
+用户设定了一星期完成2个action的目标。目标达到，首页weekly goal的圈圈转满。用户看到一个庆祝的动画。用户看完并关掉此动画。
+用户想提高对自己的挑战，于是把这星期的目标调成4个action.
+
+这时：
+首页weekly goal的圈圈从满变成不满。显示2/4，因为用户刚完成了2个action也算在内。
+当用户在同一周实现了另外2个action的时候，首页weekly goal的圈圈转满。用户将可以再一次看到庆祝的动画。用户看完并关掉此动画。
+如果用户没有在同一周实现另外2个action，那么用户是看不到动画的。
+当下一周来临时，weekly goal的圈圈将重新从零开始。目标保留用户最后一次的设定。
+fixed
+
+C情况介绍：
+用户设定了一星期完成6个action的目标。目标达到，首页weekly goal的圈圈转满。用户看到一个庆祝的动画。用户看完并关掉此动画。
+用户想放松一下，于是把这星期的目标调成2个action.
+
+这时 (就像A2情景一样的逻辑）：
+首页weekly goal的圈圈仍然保持饱满。显示6/2，因为用户刚完成了6个action。
+如果用户在同一周实现了另外的action，比如说用户又做了2个action，这样一来这周就总共有8个action了。这时weekly goal的圈圈仍然保持饱满，显示8/2，但不会出现新动画。
+fixed
+
+253 - in-progress program shouldn't appear in New/Available at any time https://zhennovate.atlassian.net/browse/PHASE1-253
+陈宇修改
+
+197 -  Make sure when clicking into an in-progress program display coaching path
+https://zhennovate.atlassian.net/browse/PHASE1-197
+1、点击在首页和在inprogress直接跳转到paperfrom了 fixed
+
+251 - Unable to scroll through paperform results page embedded on our platform after user clicks on submit button on paperform https://zhennovate.atlassian.net/browse/PHASE1-251
+paperfrom的适配问题
+这是paperfrom的适配问题，并非我们的问题，可以看到在视频里paperfrom使用了类似section的一块一块滑动的布局，可能是这个原因导致
+
+184 - Copywriting - Change Available to New https://zhennovate.atlassian.net/browse/PHASE1-184
+fixed
+
+240 - Hide Checkin on Homepage for 3/1 https://zhennovate.atlassian.net/browse/PHASE1-240
+fixed
+
+241 - Hide Insights on Header Menu for 3/1 https://zhennovate.atlassian.net/browse/PHASE1-241
+fixed
+
+226 - Hide Preview for 3/1 https://zhennovate.atlassian.net/browse/PHASE1-226
+fixed 但是这个功能是做好了的确定要隐藏么
+
+256 - Hide # People Working on the Action on Homepage Action Card for 3/1 https://zhennovate.atlassian.net/browse/PHASE1-256
+fixed
+
+221 - Copywriting - Action Added Pop-up Window https://zhennovate.atlassian.net/browse/PHASE1-221
+fixed
+
+
+====================================
+2/17日新分配的bug （大部分是小bug):
+====================================
+
+260 - Coaching Path Formatting - Module Indentation from Session https://zhennovate.atlassian.net/browse/PHASE1-260
+fixed
+
 ## 2021--2-15
 
 🔥 🐛 🔥【高晗Bug 2/9清单】这是第一批需要尽快修好的12个bug, 请于周二至周三（2月9-10日）完成：Han's Bug list, to be fixed on 2/10 @nagao8856 

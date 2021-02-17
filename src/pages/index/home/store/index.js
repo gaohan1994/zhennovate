@@ -9,6 +9,7 @@ export const initState = {
 export const Home_Actions = {
   Show_Action_Weekly_Complete_Visible: 'Show_Action_Weekly_Complete_Visible',
   Receive_Week_Start: 'Receive_Week_Start',
+  Receive_CompleteModalInfo: 'Receive_CompleteModalInfo',
 };
 
 export function homeStore(state = initState, action) {
@@ -39,9 +40,15 @@ export function homeStore(state = initState, action) {
         },
       };
     }
-    default:
+
+    case Home_Actions.Receive_CompleteModalInfo: {
+      const { payload } = action;
       return {
         ...state,
+        completeModalInfo: payload,
       };
+    }
+    default:
+      return state;
   }
 }

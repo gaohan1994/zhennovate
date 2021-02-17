@@ -18,7 +18,7 @@ function ActionFlowCompleteCard(props) {
 
   const currentTime = moment().format('MM, DD, YYYY.');
 
-  const tip = completeStatus ? 'Action Completed' : 'Action Added';
+  const tip = completeStatus ? 'Action completed' : 'Action added';
 
   const title = 'Building a Good Self Care Routine';
 

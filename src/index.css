@@ -81,3 +81,7 @@ div[zhennovate-border='bottom']::after {
   transform: scaleY(0.5);
   border-bottom: 1px solid #d6d6d6;
 }
+
+.ant-menu-item::after {
+  border-right-width: 8px !important;
+}

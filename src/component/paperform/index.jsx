@@ -318,7 +318,12 @@ const RenderPaperForm = (props) => {
         width={550}
         centered
         closable={false}
-        visible={actionCompleteVisible}
+        /**
+         * @time 02-17
+         * @todo 修改 去掉自己网站做的动画，paperfrom将支持动画gif
+         */
+        // visible={actionCompleteVisible}
+        visible={false}
         onCancel={hideCctionCompleteModal}
       >
         <div className={`${prefix}-modal`}>
@@ -341,8 +346,8 @@ const RenderPaperForm = (props) => {
 
       <PaperformActionModal
         icon={imgtodo}
-        title="Action Added!"
-        subTitle="Would you like to completed your action now?"
+        title="Action added!"
+        subTitle="Would you like to complete your action now?"
         visible={actionChoiceTodoVisible}
         setVisible={setActionChoiceTodoVisible}
         confirmButton="Do it now"

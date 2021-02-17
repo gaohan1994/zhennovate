@@ -20,7 +20,7 @@ const { TabPane } = Tabs;
 const tabsMenu = [
   {
     key: ProgramTabKeys.available,
-    tab: 'Available',
+    tab: 'New',
     Component: ProgramChild,
     empty: '',
   },

@@ -10,6 +10,7 @@ import invariant from 'invariant';
 import { ResponseCode } from '@/common/config';
 import PaperformActionModal from '@/component/paperform/component/modal';
 import useHomeHooks from '../hooks';
+import moment from 'moment';
 
 const prefix = 'component-home-actions';
 
@@ -17,7 +18,7 @@ function WeeklyGoal(props) {
   const { data = {} } = props;
   const homeStore = useSelector((state) => state.homeStore);
   // console.log('homeStore', homeStore);
-  const { endCount, planEndCount } = data;
+  const { endCount, planEndCount, weekStart } = data;
   const { isSign, userId } = useSignSdk();
   const [visible, setVisible] = useState(false);
   /**
@@ -28,8 +29,9 @@ function WeeklyGoal(props) {
   const {
     // homeStore,
     toogleWeeklyCompleteModal,
-    // showWeeklyCompleteModal,
-    // getCheckCompleteModalTimeToken,
+    showWeeklyCompleteModal,
+    getCheckCompleteModalTimeToken,
+    changeWeeklyGoalValueCallback,
   } = useHomeHooks();
 
   /**
@@ -46,8 +48,8 @@ function WeeklyGoal(props) {
    */
   const [percent, setPercent] = useState(0);
 
-  // const currentDate = moment().format('MM/DD');
-  // const nextWeekDate = moment().add(7, 'days').format('MM/DD');
+  const currentDate = moment(weekStart).format('MMM D');
+  const nextWeekDate = moment(weekStart).add(6, 'days').format('MMM D');
 
   useEffect(() => {
     if (planEndCount) {
@@ -60,14 +62,23 @@ function WeeklyGoal(props) {
    * 计算如果做完了action则弹出弹出框庆祝
    */
   useEffect(() => {
+    if (weeklyGoalPlanValue === 0) {
+      return;
+    }
     const p = ((endCount || 0) / (weeklyGoalPlanValue || 0)) * 100;
     setPercent(p);
 
-    // const token = getCheckCompleteModalTimeToken();
-    // console.log('token', token);
-    // if (endCount >= weeklyGoalPlanValue && !token) {
-    //   showWeeklyCompleteModal();
-    // }
+    console.log('endCount', endCount);
+    console.log('weeklyGoalPlanValue', weeklyGoalPlanValue);
+    console.log(
+      'endCount >= weeklyGoalPlanValue',
+      endCount >= weeklyGoalPlanValue,
+    );
+    const token = getCheckCompleteModalTimeToken();
+    console.log('token', token);
+    if (endCount >= weeklyGoalPlanValue && !token) {
+      showWeeklyCompleteModal();
+    }
   }, [endCount, weeklyGoalPlanValue]);
 
   const changeWeeklyGoal = () => {
@@ -80,6 +91,7 @@ function WeeklyGoal(props) {
         count: weeklyGoalValue,
       }).then((result) => {
         if (result.error_code === ResponseCode.success) {
+          changeWeeklyGoalValueCallback(weeklyGoalPlanValue, weeklyGoalValue);
           setWeeklyGoalPlanValue(weeklyGoalValue);
           message.success('Weekly Goal Successfully Updated');
         }
@@ -99,8 +111,13 @@ function WeeklyGoal(props) {
           <Sort
             title="Weekly Goal"
             titleStyle={{ fontSize: 16 }}
-            // subTitle="Nov 6 - Nov 12"
-            subTitleStyle={{ fontSize: 12, marginTop: 2, color: '#1b2631' }}
+            subTitle={`${currentDate} - ${nextWeekDate}`}
+            subTitleStyle={{
+              fontSize: 12,
+              marginTop: 2,
+              color: '#1b2631',
+              fontStyle: 'italic',
+            }}
             showSort={false}
           />
 
@@ -114,7 +131,13 @@ function WeeklyGoal(props) {
               format={(percent, successPercent) => {
                 return (
                   <div style={{ display: 'flex', flexDirection: 'column' }}>
-                    <span style={{ fontSize: 16, fontWeight: 'bold' }}>
+                    <span
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        color: '#1b2631',
+                      }}
+                    >
                       {`${endCount || 0}/${weeklyGoalPlanValue || 0}`}
                     </span>
                     <span
@@ -132,7 +155,9 @@ function WeeklyGoal(props) {
               <span style={{ fontWeight: 'bold' }}>
                 {weeklyGoalPlanValue || 0}
               </span>{' '}
-              actions to reach your weekly goal.
+              actions to
+              <br />
+              reach your weekly goal.
             </span>
           </div>
 

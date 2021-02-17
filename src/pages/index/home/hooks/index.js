@@ -54,6 +54,32 @@ const useHomeHooks = () => {
     return false;
   };
 
+  /**
+   * @todo
+   *
+   * B情况介绍：
+   * 用户设定了一星期完成2个action的目标。目标达到，首页weekly goal的圈圈转满。用户看到一个庆祝的动画。用户看完并关掉此动画。
+   * 用户想提高对自己的挑战，于是把这星期的目标调成4个action.
+   * 这时：
+   * 首页weekly goal的圈圈从满变成不满。显示2/4，因为用户刚完成了2个action也算在内。
+   * 当用户在同一周实现了另外2个action的时候，首页weekly goal的圈圈转满。用户将可以再一次看到庆祝的动画。用户看完并关掉此动画。
+   * 如果用户没有在同一周实现另外2个action，那么用户是看不到动画的。
+   * 当下一周来临时，weekly goal的圈圈将重新从零开始。目标保留用户最后一次的设定。
+   */
+  const changeWeeklyGoalValueCallback = (prevValue, nextValue) => {
+    console.log('[prevValue]', prevValue);
+    console.log('[nextValue]', nextValue);
+    if (nextValue <= prevValue) {
+      return;
+    }
+
+    dispatch({
+      type: Home_Actions.Receive_CompleteModalInfo,
+      payload: {}
+    })
+    return;
+  };
+
   // 显示周目标modal，如果已经显示过则不再显示
   const showWeeklyCompleteModal = () => {
     // const token = getCheckCompleteModalTimeToken();
@@ -88,6 +114,7 @@ const useHomeHooks = () => {
     hideWeeklyCompleteModal,
     toogleWeeklyCompleteModal,
     getCheckCompleteModalTimeToken,
+    changeWeeklyGoalValueCallback,
   };
 };
 
