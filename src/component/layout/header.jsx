@@ -56,6 +56,9 @@ export default function () {
   // <Menu.Item key="insights" style={{ borderBottom: 0 }}>
   //   <Link to="/insights">Insights</Link>
   // </Menu.Item>;
+  // <Menu.Item key="workshops" style={{ borderBottom: 0 }}>
+  //   <Link to="/workshops">Workshops</Link>
+  // </Menu.Item>;
   return (
     <Header
       className={`${prefix}-header`}
@@ -70,11 +73,7 @@ export default function () {
           <Link to="/home">Home</Link>
         </Menu.Item>
         <Menu.Item key="program" style={{ borderBottom: 0 }}>
-          <Link to="/program">Program</Link>
-        </Menu.Item>
-
-        <Menu.Item key="workshops" style={{ borderBottom: 0 }}>
-          <Link to="/workshops">Workshops</Link>
+          <Link to="/program">Programs</Link>
         </Menu.Item>
       </Menu>
 

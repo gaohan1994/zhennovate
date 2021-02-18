@@ -7,7 +7,10 @@
  * @Last Modified time: 2021-02-04 11:42:15
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
-import { formatModuleData } from '@/pages/index/detail/constants';
+import {
+  formatModuleData,
+  programActionstatus,
+} from '@/pages/index/detail/constants';
 import { useHistory } from 'react-router-dom';
 import { programStart, programEnd } from '@/pages/index/program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
@@ -21,6 +24,10 @@ import imgtodo from '@/assets/modal/Icon_Check_128x128.png';
 import imgcalendar from '@/assets/modal/Icon_Calendar_128x128.png';
 import ActionFlowCompleteCard from './component/action-flow';
 import { RECEIVE_MESSAGE_TYPE } from '@/pages/index/home/constants';
+
+export const ModuleType = {
+  Action: 'Action',
+};
 
 /**
  * @param RenderPaperformKeyTypes
@@ -274,20 +281,46 @@ const RenderPaperForm = (props) => {
         moduleId,
         paperformId,
       };
-      programStart(payload)
-        .then((result) => {
-          if (result.error_code === ResponseCode.success) {
-            setIframeUrl(result.data?.url);
+
+      const startProgramFunction = () => {
+        programStart(payload)
+          .then((result) => {
+            if (result.error_code === ResponseCode.success) {
+              setIframeUrl(result.data?.url);
+            }
+          })
+          .catch((error) => {
+            notification.error(error.message);
+          })
+          .finally(() => {
+            setTimeout(() => {
+              setLoading(false);
+            }, 1000);
+          });
+      };
+
+      /**
+       * @todo 判断如果是 type = action
+       * 则请求接口查看上次是否做了plan，如果做了plan则显示卡片
+       */
+      if (paperformKey !== RenderPaperformKeyTypes.CompletePFKey && data && data.Type === ModuleType.Action) {
+        programActionstatus({
+          userId: sign.userinfo?._id,
+          programId,
+          sessionId,
+          moduleId,
+        }).then((result) => {
+          if (
+            result.error_code === ResponseCode.success &&
+            result.data.status === 'ActionPlan'
+          ) {
+            // 说明刚做过plan 直接显示card
+            setShowActionFlowCompletedCard(true);
           }
-        })
-        .catch((error) => {
-          notification.error(error.message);
-        })
-        .finally(() => {
-          setTimeout(() => {
-            setLoading(false);
-          }, 1000);
         });
+      }
+
+      startProgramFunction();
     }
   }, [data, programData, paperformKey]);
 
@@ -300,10 +333,12 @@ const RenderPaperForm = (props) => {
    */
   const actionFlowCompleteCardProps = {
     ...rest,
+    title: data.Title,
     completeStatus:
       paperformDataKeyRef.current === RenderPaperformKeyTypes.CompletePFKey,
     onComplete: choiceTodoModalconfirmCallback,
   };
+  // console.log('actionFlowCompleteCardProps', actionFlowCompleteCardProps);
 
   return (
     <Spin spinning={loading} style={{ width: '100%', height: '100%' }}>

@@ -5,7 +5,15 @@ import imggoal from '@/assets/Icon-Action@2x.png';
 const prefix = 'component-card';
 
 function Card(props) {
-  const { title, subTitle, tip, children, width = 550, height = 300 } = props;
+  const {
+    title,
+    titleStyle = {},
+    subTitle,
+    tip,
+    children,
+    width = 550,
+    height = 300,
+  } = props;
   return (
     <div className={`${prefix}-card ${prefix}-empty`} style={{ width, height }}>
       {tip && <span style={{ marginBottom: 12 }}>{tip}</span>}
@@ -19,6 +27,7 @@ function Card(props) {
           fontSize: 16,
           marginTop: 12,
           lineHeight: 1.2,
+          ...titleStyle,
         }}
         className={`${prefix}-title`}
       >

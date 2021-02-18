@@ -1,4 +1,81 @@
 
+## 待解决
+
+https://zhennovate.atlassian.net/browse/PHASE1-197
+saved 状态和前三种不是同一级别，是单独存在的
+不能采用目前的方案，需要重新写 
+
+https://zhennovate.atlassian.net/browse/PHASE1-170
+目前是按照
+
+排序后的action
+
+排序后的assessment
+
+排序后的reflection
+期望；
+所有的entry项目全部混在一起排序
+## 2021-02-18
+Quote of the Day Bug https://zhennovate.atlassian.net/browse/PHASE1-173
+1、只显示一条 fixed
+2、每24小时后台返回需要变化 陈禹
+一次配置多条（上百条），每天更换一条，格式重新约定一下
+
+Wrong Headers for New Programs https://zhennovate.atlassian.net/browse/PHASE1-270
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-269
+陈禹修改
+
+https://zhennovate.atlassian.net/browse/PHASE1-271
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-263
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-262
+未复现
+
+https://zhennovate.atlassian.net/browse/PHASE1-260
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-250
+fixed 接口调用时没有传递userid
+
+https://zhennovate.atlassian.net/browse/PHASE1-217
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-208
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-196
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-195
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-193
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-171
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-168
+fixed
+1、programactionstatus 返回加一个时间 陈禹
+2、首页quit之后 点击module 应该显示plan
+
+https://zhennovate.atlassian.net/browse/PHASE1-267
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-181
+陈禹
+可能是脏数据问题 并非bug
+
+https://zhennovate.atlassian.net/browse/PHASE1-187
+fixed
+
+
 168 - Missing Action Pieces on demo-us.Zhennovate https://zhennovate.atlassian.net/browse/PHASE1-168
 设计稿在bug里面
 1、用户若是离开，再点回该Action module的话，应该看到该界面 【等待接口给出当前做到哪一步】
@@ -9,11 +86,11 @@
 
 224 - Cannot Add Program to Calendar https://zhennovate.atlassian.net/browse/PHASE1-224
 没修好
-1、禹哥寻找去掉markdown语法的string给分享日历用
-2、如果不行考虑加字段
+fixed
 
 209 - Cannot add action to Outlook and Apple calendars https://zhennovate.atlassian.net/browse/PHASE1-209
 与224关联
+fixed
 
 208 - Weekly Goal - Copywriting https://zhennovate.atlassian.net/browse/PHASE1-208
 未完成、完成、超额完成 话术

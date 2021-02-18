@@ -1,3 +1,4 @@
+/* eslint-disable no-unreachable */
 /**
  * program 老师详情
  * @Author: centerm.gaohan
@@ -5,6 +6,7 @@
  * @Last Modified by: centerm.gaohan
  * @Last Modified time: 2020-12-27 18:17:54
  */
+import ReactMarkdown from 'react-markdown';
 import React from 'react';
 // import { Card } from 'antd';
 import './index.less';
@@ -49,11 +51,11 @@ export default (props) => {
                         {item.Title && `，${item.Title}`}
                       </div>
                       <div
-                        className={`${prefix}-instructor-item-text ${
+                        className={`program-component-markdown ${prefix}-instructor-item-text ${
                           status ? '' : `${prefix}-markdown-overflow`
                         }`}
                       >
-                        {item.Desc}
+                        <ReactMarkdown>{item.Desc}</ReactMarkdown>
                       </div>
                     </div>
                   </div>

@@ -230,22 +230,19 @@ function Goal({ style = {} }) {
           </span>
 
           {showQuotes ? (
-            <>
-              {userQuotes.map((quote) => {
-                return (
-                  <span
-                    key={quote}
-                    style={{
-                      marginTop: 12,
-                      fontSize: 14,
-                      textAlign: 'center',
-                    }}
-                  >
-                    {quote}
-                  </span>
-                );
-              })}
-            </>
+            userQuotes &&
+            userQuotes[0] && (
+              <span
+                key={userQuotes[0]}
+                style={{
+                  marginTop: 12,
+                  fontSize: 14,
+                  textAlign: 'center',
+                }}
+              >
+                {userQuotes[0]}
+              </span>
+            )
           ) : (
             <>
               <span

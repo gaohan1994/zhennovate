@@ -11,7 +11,7 @@ import {
   BookOutlined,
   SolutionOutlined,
   IdcardOutlined,
-  // CheckCircleFilled,
+  CheckCircleFilled,
 } from '@ant-design/icons';
 import { userProgram } from '@/pages/index/program/constants';
 // import { useHistory } from 'react-router-dom';
@@ -29,6 +29,7 @@ import Entry from './entry';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import MenuItem from './component/menu-item';
 // import imguncheck from '@/assets/3.数据录入-2.Radio单选框-亮色-Icon-未选.png';
+import imguncheck from '@/assets/Icon_CoachingPath_Empty_36x36.svg';
 
 const prefix = 'page-detail';
 
@@ -309,6 +310,7 @@ export default (props) => {
                    */
                   const isSecondSelected =
                     selectedKeys.findIndex((s) => s.length > 5) > -1;
+
                   return (
                     <Menu.SubMenu
                       title={<MenuTitle title={item.title} icon={item.icon} />}
@@ -321,22 +323,45 @@ export default (props) => {
                       } custom-antd-second-menu`}
                     >
                       {item.children.map((session) => {
+                        const { FinishedSessions } = programData;
+                        const currentSessionFinished =
+                          FinishedSessions &&
+                          FinishedSessions.some(
+                            // eslint-disable-next-line max-nested-callbacks
+                            (m) => m === session._id,
+                          );
                         return (
                           <Menu.SubMenu
-                            title={session.Title}
+                            // title={session.Title}
+                            title={
+                              <MenuTitle
+                                title={session.Title}
+                                icon={
+                                  currentSessionFinished ? (
+                                    <CheckCircleFilled
+                                      style={{ color: '#2fc25b' }}
+                                    />
+                                  ) : (
+                                    <img
+                                      src={imguncheck}
+                                      alt=""
+                                      style={{
+                                        width: 12,
+                                        height: 12,
+                                        maxWidth: 12,
+                                        maxHeight: 12,
+                                        marginRight: 10,
+                                      }}
+                                    />
+                                  )
+                                }
+                              />
+                            }
                             key={session._id}
                             className="custom-antd-menu"
                           >
                             {session.Modules
                               ? session.Modules.map((module) => {
-                                  // const { FinishedModules } = session;
-                                  // const isFinished =
-                                  //   FinishedModules &&
-                                  //   FinishedModules.some(
-                                  //     // eslint-disable-next-line max-nested-callbacks
-                                  //     (m) => m === module._id,
-                                  //   );
-
                                   return (
                                     <Menu.Item
                                       style={{ paddingLeft: 48 }}
@@ -352,42 +377,6 @@ export default (props) => {
                                       />
                                     </Menu.Item>
                                   );
-                                  // return (
-                                  // <Menu.Item
-                                  //   style={{ paddingLeft: 48 }}
-                                  //   key={module._id}
-                                  //   onClick={() => onModuleClick(module)}
-                                  // >
-                                  //     <div className={`${prefix}-menu`}>
-                                  //       {isFinished ? (
-                                  //         <div
-                                  //           className={`${prefix}-menu-check`}
-                                  //         >
-                                  //           <CheckCircleFilled  style={{ color: '#2fc25b' }} />
-                                  //         </div>
-                                  //       ) : (
-                                  //         <div
-                                  //           className={`${prefix}-menu-check`}
-                                  //         >
-                                  //           <img src={imguncheck} alt='' />
-                                  //         </div>
-                                  //       )}
-                                  //       <span
-                                  //         className={`${prefix}-menu-title`}
-                                  //       >
-                                  //         {module.Title}
-                                  //       </span>
-                                  //       <span
-                                  //         className={`${prefix}-menu-desc`}
-                                  //         style={{ marginTop: 2, fontSize: 12 }}
-                                  //       >
-                                  //         {module.Type}
-                                  //         <span className="dot" />
-                                  //         {`${module.Duration} min`}
-                                  //       </span>
-                                  //     </div>
-                                  //   </Menu.Item>
-                                  // );
                                 })
                               : ''}
                           </Menu.SubMenu>

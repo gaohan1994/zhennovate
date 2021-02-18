@@ -43,7 +43,7 @@ export default (props) => {
           }
           onClick={onChange}
         >
-          {cate} Programs to get you started
+          {cate}
         </div>
 
         <div className={`${prefix}-card-bar`}>

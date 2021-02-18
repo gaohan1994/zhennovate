@@ -230,6 +230,10 @@ table {
   -webkit-box-orient: vertical !important;
 }
 
+.custom-antd-menu > .ant-menu-submenu-title {
+  padding-left: 24px !important;
+}
+
 /* .custom-antd-first-menu > . */
 
 /* .custom-antd-first-menu > .ant-menu-item-only-child {

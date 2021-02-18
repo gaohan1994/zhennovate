@@ -131,22 +131,22 @@ function useProgramHooks(type, options) {
   // 使用hooks时触发
   useEffect(() => {
     switch (type) {
-      case ProgramTabKeys.available: {
-        field.run();
-        break;
-      }
-      case ProgramTabKeys.progress: {
-        fieldProgress.run(sign.userinfo);
-        break;
-      }
-      case ProgramTabKeys.complete: {
-        fieldComplete.run(sign.userinfo);
-        break;
-      }
-      case ProgramTabKeys.save: {
-        fieldSaved.run(sign.userinfo);
-        break;
-      }
+      // case ProgramTabKeys.available: {
+      //   field.run(sign.userinfo);
+      //   break;
+      // }
+      // case ProgramTabKeys.progress: {
+      //   fieldProgress.run(sign.userinfo);
+      //   break;
+      // }
+      // case ProgramTabKeys.complete: {
+      //   fieldComplete.run(sign.userinfo);
+      //   break;
+      // }
+      // case ProgramTabKeys.save: {
+      //   fieldSaved.run(sign.userinfo);
+      //   break;
+      // }
       default: {
         break;
       }

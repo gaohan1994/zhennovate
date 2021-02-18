@@ -5,6 +5,7 @@ import Sort from '@/component/sort';
 import Markdown from '@/component/markdown';
 import '../index.less';
 import imgaction from '../../../../assets/Icon-Action@2x.png';
+import imgassessment from '../../../../assets/Icon-Assessment@2x.png';
 import imgreflection from '../../../../assets/Icon-Reflection@2x.png';
 import { programEntry } from '../../program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
@@ -32,7 +33,7 @@ function RenderEntryData({ data, type }) {
                 <RenderHeader
                   title={Module.Title}
                   subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-                  icon={imgaction}
+                  icon={imgassessment}
                   border={false}
                 >
                   <div
@@ -58,19 +59,30 @@ function RenderEntryData({ data, type }) {
                 <RenderHeader
                   title={Module.Title}
                   subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-                  icon={imgaction}
+                  icon={type === EntryFilter.Action ? imgaction : imgreflection}
                 />
               )}
               title="Action Name Written Here"
             >
               {PFDatas.map((data, index) => {
+                const isMultiple = Array.isArray(data.value);
+                const answers =
+                  (isMultiple && data.value && data.value[0].split(' ')) || [];
                 return (
                   <p key={data.title} style={{ marginBottom: 20 }}>
                     <p>
                       {`${index + 1}. `}
                       {data.title}
                     </p>
-                    <p>{data.value}</p>
+                    {isMultiple ? (
+                      <ul style={{paddingLeft: 18}}>
+                        {answers.map((multipleAnswer) => {
+                          return <li key={multipleAnswer}>{multipleAnswer}</li>;
+                        })}
+                      </ul>
+                    ) : (
+                      <p>{data.value}</p>
+                    )}
                   </p>
                 );
               })}
@@ -88,7 +100,7 @@ export const EntryFilter = {
   Reflect: 'Reflect',
 };
 
-function RenderHeader(props) {
+export function RenderHeader(props) {
   const { icon, title, subTitle, border = true, children } = props;
   const prefix = 'page-detail';
   return (
@@ -134,6 +146,11 @@ export default (props) => {
 
   useEffect(() => {
     setLoading(true);
+
+    if (!programData) {
+      return;
+    }
+
     programEntry({
       userId,
       programId: programData._id,
@@ -144,7 +161,7 @@ export default (props) => {
 
       setLoading(false);
     });
-  }, []);
+  }, [programData]);
 
   // const { Action, Assessment, Reflect } = entryData;
 
@@ -191,7 +208,7 @@ export default (props) => {
       return null;
     }
 
-    return <RenderEntryData data={Action} />;
+    return <RenderEntryData data={Action} type={EntryFilter.Action} />;
   };
 
   /**
@@ -222,7 +239,7 @@ export default (props) => {
     if (!showReflect) {
       return null;
     }
-    return <RenderEntryData data={Reflect} />;
+    return <RenderEntryData data={Reflect} type={EntryFilter.Reflect} />;
   };
 
   return (

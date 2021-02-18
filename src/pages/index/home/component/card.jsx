@@ -57,7 +57,7 @@ function HomeProgramCard(props) {
       };
       entryDelete(payload).then((result) => {
         if (result.error_code === ResponseCode.success) {
-          message.success('Quit Action !');
+          message.success("You've let go of this action for now.");
           callback && callback();
         }
       });

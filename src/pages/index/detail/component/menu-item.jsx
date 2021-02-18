@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { CheckCircleFilled } from '@ant-design/icons';
-import imguncheck from '@/assets/3.数据录入-2.Radio单选框-亮色-Icon-未选.png';
+import imguncheck from '@/assets/Icon_CoachingPath_Empty_36x36.svg';
 import '../index.less';
 
 const prefix = 'page-detail';
@@ -30,7 +30,7 @@ function MenuItem(props) {
         </div>
       ) : (
         <div className={`${prefix}-menu-check`}>
-          <img src={imguncheck} alt="" />
+          <img src={imguncheck} alt="" style={{ width: 12, height: 12, maxWidth: 12, maxHeight: 12}} />
         </div>
       )}
       <span className={`${prefix}-menu-title`}>{data.Title}</span>

@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 import React, { useState, useEffect } from 'react';
 import './index.less';
 import { Progress, Modal, Button, message, Spin } from 'antd';
@@ -150,15 +151,31 @@ function WeeklyGoal(props) {
               }}
             />
 
-            <span style={{ marginLeft: 14 }}>
-              Complete{' '}
-              <span style={{ fontWeight: 'bold' }}>
-                {weeklyGoalPlanValue || 0}
-              </span>{' '}
-              actions to
-              <br />
-              reach your weekly goal.
-            </span>
+            {endCount < weeklyGoalPlanValue ? (
+              <span style={{ marginLeft: 14 }}>
+                Complete{' '}
+                <span style={{ fontWeight: 'bold' }}>
+                  {weeklyGoalPlanValue - endCount}
+                </span>{' '}
+                actions to
+                <br />
+                reach your weekly goal.
+              </span>
+            ) : endCount === weeklyGoalPlanValue ? (
+              <span style={{ marginLeft: 14 }}>
+                You’ve reached your goal for this week!
+              </span>
+            ) : (
+              <span style={{ marginLeft: 14 }}>
+                You've achieved{' '}
+                <span style={{ fontWeight: 'bold' }}>
+                  {endCount - weeklyGoalPlanValue}
+                </span>{' '}
+                actions
+                <br />
+                beyond your goal this week!
+              </span>
+            )}
           </div>
 
           <span

@@ -85,15 +85,18 @@ export default (props) => {
 
     const currentFields = getCurrentFields(key);
     console.log('[p currentFields]', currentFields);
-    currentFields.run(sign.userinfo)
+    currentFields.run(sign.userinfo);
     // window.location.hash = `#/program?entry=${key}`;
   };
 
   useEffect(() => {
-    if (searchParams.entry) {
-      if (Object.keys(ProgramTabKeys).some((k) => k === searchParams.entry)) {
-        checkSign(() => onChangeTab(searchParams.entry));
-      }
+    if (
+      searchParams.entry &&
+      Object.keys(ProgramTabKeys).some((k) => k === searchParams.entry)
+    ) {
+      checkSign(() => onChangeTab(searchParams.entry));
+    } else {
+      onChangeTab(ProgramTabKeys.available);
     }
   }, []);
 

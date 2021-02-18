@@ -92,6 +92,12 @@ export const programEntry = (params) => {
   return api.get(`/program/entry/${params.userId}/${params.programId}`);
 };
 
+export const programActionstatus = (params) => {
+  return api.get(
+    `/program/actionstatus/${params.userId}/${params.programId}/${params.sessionId}/${params.moduleId}`,
+  );
+};
+
 export const programWorkshop = (params) => {
   return api.get(`/program/workshops/${params.userId}/${params.programId}`);
 };

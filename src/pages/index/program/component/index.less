@@ -149,35 +149,58 @@
       overflow: hidden;
       text-overflow: ellipsis;
     }
-    & > h1,
-    & > h2,
-    & > h3,
-    & > h4,
-    & > h5,
-    & > h6,
-    & > strong {
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6,
+    & strong,
+    & em {
       font-weight: bold;
     }
-
-    & > h1 {
+    & h1,
+    & h2,
+    & h3,
+    & h4,
+    & h5,
+    & h6,
+    & ul,
+    & ol,
+    & p {
+      margin: 10px 0;
+    }
+    & em {
+      font-style: italic;
+    }
+    // &
+    & ul {
+      list-style-type: disc;
+      list-style-position: inside ;
+    }
+    & ol {
+      list-style-type: decimal;
+      list-style-position:  inside;
+    }
+    & h1 {
       color: @black;
       font-size: 24px;
     }
-    & > h2 {
+    & h2 {
       // border-bottom: 1px solid #cccccc;
       color: @black;
       font-size: 24px;
     }
-    & > h3 {
+    & h3 {
       font-size: 18px;
     }
-    & > h4 {
+    & h4 {
       font-size: 16px;
     }
-    & > h5 {
+    & h5 {
       font-size: 14px;
     }
-    & > h6 {
+    & h6 {
       color: #777777;
       background-color: inherit;
       font-size: 14px;
