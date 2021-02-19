@@ -393,11 +393,11 @@ const RenderPaperForm = (props) => {
       <PaperformActionModal
         icon={imgcalendar}
         title="Add to calendar"
-        subTitle="Would you like to add action to your calendar as a reminder?"
+        subTitle="Would you like to add this action to your calendar as a reminder?"
         visible={actionAddCalendarVisible}
         setVisible={setActionAddCalendarVisible}
-        confirmButton="Add to Calendar"
-        secondButton="No Thanks"
+        confirmButton="Add to calendar"
+        secondButton="No thanks"
         confirmCallback={addCalendarModalconfirmCallback}
         secondCallback={addCalendarModalsecondCallback}
       />

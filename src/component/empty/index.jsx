@@ -32,13 +32,13 @@ function Empty(props) {
         {title
           ? title
           : tab.key === ProgramTabKeys.available
-          ? 'No Available Programs here'
+          ? 'No available Programs here'
           : tab.key === ProgramTabKeys.progress
-          ? 'No In-progress Programs'
+          ? 'No in-progress Programs'
           : tab.key === ProgramTabKeys.complete
-          ? 'No Completed Programs'
+          ? 'No completed Programs'
           : tab.key === ProgramTabKeys.save
-          ? 'No Saved Programs'
+          ? 'No saved Programs'
           : ''}
       </span>
       <span>

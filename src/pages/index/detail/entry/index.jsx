@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '@/pages/index/program/index.less';
 import Filter from '@/component/fliter';
-import Sort from '@/component/sort';
+import Sort, { sortDataByTimeByNewest } from '@/component/sort';
 import Markdown from '@/component/markdown';
 import '../index.less';
 import imgaction from '../../../../assets/Icon-Action@2x.png';
@@ -13,89 +13,82 @@ import { ResponseCode } from '@/common/config';
 import { Skeleton, Card } from 'antd';
 import moment from 'moment';
 import Empty from '@/component/empty';
+import { merge } from 'lodash';
 import { ArrowRightOutlined } from '@ant-design/icons';
 
 const prefix = 'page-program';
 
-function RenderEntryData({ data, type }) {
+export function RenderEntryData({ item, type }) {
   // 如果是Assessment 则点击查看pdf
   const isAssessment = type === EntryFilter.Assessment;
+  const { Module = {}, PFDatas = [], EndAt = '' } = item;
+
+  if (isAssessment) {
+    return (
+      <section key={item._id} style={{ marginBottom: 32 }}>
+        <Card>
+          <RenderHeader
+            title={Module.Title}
+            subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+            icon={imgassessment}
+            border={false}
+          >
+            <div
+              className="component-home-welcome-check"
+              common-touch="touch"
+              style={{ bottom: '0px', right: '0px' }}
+            >
+              View Report
+              <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
+            </div>
+          </RenderHeader>
+        </Card>
+      </section>
+    );
+  }
 
   return (
-    <>
-      {data.map((item) => {
-        const { Module = {}, PFDatas = [], EndAt = '' } = item;
-
-        if (isAssessment) {
+    <section key={item._id} style={{ marginBottom: 32 }}>
+      <Markdown
+        renderHeader={() => (
+          <RenderHeader
+            title={Module.Title}
+            subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+            icon={type === EntryFilter.Action ? imgaction : imgreflection}
+          />
+        )}
+        title="Action Name Written Here"
+      >
+        {PFDatas.map((data, index) => {
+          const isMultiple = Array.isArray(data.value);
+          const answers =
+            (isMultiple && data.value && data.value[0].split(' ')) || [];
           return (
-            <section key={item._id} style={{ marginBottom: 32 }}>
-              <Card>
-                <RenderHeader
-                  title={Module.Title}
-                  subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-                  icon={imgassessment}
-                  border={false}
-                >
-                  <div
-                    className="component-home-welcome-check"
-                    common-touch="touch"
-                    style={{ bottom: '0px', right: '0px' }}
-                  >
-                    View Report
-                    <ArrowRightOutlined
-                      style={{ fontSize: 12, marginLeft: 8 }}
-                    />
-                  </div>
-                </RenderHeader>
-              </Card>
-            </section>
-          );
-        }
-
-        return (
-          <section key={item._id} style={{ marginBottom: 32 }}>
-            <Markdown
-              renderHeader={() => (
-                <RenderHeader
-                  title={Module.Title}
-                  subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-                  icon={type === EntryFilter.Action ? imgaction : imgreflection}
-                />
+            <p key={data.title} style={{ marginBottom: 20 }}>
+              <p>
+                {`${index + 1}. `}
+                {data.title}
+              </p>
+              {isMultiple ? (
+                <ul style={{ paddingLeft: 18 }}>
+                  {answers.map((multipleAnswer) => {
+                    return <li key={multipleAnswer}>{multipleAnswer}</li>;
+                  })}
+                </ul>
+              ) : (
+                <p>{data.value}</p>
               )}
-              title="Action Name Written Here"
-            >
-              {PFDatas.map((data, index) => {
-                const isMultiple = Array.isArray(data.value);
-                const answers =
-                  (isMultiple && data.value && data.value[0].split(' ')) || [];
-                return (
-                  <p key={data.title} style={{ marginBottom: 20 }}>
-                    <p>
-                      {`${index + 1}. `}
-                      {data.title}
-                    </p>
-                    {isMultiple ? (
-                      <ul style={{paddingLeft: 18}}>
-                        {answers.map((multipleAnswer) => {
-                          return <li key={multipleAnswer}>{multipleAnswer}</li>;
-                        })}
-                      </ul>
-                    ) : (
-                      <p>{data.value}</p>
-                    )}
-                  </p>
-                );
-              })}
-            </Markdown>
-          </section>
-        );
-      })}
-    </>
+            </p>
+          );
+        })}
+      </Markdown>
+    </section>
   );
 }
 
 export const EntryFilter = {
   Action: 'Action',
+  ActionCompleted: 'ActionCompleted',
   Assessment: 'Assessment',
   Reflect: 'Reflect',
 };
@@ -127,6 +120,7 @@ export function RenderHeader(props) {
 export default (props) => {
   const { programData } = props;
   const [loading, setLoading] = useState(true);
+
   /**
    * @param entryData entry 的数据
    */
@@ -136,6 +130,7 @@ export default (props) => {
    */
   const [selectedCategory, setSelectedCategory] = useState([
     EntryFilter.Action,
+    EntryFilter.ActionCompleted,
     EntryFilter.Assessment,
     EntryFilter.Reflect,
   ]);
@@ -143,6 +138,32 @@ export default (props) => {
    * @param useSignSdk 用户相关
    */
   const { userId } = useSignSdk();
+
+  /**
+   * @param {entryArray} 整理成数组类型
+   */
+  const [entryArray, setEntryArray] = useState([]);
+
+  useEffect(() => {
+    let eArray = [];
+    const mergeEntryData = merge({}, entryData);
+    for (let key in mergeEntryData) {
+      if (mergeEntryData[key] && mergeEntryData[key].length > 0) {
+        const inSelectedToken = selectedCategory.some((k) => k === key);
+        if (inSelectedToken) {
+          const currentKeyArray = mergeEntryData[key].map((item) => {
+            return { ...item, TYPE: key };
+          });
+          eArray = eArray.concat(currentKeyArray);
+        }
+      }
+    }
+
+    const afterSortDatasource = eArray.sort((a, b) =>
+      sortDataByTimeByNewest(a, b, 'EndAt'),
+    );
+    setEntryArray(afterSortDatasource);
+  }, [entryData, selectedCategory]);
 
   useEffect(() => {
     setLoading(true);
@@ -197,50 +218,51 @@ export default (props) => {
   /**
    * @param renderEntryAction 渲染action
    */
-  const renderEntryAction = () => {
-    const showAction = selectedCategory.some((s) => s === EntryFilter.Action);
+  // const renderEntryAction = () => {
+  //   const showAction = selectedCategory.some((s) => s === EntryFilter.Action);
 
-    if (!showAction) {
-      return null;
-    }
+  //   if (!showAction) {
+  //     return null;
+  //   }
 
-    if (!hasAction) {
-      return null;
-    }
+  //   if (!hasAction) {
+  //     return null;
+  //   }
 
-    return <RenderEntryData data={Action} type={EntryFilter.Action} />;
-  };
+  //   return <RenderEntryData data={Action} type={EntryFilter.Action} />;
+  // };
 
-  /**
-   * @param renderEntryAssessment 渲染Assessment
-   */
-  const renderEntryAssessment = () => {
-    const showAssessment = selectedCategory.some(
-      (s) => s === EntryFilter.Assessment,
-    );
+  // /**
+  //  * @param renderEntryAssessment 渲染Assessment
+  //  */
+  // const renderEntryAssessment = () => {
+  //   const showAssessment = selectedCategory.some(
+  //     (s) => s === EntryFilter.Assessment,
+  //   );
 
-    if (!showAssessment) {
-      return null;
-    }
-    if (!hasAssessment) {
-      return null;
-    }
-    return <RenderEntryData data={Assessment} type={EntryFilter.Assessment} />;
-  };
+  //   if (!showAssessment) {
+  //     return null;
+  //   }
+  //   if (!hasAssessment) {
+  //     return null;
+  //   }
+  //   return <RenderEntryData data={Assessment} type={EntryFilter.Assessment} />;
+  // };
 
-  /**
-   * @param renderEntryReflect 渲染Reflect
-   */
-  const renderEntryReflect = () => {
-    const showReflect = selectedCategory.some((s) => s === EntryFilter.Reflect);
-    if (!hasReflect) {
-      return null;
-    }
-    if (!showReflect) {
-      return null;
-    }
-    return <RenderEntryData data={Reflect} type={EntryFilter.Reflect} />;
-  };
+  // /**
+  //  * @param renderEntryReflect 渲染Reflect
+  //  */
+  // const renderEntryReflect = () => {
+  //   const showReflect = selectedCategory.some((s) => s === EntryFilter.Reflect);
+  //   if (!hasReflect) {
+  //     return null;
+  //   }
+  //   if (!showReflect) {
+  //     return null;
+  //   }
+  //   return <RenderEntryData data={Reflect} type={EntryFilter.Reflect} />;
+  // };
+  console.log('entryArray', entryArray);
 
   return (
     <div
@@ -251,9 +273,9 @@ export default (props) => {
         <div style={{ width: '100%', height: 32 }} />
         <Sort
           title="Entries"
-          subTitle="Micro copy for entries"
-          dataSource={entryData}
-          setDataSourceHook={setEntryData}
+          subTitle="Revisit your input"
+          dataSource={entryArray}
+          setDataSourceHook={setEntryArray}
           setSortKey="EndAt"
         />
 
@@ -265,16 +287,24 @@ export default (props) => {
           </>
         ) : emptyEntryToken ? (
           <Empty
-            title="No Entries"
-            subTitle="Assessments, Action Results, and Reflections will appear here."
+            title="No entries"
+            subTitle="As you work through the program, your reflective entries will appear here."
             icon={imgreflection}
           />
         ) : (
-          <>
-            {renderEntryAction()}
-            {renderEntryReflect()}
-            {renderEntryAssessment()}
-          </>
+          entryArray.length > 0 && (
+            <>
+              {entryArray.map((item) => {
+                return (
+                  <RenderEntryData
+                    key={item._id}
+                    item={item}
+                    type={item.TYPE}
+                  />
+                );
+              })}
+            </>
+          )
         )}
       </div>
       <div className={`${prefix}-container-right`}>
@@ -283,6 +313,7 @@ export default (props) => {
           list={entryData}
           category={[
             EntryFilter.Action,
+            EntryFilter.ActionCompleted,
             EntryFilter.Assessment,
             EntryFilter.Reflect,
           ]}

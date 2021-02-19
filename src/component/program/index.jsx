@@ -15,6 +15,7 @@ import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { saveProgram, unsaveprogram } from '../constants';
 import { ResponseCode } from '@/common/config';
 import { ProgramTabKeys } from '@/pages/index/program/constants';
+import moment from 'moment';
 
 const prefix = 'component-program';
 
@@ -34,8 +35,7 @@ function Program(props) {
     /**
      * @param {navigateToPaperfromToken} 正在进行或已完成的program应该跳过program简介页面
      */
-    const navigateToPaperfromToken =
-      type === 'home' || tab.key === ProgramTabKeys.progress || tab.key === ProgramTabKeys.complete;
+    const navigateToPaperfromToken = data.IsOpened;
 
     if (navigateToPaperfromToken) {
       const firstModule =
@@ -66,7 +66,7 @@ function Program(props) {
     if (data.IsSaved === true) {
       unsaveprogram({ userId, programId: data._id }).then((result) => {
         if (result.error_code === ResponseCode.success) {
-          message.success('Program Unsaved');
+          message.success('Program unsaved.');
           setData((prevData) => {
             return {
               ...prevData,
@@ -87,7 +87,7 @@ function Program(props) {
 
     saveProgram({ userId, programId: data._id }).then((result) => {
       if (result.error_code === ResponseCode.success) {
-        message.success('Program Saved');
+        message.success('Program saved.');
         setData((prevData) => {
           return {
             ...prevData,
@@ -115,6 +115,14 @@ function Program(props) {
       teachersName += ` ${names.join(', ')}`;
     }
 
+    const duration = data.totalDuration;
+
+    const hours = moment.duration(duration, 'minutes').hours();
+    const hoursString = hours !== 0 ? `${hours} h` : '';
+
+    const minutes = moment.duration(duration, 'minutes').minutes();
+    const minutesString = `${minutes} m`;
+
     return (
       <div className={`${prefix}-card`} style={{ ...style }} onClick={onClick}>
         <div
@@ -127,7 +135,7 @@ function Program(props) {
           <span style={{ marginTop: 12 }}>{teachersName}</span>
           <span style={{ marginTop: 12 }}>
             {data.Sessions?.length || 0} sessions{' '}
-            {`${data.totalDuration || 0} m`}
+            {`${hoursString} ${minutesString}`}
           </span>
 
           <div
@@ -152,7 +160,11 @@ function Program(props) {
     data && data._id
       ? percent === 1
         ? 'Completed'
-        : `${data.Sessions.length - data.FinishSessionTotal} sessions left`
+        : `${data.Sessions.length - data.FinishSessionTotal} ${
+            data.Sessions.length - data.FinishSessionTotal > 1
+              ? 'sessions'
+              : 'session'
+          } left`
       : '';
 
   const widthStyle = type !== 'home' ? { width: 312 } : { width: 520 };
@@ -169,7 +181,10 @@ function Program(props) {
         common-touch="touch"
       />
       <div className={`${prefix}-content`}>
-        <span>{data.Sessions?.length || 0} sessions</span>
+        <span>
+          {data.Sessions?.length || 0}{' '}
+          {data.Sessions?.length > 1 ? 'sessions' : 'session'}
+        </span>
 
         <span className={`${prefix}-content-title`} style={{ minHeight: 56 }}>
           {data.Name}

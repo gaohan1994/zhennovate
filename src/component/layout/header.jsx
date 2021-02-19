@@ -85,7 +85,7 @@ export default function () {
               history.push(`/sign/signup`);
             }}
           >
-            Sign Up
+            Sign up
           </Button>
         ) : (
           <Dropdown trigger={['click']} overlay={dropMenu}>

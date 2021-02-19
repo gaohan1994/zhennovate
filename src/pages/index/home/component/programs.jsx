@@ -25,7 +25,7 @@ function HomePrograms() {
   return (
     <div style={{ marginTop: 32 }}>
       <Sort
-        title="Programs in Progress"
+        title="Programs in progress"
         subTitle="Continue where you left off"
         showSort={false}
       />

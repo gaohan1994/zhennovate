@@ -74,7 +74,7 @@ function CalendarModal() {
         width={356}
         centered
         bodyStyle={{ padding: 0 }}
-        title="Add to Calendar"
+        title="Add to calendar"
         footer={null}
         visible={state.visible}
         onCancel={onHide}

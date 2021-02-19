@@ -100,7 +100,7 @@ export default (props) => {
         // },
         {
           id: '2',
-          title: 'Coaching Path',
+          title: 'Coaching path',
           children: programData.Sessions ? programData.Sessions : [],
           icon: <BookOutlined />,
         },

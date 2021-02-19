@@ -6,7 +6,7 @@
   &-title {
     position: relative;
     font-size: 20px;
-    font-weight: bold;
+    .fontWeight();
     font-style: normal;
     color: @black;
     .padding(16px, b);
@@ -42,7 +42,7 @@
     }
     &-title {
       font-size: 20px;
-      font-weight: bold;
+      .fontWeight();
       color: @black;
     }
     &-desc {
@@ -57,7 +57,7 @@
       .margin(16px, t);
       &-rate {
         font-size: 24px;
-        font-weight: bold;
+        .fontWeight();
         color: @black;
       }
     }
@@ -83,10 +83,10 @@
       }
       &-name {
         font-size: 20px;
-        font-weight: bold;
+        .fontWeight();
       }
       &-about {
-        font-weight: bold;
+        .fontWeight();
       }
     }
     &-more {
@@ -94,7 +94,7 @@
       right: 24px;
       bottom: 24px;
       font-size: 14px;
-      font-weight: bold;
+      .fontWeight();
     }
   }
 
@@ -102,7 +102,7 @@
     &-title {
       position: relative;
       font-size: 20px;
-      font-weight: bold;
+      .fontWeight();
       font-style: normal;
       color: var(--black);
       .margin(16px, b);
@@ -142,12 +142,27 @@
     font-size: 14px;
     color: @black;
     .margin(24px, b);
+    line-height: 1.2;
     &-overflow {
+      height: 4.6rem;
       display: -webkit-box;
       -webkit-box-orient: vertical;
+      -moz-box-orient: vertical;
       -webkit-line-clamp: 4;
       overflow: hidden;
       text-overflow: ellipsis;
+      position: relative;
+
+      &:after {
+        content: '';
+        text-align: right;
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        width: 10%;
+        height: 1.2em;
+        background: linear-gradient(to right, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1) 50%);
+      }
     }
     & h1,
     & h2,
@@ -157,7 +172,7 @@
     & h6,
     & strong,
     & em {
-      font-weight: bold;
+      .fontWeight();
     }
     & h1,
     & h2,

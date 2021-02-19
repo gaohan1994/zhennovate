@@ -307,7 +307,7 @@
 .program-component-title {
   position: relative;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
   font-style: normal;
   color: #1b2631;
   padding-bottom: 16px;
@@ -359,7 +359,7 @@
 }
 .program-component-card-title {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
   color: #1b2631;
 }
 .program-component-card-desc {
@@ -379,7 +379,7 @@
 }
 .program-component-outcome-item-rate {
   font-size: 24px;
-  font-weight: bold;
+  font-weight: 900;
   color: #1b2631;
 }
 .program-component-instructor-item {
@@ -403,22 +403,22 @@
 }
 .program-component-instructor-item-name {
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
 }
 .program-component-instructor-item-about {
-  font-weight: bold;
+  font-weight: 900;
 }
 .program-component-instructor-more {
   position: absolute;
   right: 24px;
   bottom: 24px;
   font-size: 14px;
-  font-weight: bold;
+  font-weight: 900;
 }
 .program-component-coach-title {
   position: relative;
   font-size: 20px;
-  font-weight: bold;
+  font-weight: 900;
   font-style: normal;
   color: var(--black);
   margin-bottom: 16px;
@@ -456,13 +456,27 @@
   font-size: 14px;
   color: #1b2631;
   margin-bottom: 24px;
+  line-height: 1.2;
 }
 .program-component-markdown-overflow {
+  height: 4.6rem;
   display: -webkit-box;
   -webkit-box-orient: vertical;
+  -moz-box-orient: vertical;
   -webkit-line-clamp: 4;
   overflow: hidden;
   text-overflow: ellipsis;
+  position: relative;
+}
+.program-component-markdown-overflow:after {
+  content: '';
+  text-align: right;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: 10%;
+  height: 1.2em;
+  background: linear-gradient(to right, rgba(255, 255, 255, 0), #ffffff 50%);
 }
 .program-component-markdown h1,
 .program-component-markdown h2,
@@ -472,7 +486,7 @@
 .program-component-markdown h6,
 .program-component-markdown strong,
 .program-component-markdown em {
-  font-weight: bold;
+  font-weight: 900;
 }
 .program-component-markdown h1,
 .program-component-markdown h2,

@@ -249,3 +249,11 @@ table {
   background: #1b2631;
   color: #fff;
 }
+
+.ant-tabs-tab-active {
+  font-weight: 800;
+}
+
+.ant-menu-submenu-selected {
+  font-weight: bold;
+}

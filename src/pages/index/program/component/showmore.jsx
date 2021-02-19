@@ -17,13 +17,7 @@ function ShowMore(props) {
         <div className={`${prefix}-title`}>{title}</div>
       ) : null}
 
-      <div
-        className={`${prefix}-markdown ${
-          status === false ? `${prefix}-markdown-overflow` : ''
-        }`}
-      >
-        {children && children(status)}
-      </div>
+      {children && children(status)}
 
       <div
         className={`${prefix}-markdown-more`}

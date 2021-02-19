@@ -94,7 +94,7 @@ function WeeklyGoal(props) {
         if (result.error_code === ResponseCode.success) {
           changeWeeklyGoalValueCallback(weeklyGoalPlanValue, weeklyGoalValue);
           setWeeklyGoalPlanValue(weeklyGoalValue);
-          message.success('Weekly Goal Successfully Updated');
+          message.success('Weekly Goal Successfully Updated.');
         }
 
         setLoading(false);
@@ -110,7 +110,7 @@ function WeeklyGoal(props) {
       <Spin spinning={loading}>
         <div className={`${prefix}-card`} style={{ marginRight: 24 }}>
           <Sort
-            title="Weekly Goal"
+            title="Weekly goal"
             titleStyle={{ fontSize: 16 }}
             subTitle={`${currentDate} - ${nextWeekDate}`}
             subTitleStyle={{
@@ -201,7 +201,7 @@ function WeeklyGoal(props) {
       <Modal
         width={440}
         centered
-        title="Edit Weekly Action Goal"
+        title="Edit Weekly goal"
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={
@@ -219,8 +219,8 @@ function WeeklyGoal(props) {
       >
         <div>
           <span>
-            By setting a weekly goal, this helps to be a motivator for you to
-            learn more and achieve success.
+            Set weekly goal to deepen your learning through the cycle of
+            experimenting with new actions and reflection.
           </span>
 
           <Choice
@@ -228,25 +228,25 @@ function WeeklyGoal(props) {
             onChoice={setWeeklyGoalValue}
             options={[
               {
-                label: 'Casual Learner',
-                subTitle: '2 Actions per week',
+                label: 'Casual',
+                subTitle: '1 action per week',
+                value: 1,
+              },
+              {
+                label: '  Intentional',
+                subTitle: '2 actions per week',
                 value: 2,
               },
               {
-                label: 'Casual Learner',
-                subTitle: '4 Actions per week',
-                value: 4,
-              },
-              {
-                label: 'Casual Learner',
-                subTitle: '6 Actions per week',
-                value: 6,
+                label: 'Upbeat',
+                subTitle: '3 actions per week',
+                value: 3,
               },
 
               {
-                label: 'Casual Learner',
-                subTitle: '8 Actions per week',
-                value: 8,
+                label: 'Warrior',
+                subTitle: '5 actions per week',
+                value: 5,
               },
             ]}
           />

@@ -33,7 +33,7 @@ export default (props) => {
   // program容器距离左边的距离
   // const [programOffsetLeft, setProgramOffsetLeft] = useState(-1);
 
-  const [category, setCategory] = useState(['']);
+  const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(['']);
 
   // const { top } = useScroll(document);

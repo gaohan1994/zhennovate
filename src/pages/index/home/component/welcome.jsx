@@ -88,7 +88,7 @@ function Welcome(props) {
   // <span>Ready for your daily check in?</span>;
 
   // <div className={`${prefix}-check`} onClick={onCheckIn} common-touch="touch">
-  //   Check In
+  //   Check in
   //   <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
   // </div>;
   return (

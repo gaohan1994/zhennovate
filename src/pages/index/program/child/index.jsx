@@ -31,7 +31,7 @@ export default (props) => {
   // programs数据
   const [programs, setPrograms] = useState([]);
 
-  const [category, setCategory] = useState(['']);
+  const [category, setCategory] = useState([]);
   const [selectedCategory, setSelectedCategory] = useState(['']);
 
   const { left, isSticky } = useStickyComponent(
@@ -46,6 +46,9 @@ export default (props) => {
       // 默认全选
       setCategory(programkyes);
       setSelectedCategory(programkyes);
+    } else {
+      setCategory([]);
+      setSelectedCategory([''])
     }
   }, [list]);
 

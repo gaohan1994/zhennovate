@@ -86,16 +86,16 @@ function Calendar(props) {
         render()
       ) : renderType === 'drop' ? (
         <Dropdown overlay={dropMenu} trigger={['click']}>
-          <Button>Add to Calendar</Button>
+          <Button>Add to calendar</Button>
         </Dropdown>
       ) : (
-        <Button onClick={() => setVisible(true)}>Add to Calendar</Button>
+        <Button onClick={() => setVisible(true)}>Add to calendar</Button>
       )}
       <Modal
         width={356}
         centered
         bodyStyle={{ padding: 0 }}
-        title="Add to Calendar"
+        title="Add to calendar"
         footer={null}
         visible={visible}
         onCancel={() => setVisible(false)}

@@ -1,3 +1,84 @@
+## 2021-02-19
+
+https://zhennovate.atlassian.net/browse/PHASE1-209 PHASE1-209	Cannot add action to Outlook and Apple calendars	Nanan Gao	Highest	To Do	3/1;Program
+未复现 晚上测试下
+
+https://zhennovate.atlassian.net/browse/PHASE1-187 PHASE1-187	Update program card displaying logic	Nanan Gao	Highest	To Do	3/1;Program
+待解决
+
+https://zhennovate.atlassian.net/browse/PHASE1-255 PHASE1-255	Weekly Action Goal - Copywriting	Nanan Gao	Highest	To Do	3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-273 PHASE1-273	Copywriting - When there is 1 session left display it as (1 session)	Nanan Gao	Highest	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-224 PHASE1-224	cannot add program to calendar	Nanan Gao	Highest	To Do	3/1;Program
+1、未复现无法添加日历的bug
+2、从detail页面添加program到calendar的时候 默认添加为当前module的下一个module fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-285 PHASE1-285	Hide "Resume" Program button 	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-284 PHASE1-284	Filter Empty State for Programs > Saved Page and Programs > Complete Page	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-282 PHASE1-282	Copywriting - Singular and Plural Forms for "Session" on Program Cards	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-288 PHASE1-288	Copywriting - Add action to calendar	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-220 PHASE1-220	Total Time Copywriting Update on Program Card	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-194 PHASE1-194	Glitchy text on program page	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-190 PHASE1-190	Add Gray Circle Icon to modules and sessions that have not gotten started 	Nanan Gao	High	To Do	3/1;Program
+还没有那个 inprogress icon
+目前只有两种状态，完成和未完成没有第三种状态
+
+https://zhennovate.atlassian.net/browse/PHASE1-170 PHASE1-170	Sorting Logic for Entries page currently not working	Nanan Gao	High	In Progress	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-80 PHASE1-80	Copywriting - Coaching Path	Nanan Gao	High	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-75 PHASE1-75	Copywriting - Home Page String Update	Nanan Gao	High	To Do	3/1;Home
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-287 PHASE1-287	Copywriting - Weekly Goal Toast Notification 	Nanan Gao	Medium	To Do	3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-286 PHASE1-286	Copywriting - Program Save/Unsaved Toast Notification	Nanan Gao	Medium	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-281 PHASE1-281	Add empty state to (New) program page	Nanan Gao	Medium	To Do	3/1;Program
+
+https://zhennovate.atlassian.net/browse/PHASE1-280 PHASE1-280	Copywriting - Update Empty State on entry page	Nanan Gao	Medium	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-278 PHASE1-278	Copywriting - Update entry page micro-copywriting 	Nanan Gao	Medium	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-277 PHASE1-277	Add Quiz as its own filter to this page	Nanan Gao	Medium	To Do	3/1;Program
+不是很明白
+
+https://zhennovate.atlassian.net/browse/PHASE1-276 PHASE1-276	Add "Quiz" as its own checkbox to entries page	Nanan Gao	Medium	To Do	3/1;Program
+不是很明白
+
+
+https://zhennovate.atlassian.net/browse/PHASE1-130 PHASE1-130	Make Submenu Container bigger so that it does not hide or cut the text off	Nanan Gao	Medium	To Do	3/1;Program
+目前先隐藏起来了
+
+https://zhennovate.atlassian.net/browse/PHASE1-104 PHASE1-104	Update Font Weight for Text on Coaching Path	Nanan Gao	Medium	To Do	3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-175 PHASE1-175	Learning Goals - Copywriting Typo in Window Title	Nanan Gao	Low	To Do	3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-28 PHASE1-28	Adding Breakpoints to make the design responsive to browser Window / Device size	Nanan Gao	Lowest	To Do	3/1
+在哪里加入断点？
 
 ## 待解决
 

@@ -13,6 +13,29 @@ import { merge } from 'lodash';
 
 const prefix = 'program-child';
 
+export function sortDataByTimeByNewest(time1, time2, sortKey) {
+  /**
+   * @param isTime1BeforeTime2 time1 是否在 time2 之前
+   */
+  const isTime1BeforeTime2 = moment(time1[sortKey]).isBefore(
+    moment(time2[sortKey]),
+  );
+
+  // 新 - 老
+  return isTime1BeforeTime2 ? -1 : 1;
+}
+export function sortDataByTimeByOldest(time1, time2, sortKey) {
+  /**
+   * @param isTime1BeforeTime2 time1 是否在 time2 之前
+   */
+  const isTime1BeforeTime2 = moment(time1[sortKey]).isBefore(
+    moment(time2[sortKey]),
+  );
+
+  // 老 - 新
+  return isTime1BeforeTime2 ? 1 : -1;
+}
+
 export const SortSelectValue = {
   Newest: 'Newest',
   Oldest: 'Oldest',
@@ -36,29 +59,6 @@ function Sort(props) {
     setSortKey = 'CreateAt',
   } = props;
 
-  function sortDataByTimeByNewest(time1, time2) {
-    /**
-     * @param isTime1BeforeTime2 time1 是否在 time2 之前
-     */
-    const isTime1BeforeTime2 = moment(time1[setSortKey]).isBefore(
-      moment(time2[setSortKey]),
-    );
-
-    // 新 - 老
-    return isTime1BeforeTime2 ? -1 : 1;
-  }
-  function sortDataByTimeByOldest(time1, time2) {
-    /**
-     * @param isTime1BeforeTime2 time1 是否在 time2 之前
-     */
-    const isTime1BeforeTime2 = moment(time1[setSortKey]).isBefore(
-      moment(time2[setSortKey]),
-    );
-
-    // 老 - 新
-    return isTime1BeforeTime2 ? 1 : -1;
-  }
-
   /**
    * @param selectValue 排序选中值
    */
@@ -68,8 +68,8 @@ function Sort(props) {
     const data = merge([], items);
     const afterSortData = data.sort(
       selectValue === SortSelectValue.Newest
-        ? sortDataByTimeByNewest
-        : sortDataByTimeByOldest,
+        ? (a, b) => sortDataByTimeByNewest(a, b, setSortKey)
+        : (a, b) => sortDataByTimeByOldest(a, b, setSortKey),
     );
     return afterSortData;
   };

@@ -179,7 +179,7 @@ function Goal({ style = {} }) {
     >
       <Spin spinning={loading}>
         <div className={`${prefix}-goal`}>
-          <h2 style={{ marginTop: 123 }}>My Learning Goals</h2>
+          <h2 style={{ marginTop: 123 }}>My Learning goal</h2>
           <div
             style={{
               marginTop: 18,

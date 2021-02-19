@@ -51,7 +51,7 @@
 .title-text {
   font-size: @title-text-fontsize;
   color: @title-text-color;
-  font-weight: bold;
+  .fontWeight();
 }
 
 .normal-text {
@@ -90,6 +90,10 @@
   top: 0;
   transform: scaleY(0.5);
   border-top: 1px solid #e3e3e3;
+}
+
+.fontWeight() {
+  font-weight: 900;
 }
 
 .container {

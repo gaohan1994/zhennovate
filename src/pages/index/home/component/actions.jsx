@@ -74,8 +74,8 @@ function Actions(props) {
   return (
     <div style={{ marginTop: 32 }}>
       <Swiper
-        title="My Actions"
-        subTitle="Practice what you’ve learned for mastery"
+        title="My actions"
+        subTitle="Practice what you've learned"
         height={240}
         width={744}
         data={swiperData}

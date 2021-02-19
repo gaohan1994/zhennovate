@@ -30,7 +30,7 @@ export default function (props) {
                 history.push(`/sign/signup${history.location.search}`);
               }}
             >
-              Sign Up
+              Sign up
             </Button>
           ) : (
             <Button
@@ -39,7 +39,7 @@ export default function (props) {
                 history.push(`/sign/signin${history.location.search}`);
               }}
             >
-              Sign In
+              Sign in
             </Button>
           )}
         </div>

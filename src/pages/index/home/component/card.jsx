@@ -81,7 +81,7 @@ function HomeProgramCard(props) {
         style={{ color: 'rgba(0, 0, 0, 0.65)' }}
         onClick={onAddCalendar}
       >
-        Add to Calendar
+        Add to calendar
       </Menu.Item>
       <Menu.Item
         key="delete"
