@@ -5,6 +5,8 @@ https://zhennovate.atlassian.net/browse/PHASE1-209 PHASE1-209	Cannot add action 
 
 https://zhennovate.atlassian.net/browse/PHASE1-187 PHASE1-187	Update program card displaying logic	Nanan Gao	Highest	To Do	3/1;Program
 待解决
+跳转问题fixed
+program列表还是有问题，已经做了的program出现在new里，有bug kilobit 
 
 https://zhennovate.atlassian.net/browse/PHASE1-255 PHASE1-255	Weekly Action Goal - Copywriting	Nanan Gao	Highest	To Do	3/1;Goal-Setting
 fixed
@@ -15,6 +17,9 @@ fixed
 https://zhennovate.atlassian.net/browse/PHASE1-224 PHASE1-224	cannot add program to calendar	Nanan Gao	Highest	To Do	3/1;Program
 1、未复现无法添加日历的bug
 2、从detail页面添加program到calendar的时候 默认添加为当前module的下一个module fixed
+
+如果用户已经完成一个module, 那链接应该指向下一个module
+如果用户还没有完成当前的module, 那链接应该指向当前的module
 
 https://zhennovate.atlassian.net/browse/PHASE1-285 PHASE1-285	Hide "Resume" Program button 	Nanan Gao	High	To Do	3/1;Program
 fixed
@@ -62,11 +67,10 @@ https://zhennovate.atlassian.net/browse/PHASE1-278 PHASE1-278	Copywriting - Upda
 fixed
 
 https://zhennovate.atlassian.net/browse/PHASE1-277 PHASE1-277	Add Quiz as its own filter to this page	Nanan Gao	Medium	To Do	3/1;Program
-不是很明白
+陈禹修改
 
 https://zhennovate.atlassian.net/browse/PHASE1-276 PHASE1-276	Add "Quiz" as its own checkbox to entries page	Nanan Gao	Medium	To Do	3/1;Program
-不是很明白
-
+等待陈禹添加Quiz类别后 新增 Quiz 的item
 
 https://zhennovate.atlassian.net/browse/PHASE1-130 PHASE1-130	Make Submenu Container bigger so that it does not hide or cut the text off	Nanan Gao	Medium	To Do	3/1;Program
 目前先隐藏起来了
@@ -78,7 +82,7 @@ https://zhennovate.atlassian.net/browse/PHASE1-175 PHASE1-175	Learning Goals - C
 fixed
 
 https://zhennovate.atlassian.net/browse/PHASE1-28 PHASE1-28	Adding Breakpoints to make the design responsive to browser Window / Device size	Nanan Gao	Lowest	To Do	3/1
-在哪里加入断点？
+手机和pc分开设计和coding
 
 ## 待解决
 

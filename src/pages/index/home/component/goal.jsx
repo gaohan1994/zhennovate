@@ -179,7 +179,7 @@ function Goal({ style = {} }) {
     >
       <Spin spinning={loading}>
         <div className={`${prefix}-goal`}>
-          <h2 style={{ marginTop: 123 }}>My Learning goal</h2>
+          <h2 style={{ marginTop: 123 }}>My learning goal</h2>
           <div
             style={{
               marginTop: 18,
@@ -271,7 +271,7 @@ function Goal({ style = {} }) {
         height={558}
         centered
         bodyStyle={{ height: '100%', padding: '0px' }}
-        title="My Learning Goal"
+        title="My learning goal"
         onCancel={onHide}
       >
         <iframe width={812} height={452} src={url} />

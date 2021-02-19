@@ -13,9 +13,7 @@ import { merge, pull } from 'lodash';
 const prefix = 'program-child';
 
 function Filter(props) {
-
   const { style = {}, onChange, category, list, selected = [] } = props;
-
   const checkAllToken = selected.length === category.length;
 
   /**
@@ -67,41 +65,39 @@ function Filter(props) {
       <Card bodyStyle={{ paddingTop: 16 }}>
         <div className={`${prefix}-filter-card`}>
           <div className={`${prefix}-filter-title`}>Filter by</div>
-
-          {category.length > 0 && (
-            <Checkbox.Group
-              onChange={onCheckboxChange}
-              style={{ width: '100%' }}
-              value={checkAllToken ? ['All', ...selected] : selected}
-            >
-              <div className={`${prefix}-filter-checkbox`}>
-                <div className={`${prefix}-filter-checkbox-item`}>
-                  <Checkbox
-                    style={{ marginLeft: 0, marginTop: 16 }}
-                    value="All"
-                  >
-                    All
-                  </Checkbox>
-                  <span>{allCategoryLength}</span>
-                </div>
-                {category.length > 0 &&
-                  category.map((item) => {
-                    const currentCategory = list[item];
-                    return (
-                      <div
-                        key={item}
-                        className={`${prefix}-filter-checkbox-item`}
-                      >
-                        <Checkbox style={{ marginLeft: 0 }} value={item}>
-                          <span>{item}</span>
-                        </Checkbox>
-                        <span>{currentCategory && currentCategory.length}</span>
-                      </div>
-                    );
-                  })}
+          <Checkbox.Group
+            onChange={onCheckboxChange}
+            style={{ width: '100%' }}
+            value={checkAllToken ? ['All', ...selected] : selected}
+          >
+            <div className={`${prefix}-filter-checkbox`}>
+              <div className={`${prefix}-filter-checkbox-item`}>
+                <Checkbox
+                  style={{ marginLeft: 0, marginTop: 16 }}
+                  value="All"
+                  disabled={category.length === 0}
+                >
+                  All
+                </Checkbox>
+                <span>{allCategoryLength}</span>
               </div>
-            </Checkbox.Group>
-          )}
+              {category.length > 0 &&
+                category.map((item) => {
+                  const currentCategory = list[item];
+                  return (
+                    <div
+                      key={item}
+                      className={`${prefix}-filter-checkbox-item`}
+                    >
+                      <Checkbox style={{ marginLeft: 0 }} value={item}>
+                        <span>{item}</span>
+                      </Checkbox>
+                      <span>{currentCategory && currentCategory.length}</span>
+                    </div>
+                  );
+                })}
+            </div>
+          </Checkbox.Group>
         </div>
       </Card>
     </div>

@@ -262,7 +262,7 @@ export default (props) => {
     return (
       <div className={`${prefix}-menu-box`}>
         {icon}
-        <span className={`${prefix}-menu-box-title`}>{title}</span>
+        <span className={`${prefix}-menu-box-title`} style={{fontWeight: 900}}>{title}</span>
       </div>
     );
   };

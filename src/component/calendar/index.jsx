@@ -89,7 +89,7 @@ function Calendar(props) {
           <Button>Add to calendar</Button>
         </Dropdown>
       ) : (
-        <Button onClick={() => setVisible(true)}>Add to calendar</Button>
+        <Button onClick={() => setVisible(true)} style={{fontWeight: 900}}>Add to calendar</Button>
       )}
       <Modal
         width={356}

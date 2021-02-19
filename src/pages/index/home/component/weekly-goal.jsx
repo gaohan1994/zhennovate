@@ -201,7 +201,7 @@ function WeeklyGoal(props) {
       <Modal
         width={440}
         centered
-        title="Edit Weekly goal"
+        title="Edit weekly goal"
         visible={visible}
         onCancel={() => setVisible(false)}
         footer={
@@ -219,8 +219,8 @@ function WeeklyGoal(props) {
       >
         <div>
           <span>
-            Set weekly goal to deepen your learning through the cycle of
-            experimenting with new actions and reflection.
+            Pairing insight with action paves the way to success. Set a weekly
+            goal to stay action-oriented.
           </span>
 
           <Choice

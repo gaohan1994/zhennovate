@@ -128,7 +128,7 @@ function HomeProgramCard(props) {
         // style={{ color: 'gray' }}
         onClick={onCompleteAction}
       >
-        Complete Action
+        Complete action
         <ArrowRightOutlined style={{ fontSize: 12, marginLeft: 8 }} />
       </span>
 

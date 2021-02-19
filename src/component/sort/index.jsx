@@ -109,6 +109,7 @@ function Sort(props) {
 
     return (
       <Select
+        disabled={dataSource.length === 0}
         value={selectValue}
         onChange={onSelectChange}
         options={defaultSelectOptions}

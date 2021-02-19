@@ -62,17 +62,17 @@ export default function () {
   return (
     <Header
       className={`${prefix}-header`}
-      style={{ position: 'fixed', zIndex: 200 }}
+      style={{ position: 'fixed', zIndex: 200, padding: '0 24px' }}
     >
       <div
         className={`${prefix}-logo`}
         style={{ backgroundImage: `url(${logo})` }}
       />
       <Menu mode="horizontal" selectedKeys={activeKey} onSelect={onSelect}>
-        <Menu.Item key="home" style={{ borderBottom: 0 }}>
+        <Menu.Item key="home" style={{ borderBottom: 0, fontWeight: 900 }}>
           <Link to="/home">Home</Link>
         </Menu.Item>
-        <Menu.Item key="program" style={{ borderBottom: 0 }}>
+        <Menu.Item key="program" style={{ borderBottom: 0, fontWeight: 900 }}>
           <Link to="/program">Programs</Link>
         </Menu.Item>
       </Menu>

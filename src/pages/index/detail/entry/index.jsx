@@ -125,15 +125,15 @@ export default (props) => {
    * @param entryData entry 的数据
    */
   const [entryData, setEntryData] = useState({});
+
+  /**
+   * @param selectedCategory 所有的category
+   */
+  const [category, setCategory] = useState([]);
   /**
    * @param selectedCategory 选中的filter
    */
-  const [selectedCategory, setSelectedCategory] = useState([
-    EntryFilter.Action,
-    EntryFilter.ActionCompleted,
-    EntryFilter.Assessment,
-    EntryFilter.Reflect,
-  ]);
+  const [selectedCategory, setSelectedCategory] = useState([]);
   /**
    * @param useSignSdk 用户相关
    */
@@ -143,6 +143,18 @@ export default (props) => {
    * @param {entryArray} 整理成数组类型
    */
   const [entryArray, setEntryArray] = useState([]);
+
+  useEffect(() => {
+    let cGory = [];
+    const mergeEntryData = merge({}, entryData);
+    for (let key in mergeEntryData) {
+      if (mergeEntryData[key] && mergeEntryData[key].length > 0) {
+        cGory.push(key);
+      }
+    }
+    setSelectedCategory(cGory);
+    setCategory(cGory);
+  }, [entryData]);
 
   useEffect(() => {
     let eArray = [];
@@ -311,12 +323,7 @@ export default (props) => {
         <div style={{ width: '100%', height: 32 }} />
         <Filter
           list={entryData}
-          category={[
-            EntryFilter.Action,
-            EntryFilter.ActionCompleted,
-            EntryFilter.Assessment,
-            EntryFilter.Reflect,
-          ]}
+          category={category}
           selected={selectedCategory}
           onChange={setSelectedCategory}
         />
