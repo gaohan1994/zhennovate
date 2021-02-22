@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-22 11:06:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 11:42:15
+ * @Last Modified time: 2021-02-22 15:45:10
  */
 import React, { useEffect, useState, useRef, useCallback } from 'react';
 import {
@@ -99,6 +99,11 @@ const RenderPaperForm = (props) => {
      */
     delay = 1,
     callback,
+    /**
+     * @param checkModuleFinishedCallback
+     * 校验module是否做完的callback 立即执行
+     */
+    checkModuleFinishedCallback,
     ...rest
   } = props;
   const [iframeUrl, setIframeUrl] = useState('');
@@ -192,6 +197,7 @@ const RenderPaperForm = (props) => {
       if (postMessageData.type !== RECEIVE_MESSAGE_TYPE.MODULE) {
         return;
       }
+
       const { progressData, paperformData } = postMessageData;
 
       const payload = {
@@ -206,6 +212,10 @@ const RenderPaperForm = (props) => {
       const data = paperformDataRef.current;
       const paperformKey = paperformDataKeyRef.current;
       if (!preview) {
+        if (checkModuleFinishedCallback) {
+          checkModuleFinishedCallback({ postMessageData, data, programData });
+        }
+
         // 如果是非预览模式才进行上传数据calback
         programEnd(payload, { paperformData })
           .then((result) => {
@@ -303,7 +313,11 @@ const RenderPaperForm = (props) => {
        * @todo 判断如果是 type = action
        * 则请求接口查看上次是否做了plan，如果做了plan则显示卡片
        */
-      if (paperformKey !== RenderPaperformKeyTypes.CompletePFKey && data && data.Type === ModuleType.Action) {
+      if (
+        paperformKey !== RenderPaperformKeyTypes.CompletePFKey &&
+        data &&
+        data.Type === ModuleType.Action
+      ) {
         programActionstatus({
           userId: sign.userinfo?._id,
           programId,

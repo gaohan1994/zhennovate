@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:14:32
+ * @Last Modified time: 2021-02-22 15:46:27
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -193,24 +193,17 @@ export default (props) => {
   };
 
   /**
-   * 完成paperform之后
-   * 跳转到下一个module如果没有下一个module
-   * 则跳转到下一个session的第一个module
-   * 如果没有下一个session
-   * 则结束
+   * @todo check 当前 module是否做完如果是打钩
    *
-   * @time 01-06 取消自动跳转
+   * @param {*} params
+   * @return {*}
    */
-  const finishPaperformCallback = (params) => {
+  const checkModuleFinishedCallback = (params) => {
     const { programData, postMessageData } = params;
-    const {
-      session,
-      sessionIndex,
-      moduleIndex,
-      moduleId,
-      moduleData,
-    } = formatModuleData(postMessageData.progressData.module, programData);
-    const hasNextModule = !!session.Modules[moduleIndex + 1];
+    const { moduleId, moduleData } = formatModuleData(
+      postMessageData.progressData.module,
+      programData,
+    );
 
     const nextFinishedModules = merge([], currentSessionFinishedModules);
 
@@ -230,6 +223,24 @@ export default (props) => {
       setCurrentSessionFinishedModules(nextFinishedModules);
       return;
     }
+  };
+
+  /**
+   * 完成paperform之后
+   * 跳转到下一个module如果没有下一个module
+   * 则跳转到下一个session的第一个module
+   * 如果没有下一个session
+   * 则结束
+   *
+   * @time 01-06 取消自动跳转
+   */
+  const finishPaperformCallback = (params) => {
+    const { programData, postMessageData } = params;
+    const { session, sessionIndex, moduleIndex } = formatModuleData(
+      postMessageData.progressData.module,
+      programData,
+    );
+    const hasNextModule = !!session.Modules[moduleIndex + 1];
 
     if (hasNextModule) {
       // 跳转到下一个module
@@ -262,7 +273,12 @@ export default (props) => {
     return (
       <div className={`${prefix}-menu-box`}>
         {icon}
-        <span className={`${prefix}-menu-box-title`} style={{fontWeight: 900}}>{title}</span>
+        <span
+          className={`${prefix}-menu-box-title`}
+          style={{ fontWeight: 900 }}
+        >
+          {title}
+        </span>
       </div>
     );
   };
@@ -412,6 +428,7 @@ export default (props) => {
                     programData={programData}
                     paperformKey={urlParams?.paperformKey}
                     callback={finishPaperformCallback}
+                    checkModuleFinishedCallback={checkModuleFinishedCallback}
                   />
                 ) : (
                   <div className={`${prefix}-spin`}>
