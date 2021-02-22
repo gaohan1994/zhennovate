@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:14:32
+ * @Last Modified time: 2021-02-22 14:55:22
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -262,7 +262,12 @@ export default (props) => {
     return (
       <div className={`${prefix}-menu-box`}>
         {icon}
-        <span className={`${prefix}-menu-box-title`} style={{fontWeight: 900}}>{title}</span>
+        <span
+          className={`${prefix}-menu-box-title`}
+          style={{ fontWeight: 900 }}
+        >
+          {title}
+        </span>
       </div>
     );
   };

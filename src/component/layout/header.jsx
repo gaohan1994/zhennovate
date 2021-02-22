@@ -35,6 +35,10 @@ export default function () {
     setActiveKey([keys.key]);
   };
 
+  const onSetting = () => {
+    history.push(`/sign/setting`);
+  };
+
   const Logout = () => {
     userLogout(() => {
       // notificatin.success({ message: 'Log Out' });
@@ -43,7 +47,9 @@ export default function () {
 
   const dropMenu = (
     <Menu>
-      <Menu.Item key="setting">Settings</Menu.Item>
+      <Menu.Item key="setting" onClick={onSetting}>
+        Settings
+      </Menu.Item>
       <Menu.Item key="logout" onClick={Logout}>
         Log out
       </Menu.Item>

@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 14:09:14
+ * @Last Modified time: 2021-02-22 14:57:20
  */
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
@@ -19,7 +19,7 @@ import Workshops from '../workshop';
 import AuthRoute from '@/component/auth/auth';
 // import { useMount } from 'ahooks';
 
-const renderWithFooter = (Component, props) => {
+export const renderWithFooter = (Component, props) => {
   return (
     <div>
       <Component {...props} />
