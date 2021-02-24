@@ -7,6 +7,7 @@ import '../index.less';
 import imgaction from '../../../../assets/Icon-Action@2x.png';
 import imgassessment from '../../../../assets/Icon-Assessment@2x.png';
 import imgreflection from '../../../../assets/Icon-Reflection@2x.png';
+import imgquiz from '../../../../assets/Icon-Entry-Quiz-64x64.png';
 import { programEntry } from '../../program/constants';
 import useSignSdk from '@/pages/sign/store/sign-sdk';
 import { ResponseCode } from '@/common/config';
@@ -54,7 +55,15 @@ export function RenderEntryData({ item, type }) {
           <RenderHeader
             title={Module.Title}
             subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
-            icon={type === EntryFilter.Action ? imgaction : imgreflection}
+            icon={
+              type === EntryFilter.Action
+                ? imgaction
+                : type === EntryFilter.Quiz
+                ? imgquiz
+                : type === EntryFilter.Assessment
+                ? imgassessment
+                : imgreflection
+            }
           />
         )}
         title="Action Name Written Here"
@@ -91,6 +100,7 @@ export const EntryFilter = {
   ActionCompleted: 'ActionCompleted',
   Assessment: 'Assessment',
   Reflect: 'Reflect',
+  Quiz: 'Quiz',
 };
 
 export function RenderHeader(props) {
