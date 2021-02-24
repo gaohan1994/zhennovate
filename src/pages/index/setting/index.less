@@ -1,0 +1,60 @@
+@import '../../../common/theme.less';
+
+@prefix: setting;
+
+.@{prefix} {
+  &-title {
+    font-size: 18px;
+    font-weight: bold;
+    color: #000;
+    padding-left: 24px;
+    .margin(16px, tb);
+    .fontWeight();
+  }
+
+  &-box {
+    background-color: #fff;
+    overflow-y: auto;
+    .flex(center, flex-start, column);
+  }
+
+  &-card {
+    width: 740px;
+    .margin(24px, t);
+
+    & .ant-card-head-title {
+      font-weight: 900 !important;
+    }
+
+    &-save {
+      width: 100%;
+      text-align: right;
+      color: @clear-blue;
+      text-decoration: underline;
+      font-size: 16px;
+    }
+  }
+
+  &-reminder {
+    &-times {
+      .flex(center, flex-start, row);
+    }
+    &-time {
+      width: 36px;
+      height: 36px;
+      margin: 12px 0px 12px 12px;
+      border-radius: 18px;
+      border: 1px solid @clear-blue;
+      .flex(center, center);
+      line-height: 1;
+    }
+    &-time[reminder-active='normal'] {
+      background-color: #fff;
+      color: #000000;
+    }
+    &-time[reminder-active='active'] {
+      background-color: @clear-blue;
+      color: #fff;
+    }
+  }
+}

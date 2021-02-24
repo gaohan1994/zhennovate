@@ -36,7 +36,7 @@ export default function () {
   };
 
   const onSetting = () => {
-    history.push(`/sign/setting`);
+    history.push(`/setting`);
   };
 
   const Logout = () => {
