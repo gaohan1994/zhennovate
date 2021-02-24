@@ -8,7 +8,7 @@ import imgprogress from '../../assets/empty/Icon-Inprogress-Empty.svg';
 const prefix = 'component-empty';
 
 function Empty(props) {
-  const { tab = {}, title, subTitle, icon } = props;
+  const { tab = {}, title, subTitle, icon, style = {} } = props;
 
   const renderIcon = icon
     ? icon
@@ -23,7 +23,7 @@ function Empty(props) {
     : '';
 
   return (
-    <div className={`${prefix}`}>
+    <div className={`${prefix}`} style={style}>
       <div
         className={`${prefix}-icon`}
         style={{ backgroundImage: `url(${renderIcon})` }}
@@ -32,7 +32,7 @@ function Empty(props) {
         {title
           ? title
           : tab.key === ProgramTabKeys.available
-          ? 'No available programs here'
+          ? 'No new programs'
           : tab.key === ProgramTabKeys.progress
           ? 'No in-progress programs'
           : tab.key === ProgramTabKeys.complete

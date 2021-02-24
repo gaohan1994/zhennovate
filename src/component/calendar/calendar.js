@@ -6,7 +6,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-23 10:06:03
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:12:23
+ * @Last Modified time: 2021-02-24 22:10:30
  */
 
 class Calendar {
@@ -24,7 +24,8 @@ class Calendar {
    * @todo 格式化detail防止出现错误格式
    */
   formatDetail(detail = '') {
-    return detail.replace(/[\\\`\*\_\[\]\#\+\-\!\>\r\n]/g, '');
+    return detail.replace(/[\`*_[]#+-!>\r\n]/g, '');
+    // return detail.replace(/[\\\`\*\_\[\]\#\+\-\!\>\r\n]/g, '');
   }
 
   /**

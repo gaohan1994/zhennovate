@@ -24,7 +24,7 @@ export const CalendarDataType = {
  * @Author: centerm.gaohan
  * @Date: 2021-02-07 13:36:09
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 10:26:03
+ * @Last Modified time: 2021-02-24 22:14:28
  */
 class CalendarHelper {
   constructor() {
@@ -136,12 +136,12 @@ class CalendarHelper {
     if (calendarWays === 'google') {
       detailContent += `<p>Continue where you left off at: </p>`;
       detailContent += `<a href="${linkHref}">${nextModule.Title}</a>`;
-      detailContent += `<p>See program details: </p>`;
-      detailContent += `<p>${calendar.formatDetail(program.Detail) || ''}</p>`;
+      // detailContent += `<p>See program details: </p>`;
+      // detailContent += `<p>${calendar.formatDetail(program.Detail) || ''}</p>`;
     } else {
-      detailContent += `Continue where you left off at: \n`;
-      detailContent += `See program details: \n`;
-      detailContent += `\n ${calendar.formatDetail(program.Detail) || ''}`;
+      detailContent += `Continue where you left off at: ${linkHref}`;
+      // detailContent += `See program details: \n`;
+      // detailContent += `\n ${calendar.formatDetail(program.Detail) || ''}`;
     }
 
     /**
@@ -160,7 +160,7 @@ class CalendarHelper {
             `${detailContent}` +
             '</body></html>'
           : detailContent,
-      ...(calendarWays !== 'google' ? { url: linkHref } : {}),
+      ...(calendarWays !== 'google' ? { url: '' } : {}),
     };
 
     return calendar.calendarGenerators(calendarData, calendarWays);
@@ -182,6 +182,8 @@ class CalendarHelper {
      * @param endTime 结束时间 第三天的相同时间
      *  */
     const data = this.getCalendarData();
+    console.log('[data this.getCalendarData()]', data);
+
     const type = this.getCalendarType();
 
     const startTime = this.formatTime(moment().add(1, 'd'));
@@ -205,12 +207,11 @@ class CalendarHelper {
      * 如果是outlook或者apple日历则把链接放进url
      */
     if (calendarWays === 'google') {
-      detailContent += `<p>Action Time - Practice what you’ve learned for mastery! </p>`;
-      detailContent += `<p>For tips and instructions, or to reflect on the action taken, visit:</p>`;
+      detailContent += `<p>Action Time - Experiment with a new action and reflect here:</p>`;
       detailContent += `<a href="${linkHref}">${data.Title}</a>`;
+      // detailContent += `<p>From Program: ${}</p>`
     } else {
-      detailContent += `Action Time - Practice what you’ve learned for mastery! \n`;
-      detailContent += `\n For tips and instructions, or to reflect on the action taken, visit:`;
+      detailContent += `Action Time - Experiment with a new action and reflect here - ${data.Title.toUpperCase()} ${linkHref}`;
       // detailContent += `\n ${data.Desc || ''}`;
     }
 
@@ -230,7 +231,7 @@ class CalendarHelper {
             `${detailContent}` +
             '</body></html>'
           : detailContent,
-      ...(calendarWays !== 'google' ? { url: linkHref } : {}),
+      ...(calendarWays !== 'google' ? { url: '' } : {}),
     };
     return calendar.calendarGenerators(calendarData, calendarWays);
   }

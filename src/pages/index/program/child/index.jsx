@@ -5,7 +5,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:01:43
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-05 10:21:41
+ * @Last Modified time: 2021-02-24 21:51:43
  */
 import React, { useState, useEffect, useRef } from 'react';
 // import { useScroll } from 'ahooks';
@@ -48,7 +48,7 @@ export default (props) => {
       setSelectedCategory(programkyes);
     } else {
       setCategory([]);
-      setSelectedCategory([''])
+      setSelectedCategory(['']);
     }
   }, [list]);
 
@@ -108,23 +108,34 @@ export default (props) => {
   };
 
   if (tab.key === ProgramTabKeys.available) {
+    let emptyToken = true;
+    for (let key in list) {
+      if (list[key].length > 0) {
+        emptyToken = false;
+      }
+    }
+
     return (
       <div className={`${prefix}-card`}>
-        {category.map((cate, cateIndex) => {
-          const currentCatePrograms = list[cate];
-          if (currentCatePrograms && currentCatePrograms.length > 0) {
-            return (
-              <Swiper
-                key={cate}
-                cate={cate}
-                cateIndex={cateIndex}
-                list={list}
-                tab={tab}
-              />
-            );
-          }
-          return <div key={cate} />;
-        })}
+        {emptyToken === false ? (
+          category.map((cate, cateIndex) => {
+            const currentCatePrograms = list[cate];
+            if (currentCatePrograms && currentCatePrograms.length > 0) {
+              return (
+                <Swiper
+                  key={cate}
+                  cate={cate}
+                  cateIndex={cateIndex}
+                  list={list}
+                  tab={tab}
+                />
+              );
+            }
+            return <div key={cate} />;
+          })
+        ) : (
+          <Empty tab={tab} style={{ width: '100%' }} />
+        )}
       </div>
     );
   }

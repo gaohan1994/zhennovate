@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:04:06
+ * @Last Modified time: 2021-02-24 17:44:59
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -22,7 +22,7 @@ const tabsMenu = [
     key: ProgramTabKeys.available,
     tab: 'New',
     Component: ProgramChild,
-    empty: '',
+    empty: 'New programs will be added here. Please check back later.',
   },
   {
     key: ProgramTabKeys.progress,

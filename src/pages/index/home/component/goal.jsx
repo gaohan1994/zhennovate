@@ -67,7 +67,6 @@ function Goal({ style = {} }) {
   // 请求 quotes
   const fetchQuotes = () => {
     quotes().then((result) => {
-      console.log('[名人名言：]', result);
       if (result && result.error_code === ResponseCode.success) {
         setUserQuotes(result.data);
       }
@@ -79,7 +78,6 @@ function Goal({ style = {} }) {
     setLoading(true);
     goalStart({ userId })
       .then((result) => {
-        console.log('[请求goal的paperfrom地址]', result);
         if (result.error_code === ResponseCode.success) {
           setUrl(`${result.data?.url}&num=${Math.random()}`);
         }
@@ -96,7 +94,6 @@ function Goal({ style = {} }) {
   const setUserLearningGoal = () => {
     goal({ userId })
       .then((result) => {
-        console.log('[用户的goal]', result);
         setUserGoal(result.data);
         setLoading(false);
       })
@@ -117,7 +114,6 @@ function Goal({ style = {} }) {
       postMessageData.type === RECEIVE_MESSAGE_TYPE.CHANGE_GOAL
     ) {
       const { paperformData } = postMessageData;
-      console.log('[window message goal数据]', postMessageData);
       if (paperformData) {
         const payload = {
           userId: userId,
@@ -139,7 +135,6 @@ function Goal({ style = {} }) {
     try {
       invariant(isSign, 'Please Sign in');
       goalStart({ userId }).then((result) => {
-        console.log('[请求goal的paperfrom地址]', result);
         if (result.error_code === ResponseCode.success) {
           setUrl(`${result.data?.url}&time=${Math.round(new Date() / 1000)}`);
         }
@@ -171,7 +166,6 @@ function Goal({ style = {} }) {
 
   const showQuotes = userQuotes && userQuotes.length > 0;
   // const quotesText = showQuotes ? userQuotes.join(' ') : '';
-
   return (
     <div
       className={`${prefix}-goal-box`}
@@ -179,7 +173,7 @@ function Goal({ style = {} }) {
     >
       <Spin spinning={loading}>
         <div className={`${prefix}-goal`}>
-          <h2 style={{ marginTop: 123 }}>My learning goal</h2>
+          <h2 style={{ marginTop: 52 }}>My learning goal</h2>
           <div
             style={{
               marginTop: 18,
@@ -267,14 +261,14 @@ function Goal({ style = {} }) {
       <Modal
         visible={visible}
         footer={null}
-        width={812}
-        height={558}
+        width={1000}
+        height={800}
         centered
         bodyStyle={{ height: '100%', padding: '0px' }}
         title="My learning goal"
         onCancel={onHide}
       >
-        <iframe width={812} height={452} src={url} />
+        <iframe width={1000} height={700} src={url} />
       </Modal>
     </div>
   );

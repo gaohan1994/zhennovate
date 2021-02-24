@@ -49,8 +49,13 @@ function WeeklyGoal(props) {
    */
   const [percent, setPercent] = useState(0);
 
-  const currentDate = moment(weekStart).format('MMM D');
-  const nextWeekDate = moment(weekStart).add(6, 'days').format('MMM D');
+  const timeZoneOffset = new Date().getTimezoneOffset();
+  const timeZoneDate =
+    timeZoneOffset > 0
+      ? moment(weekStart).add(timeZoneOffset / 60, 'hours')
+      : moment(weekStart).subtract(timeZoneOffset / 60, 'hours');
+  const currentDate = moment(timeZoneDate).format('MMM D');
+  const nextWeekDate = moment(timeZoneDate).add(6, 'days').format('MMM D');
 
   useEffect(() => {
     if (planEndCount) {
@@ -68,15 +73,7 @@ function WeeklyGoal(props) {
     }
     const p = ((endCount || 0) / (weeklyGoalPlanValue || 0)) * 100;
     setPercent(p);
-
-    console.log('endCount', endCount);
-    console.log('weeklyGoalPlanValue', weeklyGoalPlanValue);
-    console.log(
-      'endCount >= weeklyGoalPlanValue',
-      endCount >= weeklyGoalPlanValue,
-    );
     const token = getCheckCompleteModalTimeToken();
-    console.log('token', token);
     if (endCount >= weeklyGoalPlanValue && !token) {
       showWeeklyCompleteModal();
     }
@@ -84,7 +81,7 @@ function WeeklyGoal(props) {
 
   const changeWeeklyGoal = () => {
     try {
-      invariant(!!isSign, 'Please Sign-in');
+      invariant(!!isSign, 'Please sign in.');
       setLoading(true);
 
       renewactionplan({
@@ -94,7 +91,7 @@ function WeeklyGoal(props) {
         if (result.error_code === ResponseCode.success) {
           changeWeeklyGoalValueCallback(weeklyGoalPlanValue, weeklyGoalValue);
           setWeeklyGoalPlanValue(weeklyGoalValue);
-          message.success('Weekly Goal Successfully Updated.');
+          message.success('Weekly goal successfully updated.');
         }
 
         setLoading(false);
@@ -144,7 +141,7 @@ function WeeklyGoal(props) {
                     <span
                       style={{ fontSize: 14, color: '#1b2631', marginTop: 8 }}
                     >
-                      Actions
+                      {weeklyGoalPlanValue > 1 ? 'Actions' : 'Action'}
                     </span>
                   </div>
                 );
@@ -169,9 +166,9 @@ function WeeklyGoal(props) {
               <span style={{ marginLeft: 14 }}>
                 You've achieved{' '}
                 <span style={{ fontWeight: 'bold' }}>
-                  {endCount - weeklyGoalPlanValue}
+                  {endCount - weeklyGoalPlanValue || 0}
                 </span>{' '}
-                actions
+                {endCount - weeklyGoalPlanValue > 1 ? 'actions' : 'action'}
                 <br />
                 beyond your goal this week!
               </span>
@@ -190,8 +187,13 @@ function WeeklyGoal(props) {
 
       <PaperformActionModal
         visible={homeStore.weeklyCompleteModalVisible}
-        title="Action Goal Reached!"
-        subTitle="You’ve completed your action goal for this week! Yipee! Pat yourself on the back for staying on track!"
+        title="Action goal reached!"
+        subTitle={
+          <>
+            <p>You’ve completed your action goal for this week! Yipee! </p>
+            <p>Pat yourself on the back for staying on track!</p>
+          </>
+        }
         confirmButton="Done"
         img="https://media.giphy.com/media/5xaOcLGvzHxDKjufnLW/giphy.gif"
         bodyStyle={{ padding: '20px 32px' }}
@@ -204,6 +206,7 @@ function WeeklyGoal(props) {
         title="Edit weekly goal"
         visible={visible}
         onCancel={() => setVisible(false)}
+        bodyStyle={{ paddingTop: '18px' }}
         footer={
           <Button
             type="primary"
@@ -218,10 +221,10 @@ function WeeklyGoal(props) {
         }
       >
         <div>
-          <span>
+          <div style={{ marginBottom: 18 }}>
             Pairing insight with action paves the way to success. Set a weekly
             goal to stay action-oriented.
-          </span>
+          </div>
 
           <Choice
             defaultValue={weeklyGoalValue}
@@ -233,7 +236,7 @@ function WeeklyGoal(props) {
                 value: 1,
               },
               {
-                label: '  Intentional',
+                label: 'Intentional',
                 subTitle: '2 actions per week',
                 value: 2,
               },

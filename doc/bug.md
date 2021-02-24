@@ -1,7 +1,67 @@
+## 2021-02-24
+
+https://zhennovate.atlassian.net/browse/PHASE1-216 cannot add program to calendar Nanan Gao Di Ye Highest To Do 2021/2/19 7:03 3/1;Program
+1、已更新正则表达式 但是 safari 的 apple 和 outlook 还是无法添加到日历 3.1 之后解决
+2、From Program 暂时先去掉等 3.1 之后添加一个 program 字段
+
+https://zhennovate.atlassian.net/browse/PHASE1-209 Cannot add action to Outlook and Apple calendars Nanan Gao Di Ye Highest To Do 2021/2/20 3:46 3/1;Program
+已更新正则表达式 但是 safari 的 apple 和 outlook 还是无法添加到日历 3.1 之后解决
+
+https://zhennovate.atlassian.net/browse/PHASE1-224 Cannot Add Program to Calendar Nanan Gao Di Ye High To Do 2021/2/19 17:58 3/1;Program
+1、因为正则表达式还不是很完善，先去掉 program 的 detail 保证 calendar 功能万无一失
+
+https://zhennovate.atlassian.net/browse/PHASE1-293 Copywriting - Add action to calendar Nanan Gao Di Ye Medium To Do 2021/2/19 23:07 3/1;Program
+fixed
+
+---
+
+https://zhennovate.atlassian.net/browse/PHASE1-255 Weekly Action Goal - Copywriting Nanan Gao Di Ye Highest To Do 2021/2/19 17:02 3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-290 Action entries should be categorized according to spec - backend Nanan Gao Di Ye Highest To Do 2021/2/20 2:09 3/1;Program
+
+https://zhennovate.atlassian.net/browse/PHASE1-277 Add Quiz as its own filter to this page Nanan Gao Linda Zheng Medium To Do 2021/2/19 18:55 3/1;Program
+前端根据返回的 key 渲染 filter 中的选项
+
+https://zhennovate.atlassian.net/browse/PHASE1-297 Copywriting - Weekly Goal Complete State Nanan Gao Di Ye Highest To Do 2021/2/20 8:44 3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-201 Action Completed Status Nanan Gao Linda Zheng Highest In Progress 2021/2/23 19:29 3/1;Program
+禹哥帮忙看下这个 bug，目前 bug 是只要完成了 session 中最后一个 module 时，整个 session 会被设置为完成
+
+https://zhennovate.atlassian.net/browse/PHASE1-269 Timezone issue for Date Display on Platform Nanan Gao Di Ye High To Do 2021/2/19 19:18 3/1;Program
+moment 插件应该已经做了适配了，晚上找不同时区的人进行测试
+
+https://zhennovate.atlassian.net/browse/PHASE1-292 Copywriting - Weekly Goal Card Nanan Gao Di Ye High To Do 2021/2/19 19:34 3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-289 Inconsistent Status for session level on coaching path Nanan Gao Linda Zheng High To Do 2021/2/20 2:46 3/1;Program
+陈玉修改
+和 201 关联
+
+https://zhennovate.atlassian.net/browse/PHASE1-202 Weekly Goal Complete - Pop-up should only happen once and never happen again after user closes the pop-up Nanan Gao Linda Zheng High To Do 2021/2/20 8:28 3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-304 Copywriting - Weekly Goal Nanan Gao Di Ye High To Do 2021/2/24 4:09 3/1;Goal-Setting
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-281 Add empty state to (New) program page Nanan Gao Linda Zheng Medium To Do 2021/2/19 18:48 3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-287 Copywriting - Weekly Goal Toast Notification Nanan Gao Di Ye Medium To Do 2021/2/19 19:54 3/1;Goal-Setting
+fixed 应该需要刷新
+
+https://zhennovate.atlassian.net/browse/PHASE1-276 Change Quiz entry to use the correct icon Nanan Gao Linda Zheng Medium To Do 2021/2/20 2:26 3/1;Program
+
+https://zhennovate.atlassian.net/browse/PHASE1-296 Copywriting - Weekly Goal Complete Pop-Up Nanan Gao Di Ye Medium To Do 2021/2/20 8:38 3/1;Program
+fixed
+
+https://zhennovate.atlassian.net/browse/PHASE1-300 Make learning goal pop up bigger Nanan Gao Linda Zheng Medium To Do 2021/2/23 20:28 3/1;Program
+fixed
+
 ## 2021-02-22
 
 222 fixed
-201 fixed
 197 陈禹修改
 
 ## 2021-02-19
