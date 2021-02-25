@@ -1,5 +1,5 @@
 import React from 'react';
-import { Layout, Button } from 'antd';
+import { Layout } from 'antd';
 import './index.less';
 import logo from '@/assets/logo@3x.png';
 import { useHistory } from 'react-router-dom';
@@ -9,8 +9,6 @@ const { Header } = Layout;
 
 export default function (props) {
   const history = useHistory();
-  const { entry } = props;
-  const isCheck = window.location.href.indexOf('sign/check') > -1;
   return (
     <Header className={`${prefix}-sign-header`}>
       <div
@@ -20,30 +18,6 @@ export default function (props) {
         <img className={`${prefix}-sign-logo-img`} src={logo} />
         <span className={`${prefix}-sign-logo-text`}>Zhennovate</span>
       </div>
-
-      {!isCheck && (
-        <div className={`${prefix}-header-button`}>
-          {!entry ? (
-            <Button
-              style={{ minWidth: 120 }}
-              onClick={() => {
-                history.push(`/sign/signup${history.location.search}`);
-              }}
-            >
-              Sign up
-            </Button>
-          ) : (
-            <Button
-              style={{ minWidth: 120 }}
-              onClick={() => {
-                history.push(`/sign/signin${history.location.search}`);
-              }}
-            >
-              Sign in
-            </Button>
-          )}
-        </div>
-      )}
     </Header>
   );
 }

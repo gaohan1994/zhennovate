@@ -12,11 +12,15 @@
       letter-spacing: normal;
       text-align: left;
       color: @gray-1;
+      & > span {
+        .margin(4px, l);
+        text-decoration: underline;
+      }
     }
     &-title {
       font-size: 32px;
-      font-weight: normal;
       .margin(12px, b);
+      .fontWeight();
     }
     &-subtitle {
       font-size: 16px;
@@ -57,6 +61,27 @@
       & > span[role='img'] {
         .margin(0px, l);
       }
+    }
+  }
+
+  &-label {
+    width: 100%;
+    .flex(center, space-between, row);
+
+    & > h3 {
+      color: @clear-blue;
+      text-decoration: underline;
+    }
+  }
+
+  &-tips {
+    .fontWeight();
+    width: 100%;
+    .flex(center, center, row);
+    .margin(24px, t);
+    & > span {
+      .margin(4px, l);
+      color: @clear-blue;
     }
   }
 }

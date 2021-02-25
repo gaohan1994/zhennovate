@@ -13,6 +13,7 @@ import Signin from '@/pages/sign/sign-in';
 import Forgot from '@/pages/sign/forgot';
 import Check from '@/pages/sign/check';
 import ResetPage from './forgot/reset';
+import SetPassword from '@/pages/sign/set-password';
 /**
  * 主页布局
  * 包括顶部导航栏 以及路由配置
@@ -40,6 +41,7 @@ export default function () {
           component={ResetPage}
           exact={true}
         />
+        <Route path="/sign/setpassword" component={SetPassword} exact={true} />
         <Route path="/sign/check" component={Check} exact={true} />
       </Switch>
     </LayoutContainer>

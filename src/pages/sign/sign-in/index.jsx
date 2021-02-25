@@ -6,7 +6,7 @@
  * @Last Modified time: 2021-02-04 15:00:57
  */
 import React, { useState } from 'react';
-import { Form, message, Input } from 'antd';
+import { Form, message, Input, Checkbox } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
@@ -76,9 +76,17 @@ export default function SignIn(props) {
     }
   };
 
+  const onForgotPassword = () => {
+    history.push(`/sign/forgot`);
+  };
+
+  const onSignUp = () => {
+    history.push(`/sign/signup`);
+  };
+
   return (
     <Container>
-      <div className={`${prefix}-up-title`}>Sign In</div>
+      <div className={`${prefix}-up-title`}>Welcome back</div>
       <Form form={form} layout="vertical">
         <FormItem
           label="Email Address"
@@ -94,7 +102,14 @@ export default function SignIn(props) {
           ]}
         />
         <FormItem
-          label="Password"
+          label={
+            <div className={`${prefix}-label`}>
+              <span>Password</span>
+              <h3 common-touch="touch" onClick={onForgotPassword}>
+                Forgot password?
+              </h3>
+            </div>
+          }
           name="password"
           style={{ marginBottom: 12 }}
           rules={[
@@ -115,18 +130,18 @@ export default function SignIn(props) {
           }}
         />
 
-        <div
-          className={`${prefix}-up-forgot`}
-          onClick={() => {
-            history.push('/sign/forgot');
-          }}
-        >
-          Forgot Password?
-        </div>
+        <Checkbox style={{ marginBottom: 14 }}>Remember me</Checkbox>
 
         <Button form={form} submit={onSubmit} loading={loading}>
           Sign in
         </Button>
+
+        <section className={`${prefix}-tips`}>
+          Don’t have an account?{' '}
+          <span common-touch="touch" onClick={onSignUp}>
+            Sign up.
+          </span>
+        </section>
       </Form>
     </Container>
   );

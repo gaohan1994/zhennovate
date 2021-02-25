@@ -22,7 +22,7 @@ function LayoutContainer(props) {
   const { entry } = props;
 
   return (
-    <Layout style={{ width: '100%', height: '100%' }}>
+    <Layout style={{ width: '100%', height: '100%', backgroundColor: '#fff' }}>
       <LayoutHeader entry={entry} />
       <Layout className={`${prefix}-content`} style={{ marginTop: 0 }}>
         <div style={{ flex: 1 }}>{props.children}</div>

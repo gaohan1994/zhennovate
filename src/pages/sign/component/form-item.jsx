@@ -12,7 +12,7 @@ export default (props) => {
   const { render, inputProps = {}, ...rest } = props;
 
   return (
-    <Form.Item help="" {...rest}>
+    <Form.Item {...rest}>
       {render ? render() : <Input {...inputProps} />}
     </Form.Item>
   );

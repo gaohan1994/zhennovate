@@ -7,6 +7,7 @@
  */
 import React from 'react';
 import './index.less';
+import { Card } from 'antd';
 
 const prefix = 'sign-component';
 export default (props) => {
@@ -14,7 +15,7 @@ export default (props) => {
   return (
     <div className={`${prefix}`}>
       <div className={`${prefix}-box`} style={style}>
-        {props.children}
+        <Card>{props.children}</Card>
       </div>
     </div>
   );

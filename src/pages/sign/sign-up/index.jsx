@@ -6,7 +6,7 @@
  * @Last Modified time: 2021-02-01 14:24:56
  */
 import React from 'react';
-import { Form, Checkbox, message, Input } from 'antd';
+import { Form, Checkbox, message, Row, Col, Radio } from 'antd';
 import md5 from 'blueimp-md5';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
@@ -18,7 +18,6 @@ import invariant from 'invariant';
 import '../index.less';
 import { Action_Types } from '../store/sign-store';
 import { formatSearch } from '@/common/request';
-import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const prefix = 'sign-page';
 
@@ -70,24 +69,59 @@ export default function SignUp() {
       message.error(error.message);
     }
   };
+
+  const onSignIn = () => {
+    history.push(`/sign/signin`);
+  };
   return (
     <Container>
       <div className={`${prefix}-up-title`}>Join us</div>
       <div className={`${prefix}-up-subtitle`}>Start your journey today!</div>
       <Form form={form} layout="vertical">
-        <FormItem
-          label="Full Name"
-          name="name"
-          inputProps={{
-            placeholder: 'Name',
-          }}
-          rules={[
-            {
-              required: true,
-              message: 'Please enter your name.',
-            },
-          ]}
-        />
+        <Form.Item label="Are you joining through an organization?">
+          <Row>
+            <Col span={12}>
+              <Radio>Yes!</Radio>
+            </Col>
+            <Col span={12}>
+              <Radio>Nope, it’s just me. </Radio>
+            </Col>
+          </Row>
+        </Form.Item>
+
+        <Row gutter={8}>
+          <Col span={12}>
+            <FormItem
+              label="First Name"
+              name="firstname"
+              inputProps={{
+                placeholder: 'First Name',
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter your first name.',
+                },
+              ]}
+            />
+          </Col>
+          <Col span={12}>
+            <FormItem
+              label="Last Name"
+              name="lastname"
+              inputProps={{
+                placeholder: 'Last Name',
+              }}
+              rules={[
+                {
+                  required: true,
+                  message: 'Please enter your last name.',
+                },
+              ]}
+            />
+          </Col>
+        </Row>
+
         <FormItem
           label="Email Address"
           name="email"
@@ -104,28 +138,6 @@ export default function SignUp() {
           ]}
         />
         <FormItem
-          label="Password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              type: 'string',
-              min: 8,
-              message: 'Please use 8+ characters for secure password.',
-            },
-          ]}
-          render={() => {
-            return (
-              <Input.Password
-                placeholder="password"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            );
-          }}
-        />
-        <FormItem
           name="policy"
           valuePropName="checked"
           rules={[
@@ -140,7 +152,9 @@ export default function SignUp() {
             return (
               <Checkbox>
                 <span className={`${prefix}-up-policy`}>
-                  I agree to Zhennovate’s Terms and Privacy Policy
+                  I agree to Zhennovate’s{' '}
+                  <span common-touch="touch">Terms</span> and{' '}
+                  <span common-touch="touch">Privacy Policy</span>
                 </span>
               </Checkbox>
             );
@@ -149,6 +163,13 @@ export default function SignUp() {
         <SignButton form={form} submit={onSubmit}>
           Sign up
         </SignButton>
+
+        <section className={`${prefix}-tips`}>
+          Already have an account? Please
+          <span common-touch="touch" onClick={onSignIn}>
+            sign in.
+          </span>
+        </section>
       </Form>
     </Container>
   );

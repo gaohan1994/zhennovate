@@ -15,14 +15,14 @@ export default (props) => {
 
   const [loading, setLoading] = useState(false);
   // message的高度
-  const [messageHeight, setMessageHeight] = useState(20);
+  // const [messageHeight, setMessageHeight] = useState(20);
 
   /**
    * 获取button的位置
    */
   useEffect(() => {
     if (buttonRef.current) {
-      setMessageHeight(buttonRef.current.offsetTop);
+      // setMessageHeight(buttonRef.current.offsetTop);
     }
   }, [buttonRef.current]);
 
@@ -39,13 +39,6 @@ export default (props) => {
       error.errorFields &&
         message.error({
           content: error.errorFields[0]?.errors[0],
-          style: {
-            width: 324 + 16,
-            margin: '0 auto',
-            marginTop: messageHeight + 40,
-            fontSize: 14,
-            fontWeight: 'normal',
-          },
         });
     }
   };
