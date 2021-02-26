@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-01 14:24:56
+ * @Last Modified time: 2021-02-26 17:48:10
  */
 import React from 'react';
 import { Form, message, Input } from 'antd';
@@ -22,10 +22,11 @@ import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 
 const prefix = 'sign-page';
 
-export default function SetPassword() {
+export default function SetPassword(props) {
   const dispatch = useDispatch();
   const history = useHistory();
   const [form] = Form.useForm();
+  const setPasswordId = props.match.params.setpasswordid;
 
   /**
    * 注册
@@ -34,10 +35,10 @@ export default function SetPassword() {
   const onSubmit = async (values) => {
     try {
       const payload = {
-        email: values.email,
-        name: values.name,
+        verificationId: setPasswordId,
         password: md5(values.password),
       };
+      console.log('payload', payload);
       const result = await register(payload);
       console.log('[注册返回结果]', result);
       invariant(result.error_code === 0, result.message || ' ');

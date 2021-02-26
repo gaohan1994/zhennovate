@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-02 12:18:31
+ * @Last Modified time: 2021-02-26 17:46:38
  */
 
 import { api } from '@/common/request';
@@ -22,3 +22,17 @@ export const forgotEmail = (params) => api.get(`/user/forgot/${params.email}`);
 
 export const resetPassword = (params) =>
   api.get(`/user/resetpassword/${params.forgotId}/${params.password}`);
+
+export const isOrganization = (params) => {
+  return api.get(`/user/isOrganization/${params.email}`);
+};
+
+export const userRegisterV2 = (params) => {
+  return api.post('/user/register/v2', params);
+};
+
+export const setPassword = (params) => {
+  return api.get(
+    `/user/setpassword/${params.verificationId}/${params.password}`,
+  );
+};
