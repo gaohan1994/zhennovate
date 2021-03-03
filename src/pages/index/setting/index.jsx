@@ -3,14 +3,14 @@
  * @Author: centerm.gaohan
  * @Date: 2021-02-22 14:43:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-24 15:48:37
+ * @Last Modified time: 2021-03-03 18:44:01
  */
 import React, { useEffect, useState } from 'react';
 import { Menu, Layout } from 'antd';
 import '@/pages/index/detail/index.less';
 import AuthRoute from '@/component/auth/auth';
 import { renderWithFooter } from '@/pages/index/home';
-import Infomation from './infomation';
+// import Infomation from './infomation';
 import Notification from './notification';
 import { Link, Switch } from 'react-router-dom';
 import './index.less';
@@ -18,12 +18,12 @@ import './index.less';
 const prefix = 'page-detail';
 
 const SettingRouter = [
-  {
-    key: 'infomation',
-    title: 'Account information',
-    path: '/setting',
-    Component: Infomation,
-  },
+  // {
+  //   key: 'infomation',
+  //   title: 'Account information',
+  //   path: '/setting',
+  //   Component: Infomation,
+  // },
   {
     key: 'notification',
     title: 'Notification',

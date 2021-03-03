@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-28 23:36:05
+ * @Last Modified time: 2021-03-03 17:39:37
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Checkbox, message, Row, Col, Radio, Input, Button } from 'antd';
@@ -45,6 +45,8 @@ export default function SignUp() {
   const [renderType, setRenderType] = useState(RenderType.SignUp);
   // const [renderType, setRenderType] = useState(RenderType.Result);
 
+  const [errorFields, setErrorFields] = useState([]);
+
   useEffect(() => {}, [signUpType]);
 
   const checkOrganizationEmail = async (email) => {
@@ -52,7 +54,7 @@ export default function SignUp() {
     if (result.error_code === ResponseCode.success) {
       return result.data;
     } else {
-      return { organization: null };
+      return result;
     }
   };
 
@@ -60,16 +62,21 @@ export default function SignUp() {
    * @todo 失去焦点的时候判断如果是 Organzation 则校验email
    */
   const onInputBlur = async () => {
-    const email = form.getFieldValue('email');
-    if (email && signUpType === SignUpType.Organization) {
-      const organization = await checkOrganizationEmail(email);
-      console.log('organization', organization);
-      if (organization.organization) {
-        console.log('organization');
-      } else {
-        message.error('organization null');
-      }
-    }
+    form
+      .validateFields(['email'])
+      .then(async (result) => {
+        const email = form.getFieldValue('email');
+        if (email && signUpType === SignUpType.Organization) {
+          const organization = await checkOrganizationEmail(email);
+          console.log('organization', organization);
+          if (organization.organization) {
+            console.log('organization');
+          } else {
+            setErrorFields(organization.message);
+          }
+        }
+      })
+      .catch((error) => {});
   };
 
   /**
@@ -78,6 +85,11 @@ export default function SignUp() {
    */
   const onSubmit = async (values) => {
     try {
+      if (values.errorFields) {
+        setErrorFields(values.errorFields);
+        return;
+      }
+
       if (signUpType === SignUpType.Normal) {
         /**
          * @todo 非组织的用户暂时不开发注册
@@ -89,7 +101,8 @@ export default function SignUp() {
       const checkResult = await checkOrganizationEmail(values.email);
 
       if (!checkResult.organization) {
-        throw new Error('organization null');
+        setErrorFields(checkResult.message);
+        return;
       }
 
       const payload = {
@@ -153,6 +166,8 @@ export default function SignUp() {
           <Row gutter={8}>
             <Col span={12}>
               <FormItem
+                form={form}
+                errorFields={errorFields}
                 label="First Name"
                 name="firstname"
                 inputProps={{
@@ -168,6 +183,8 @@ export default function SignUp() {
             </Col>
             <Col span={12}>
               <FormItem
+                form={form}
+                errorFields={errorFields}
                 label="Last Name"
                 name="lastname"
                 inputProps={{
@@ -183,22 +200,35 @@ export default function SignUp() {
             </Col>
           </Row>
 
-          <Form.Item
-            hasFeedback
+          <FormItem
+            form={form}
+            errorFields={errorFields}
             label="Email Address"
             name="email"
             rules={[
               {
                 required: true,
+                message: 'Please enter your email address.',
+              },
+              {
+                required: true,
                 type: 'email',
-                message:
-                  'This doesn’t look like an email address.Please check it for typos and try again.',
+                message: 'Please enter a valid email address.',
               },
             ]}
-          >
-            <Input placeholder="Email Address" onBlur={onInputBlur} />
-          </Form.Item>
+            render={({ checkFormItemStatus }) => {
+              return (
+                <Input
+                  onChange={checkFormItemStatus}
+                  placeholder="Email Address"
+                  onBlur={onInputBlur}
+                />
+              );
+            }}
+          />
           <FormItem
+            form={form}
+            errorFields={errorFields}
             name="policy"
             valuePropName="checked"
             rules={[
@@ -206,12 +236,12 @@ export default function SignUp() {
                 required: true,
                 type: 'enum',
                 enum: [true],
-                message: 'Please agree with the terms to sign up.',
+                message: 'Please agree to the terms and conditions to sign up.',
               },
             ]}
-            render={() => {
+            render={({ checkFormItemStatus }) => {
               return (
-                <Checkbox>
+                <Checkbox onChange={checkFormItemStatus}>
                   <span className={`${prefix}-up-policy`}>
                     I agree to Zhennovate’s{' '}
                     <span common-touch="touch" onClick={onTerms}>

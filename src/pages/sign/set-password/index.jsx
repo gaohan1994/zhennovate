@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-28 23:02:09
+ * @Last Modified time: 2021-03-03 17:00:24
  */
 import React, { useState } from 'react';
 import { Form, message, Input, Button } from 'antd';
@@ -42,19 +42,26 @@ export default function SetPassword(props) {
    */
   const [renderType] = useState(RenderType.Password);
 
+  const [errorFields, setErrorFields] = useState([]);
+
   /**
    * 注册
    * @param {*} values
    */
   const onSubmit = async (values) => {
     try {
+      if (values.errorFields) {
+        setErrorFields(values.errorFields);
+        return;
+      }
+
       const payload = {
         email: search.email,
         firstname: search.firstname,
         lastname: search.lastname,
         password: md5(values.password),
       };
-      console.log('payload', payload);
+      // console.log('payload', payload);
       const result = await userRegisterV2(payload);
       // const result = await register(payload);
       console.log('[注册返回结果]', result);
@@ -89,10 +96,16 @@ export default function SetPassword(props) {
         </div>
         <Form form={form} layout="vertical">
           <FormItem
+            form={form}
+            errorFields={errorFields}
             style={{ marginTop: 30 }}
             label="Create a password"
             name="password"
             rules={[
+              {
+                required: true,
+                message: 'Please enter a valid password.',
+              },
               {
                 required: true,
                 type: 'string',
@@ -100,9 +113,10 @@ export default function SetPassword(props) {
                 message: 'Please choose a password with 8 or more characters.',
               },
             ]}
-            render={() => {
+            render={({ checkFormItemStatus }) => {
               return (
                 <Input.Password
+                  onChange={checkFormItemStatus}
                   placeholder="Password 8+ characters"
                   iconRender={(visible) =>
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
@@ -112,15 +126,15 @@ export default function SetPassword(props) {
             }}
           />
           <FormItem
+            form={form}
+            errorFields={errorFields}
             label="Confirm password"
             name="confirmpassword"
             dependencies={['password']}
             rules={[
               {
                 required: true,
-                type: 'string',
-                min: 8,
-                message: 'Please use 8+ characters for secure password.',
+                message: 'Please confirm your password.',
               },
               ({ getFieldValue }) => ({
                 validator(_, value) {
@@ -128,13 +142,16 @@ export default function SetPassword(props) {
                     return Promise.resolve();
                   }
                   // eslint-disable-next-line prefer-promise-reject-errors
-                  return Promise.reject('Please confirm your password');
+                  return Promise.reject(
+                    'Passwords do not match. Please try again.',
+                  );
                 },
               }),
             ]}
-            render={() => {
+            render={({ checkFormItemStatus }) => {
               return (
                 <Input.Password
+                  onChange={checkFormItemStatus}
                   placeholder="Confirm password"
                   iconRender={(visible) =>
                     visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />

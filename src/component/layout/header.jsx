@@ -35,9 +35,9 @@ export default function () {
     setActiveKey([keys.key]);
   };
 
-  // const onSetting = () => {
-  //   history.push(`/setting`);
-  // };
+  const onSetting = () => {
+    history.push(`/setting/notification`);
+  };
 
   const Logout = () => {
     userLogout(() => {
@@ -48,9 +48,9 @@ export default function () {
 
   const dropMenu = (
     <Menu>
-      {/* <Menu.Item key="setting" onClick={onSetting}>
+      <Menu.Item key="setting" onClick={onSetting}>
         Settings
-      </Menu.Item> */}
+      </Menu.Item>
       <Menu.Item key="logout" onClick={Logout}>
         Log out
       </Menu.Item>

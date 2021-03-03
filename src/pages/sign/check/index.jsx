@@ -3,13 +3,13 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-01 10:08:47
+ * @Last Modified time: 2021-03-03 17:55:47
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
 import { Form, Input, message } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { userActive, userActiveInfo } from '../constants';
+import { userActive, userActiveInfo, verficaCode } from '../constants';
 import useSignSdk from '../store/sign-sdk';
 // import { formatSearch } from '@/common/request';
 import { useHistory } from 'react-router-dom';
@@ -18,6 +18,7 @@ import invariant from 'invariant';
 import imgcheck from '@/assets/modal/Icon_Check_128x128.png';
 import '@/component/paperform/index.less';
 import Container from '../component/container';
+import { formatSearch } from '@/common/request';
 
 const prefix = 'sign-page';
 
@@ -33,7 +34,7 @@ const RenderCheckType = {
   Paperform: 'Paperform',
 };
 
-export default () => {
+export default (props) => {
   const iframeContainerRef = useRef(null);
   const history = useHistory();
   const inputRef = useRef(null);
@@ -166,6 +167,17 @@ export default () => {
     }
   };
 
+  const onSendCode = () => {
+    const search = formatSearch(props.location.search);
+    verficaCode({ email: search.email }).then((result) => {
+      if (result.code === ResponseCode.success) {
+        message.success('Confirmation code sent. Please check your email.');
+      } else {
+        message.error(result.message || ' ');
+      }
+    });
+  };
+
   const getSuffix = () => {
     if (validateStatus === 'error') {
       return <CloseCircleFilled style={{ color: '#e86452' }} />;
@@ -227,6 +239,7 @@ export default () => {
                   className={`${prefix}-check-url`}
                   style={{ color: '#1890ff' }}
                   common-touch="touch"
+                  onClick={onSendCode}
                 >
                   Send code again
                 </span>

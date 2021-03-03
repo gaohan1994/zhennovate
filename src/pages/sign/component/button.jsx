@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 10:22:02
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-02 10:28:54
+ * @Last Modified time: 2021-03-03 16:56:23
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { message, Button } from 'antd';
@@ -36,15 +36,17 @@ export default (props) => {
         setLoading(false);
       }, 3000);
     } catch (error) {
+      console.log('error', error);
       error.errorFields &&
         message.error({
           content: error.errorFields[0]?.errors[0],
         });
+      submit(error);
     }
   };
 
   return (
-    <div ref={buttonRef}>
+    <div ref={buttonRef} style={{ marginTop: 22 }}>
       <Button
         type="primary"
         loading={loading}

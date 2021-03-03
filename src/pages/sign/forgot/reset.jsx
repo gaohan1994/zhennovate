@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-01 01:01:17
+ * @Last Modified time: 2021-03-03 16:22:29
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -11,7 +11,6 @@ import '../index.less';
 import FormItem from '../component/form-item';
 import { Form, message, Button, Input } from 'antd';
 import md5 from 'blueimp-md5';
-// import Button from '../component/button';
 import SignButton from '../component/button';
 import { resetPassword } from '../constants';
 import { ResponseCode } from '@/common/config';
@@ -26,8 +25,13 @@ function ResetPage(props) {
   const history = useHistory();
 
   const [showResult, setShowResult] = useState(false);
-
+  const [errorFields, setErrorFields] = useState([]);
   const onSubmit = (values) => {
+    if (values.errorFields) {
+      console.log('error');
+      setErrorFields(values.errorFields);
+      return;
+    }
     const payload = {
       forgotId,
       password: md5(values.password),
@@ -37,7 +41,7 @@ function ResetPage(props) {
        * 如果失败显示错误信息
        */
       if (result.error_code !== ResponseCode.success) {
-        message.error(result.msg || ' ');
+        message.error(result.message || ' ');
         return;
       }
 
@@ -101,20 +105,27 @@ function ResetPage(props) {
 
       <Form form={form} layout="vertical">
         <FormItem
+          form={form}
+          errorFields={errorFields}
           label="Password"
           name="password"
           rules={[
             {
               required: true,
+              message: 'Please enter a valid password.',
+            },
+            {
+              required: true,
               type: 'string',
               min: 8,
-              message: 'Please use 8+ characters for secure password.',
+              message: 'Please choose a password with 8 or more characters.',
             },
           ]}
-          render={() => {
+          render={({ checkFormItemStatus }) => {
             return (
               <Input.Password
                 placeholder="Password 8+ character"
+                onChange={checkFormItemStatus}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }
@@ -123,15 +134,15 @@ function ResetPage(props) {
           }}
         />
         <FormItem
+          form={form}
+          errorFields={errorFields}
           label="Confirm password"
           name="confirmPassword"
           dependencies={['password']}
           rules={[
             {
               required: true,
-              type: 'string',
-              min: 8,
-              message: 'Please use 8+ characters for secure password.',
+              message: 'Please confirm your password.',
             },
             ({ getFieldValue }) => ({
               validator(_, value) {
@@ -140,15 +151,16 @@ function ResetPage(props) {
                 }
                 // eslint-disable-next-line prefer-promise-reject-errors
                 return Promise.reject(
-                  'The two passwords that you entered do not match!',
+                  'Passwords do not match. Please try again.',
                 );
               },
             }),
           ]}
-          render={() => {
+          render={({ checkFormItemStatus }) => {
             return (
               <Input.Password
                 placeholder="Confirm password"
+                onChange={checkFormItemStatus}
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }

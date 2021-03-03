@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-01 00:28:26
+ * @Last Modified time: 2021-03-03 16:27:51
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -91,6 +91,7 @@ export default () => {
       </div>
       <Form form={form} layout="vertical">
         <FormItem
+          form={form}
           label="Email Address"
           name="email"
           inputProps={{
@@ -104,8 +105,7 @@ export default () => {
             {
               required: true,
               type: 'email',
-              message:
-                'This doesn’t look like an email address.Please check it for typos and try again.',
+              message: 'Please enter a valid email address.',
             },
           ]}
         />

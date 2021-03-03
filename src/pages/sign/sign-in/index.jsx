@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-01 00:10:09
+ * @Last Modified time: 2021-03-03 17:28:41
  */
 import React, { useState } from 'react';
 import { Form, message, Input } from 'antd';
@@ -11,21 +11,25 @@ import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
 import '../index.less';
-import signSdk from '../store/sign-sdk';
+// import signSdk from '../store/sign-sdk';
 import { useHistory } from 'react-router-dom';
 import Button from '../component/button';
 import { formatSearch } from '@/common/request';
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
+import { signin } from '../constants';
+import { useDispatch } from 'react-redux';
+import { Action_Types } from '../store/sign-store';
+import { ResponseCode } from '@/common/config';
 
 const prefix = 'sign-page';
 
 export default function SignIn(props) {
   const [form] = Form.useForm();
   const history = useHistory();
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = useState(false);
-
-  const { userSignin } = signSdk();
+  const [errorFields, setErrorFields] = useState([]);
 
   const loginCallback = () => {
     setLoading(false);
@@ -54,15 +58,25 @@ export default function SignIn(props) {
     try {
       setLoading(true);
       const fields = await form?.validateFields();
-      userSignin(
-        {
-          email: fields.email,
-          password: md5(fields.password),
-        },
-        loginCallback,
-      );
+
+      signin({
+        email: fields.email,
+        password: md5(fields.password),
+      }).then((result) => {
+        if (result.error_code === ResponseCode.success) {
+          dispatch({
+            type: Action_Types.Receive_Userinfo,
+            payload: result.data,
+          });
+          loginCallback(result);
+        } else {
+          setErrorFields(result.message);
+        }
+      });
     } catch (error) {
       setLoading(false);
+
+      error.errorFields && setErrorFields(error.errorFields);
       error.errorFields &&
         error.errorFields[0]?.errors[0] &&
         message.error({
@@ -89,6 +103,8 @@ export default function SignIn(props) {
       <div className={`${prefix}-up-title`}>Welcome back</div>
       <Form form={form} layout="vertical">
         <FormItem
+          form={form}
+          errorFields={errorFields}
           label="Email Address"
           name="email"
           inputProps={{
@@ -97,11 +113,18 @@ export default function SignIn(props) {
           rules={[
             {
               required: true,
-              message: 'Please enter your email.',
+              message: 'Please enter your email address.',
+            },
+            {
+              required: true,
+              type: 'email',
+              message: 'Please enter a valid email address.',
             },
           ]}
         />
         <FormItem
+          form={form}
+          errorFields={errorFields}
           label={
             <div className={`${prefix}-label`}>
               <span>Password</span>
@@ -118,9 +141,10 @@ export default function SignIn(props) {
               message: 'Please enter your password.',
             },
           ]}
-          render={() => {
+          render={({ checkFormItemStatus }) => {
             return (
               <Input.Password
+                onChange={checkFormItemStatus}
                 placeholder="password"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
