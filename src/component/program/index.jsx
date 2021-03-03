@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:34:53
+ * @Last Modified time: 2021-03-01 00:22:09
  */
 import React, { useState, useEffect } from 'react';
 import { Progress, message } from 'antd';
@@ -153,8 +153,18 @@ function Program(props) {
     );
   }
 
-  const percent =
-    data && data._id ? data.FinishSessionTotal / data.Sessions.length : 0;
+  /**
+   * @todo 默认开始的进度是 应该显示的绿色长度应该是 1 / (该program的session数目 x 2)。
+   */
+  let percent = 0;
+
+  if (data && data._id) {
+    if (data.FinishSessionTotal !== 0) {
+      percent = data.FinishSessionTotal / data.Sessions.length;
+    } else {
+      percent = 0.1;
+    }
+  }
 
   const percentText =
     data && data._id

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 17:32:59
+ * @Last Modified time: 2021-03-01 01:01:17
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -55,19 +55,38 @@ function ResetPage(props) {
 
   if (showResult) {
     return (
-      <Container style={{ width: '360px', alignItems: 'center' }}>
-        <div className={`${prefix}-up-title`}>Success</div>
+      <Container
+        style={{
+          width: '500px',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        border={false}
+      >
+        <div className={`${prefix}-up-title`} style={{ textAlign: 'center' }}>
+          Success
+        </div>
 
         <div
           className={`${prefix}-up-subtitle`}
           style={{ textAlign: 'center' }}
         >
-          Your password has been changed.
+          <p>Your password has been changed. </p>
+          <p>Please use your new password to sign in.</p>
         </div>
 
-        <Button type="primary" style={{ width: 156 }} onClick={backToLogin}>
-          Back to log in
-        </Button>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Button type="primary" style={{ width: 357 }} onClick={backToLogin}>
+            Back to sign in
+          </Button>
+        </div>
       </Container>
     );
   }
@@ -77,7 +96,7 @@ function ResetPage(props) {
       <div className={`${prefix}-up-title`}>Reset password</div>
 
       <div className={`${prefix}-up-subtitle`}>
-        Enter your new password below
+        Enter your new password below.
       </div>
 
       <Form form={form} layout="vertical">

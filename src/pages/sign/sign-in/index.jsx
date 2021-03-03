@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:00:57
+ * @Last Modified time: 2021-03-01 00:10:09
  */
 import React, { useState } from 'react';
-import { Form, message, Input, Checkbox } from 'antd';
+import { Form, message, Input } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
@@ -111,7 +111,7 @@ export default function SignIn(props) {
             </div>
           }
           name="password"
-          style={{ marginBottom: 12 }}
+          style={{ marginBottom: 24 }}
           rules={[
             {
               required: true,
@@ -130,7 +130,12 @@ export default function SignIn(props) {
           }}
         />
 
-        <Checkbox style={{ marginBottom: 14 }}>Remember me</Checkbox>
+        <p style={{ marginBottom: 24 }}>
+          Your sign-in will be automatically remembered on this device, unless
+          you delete the cache on this browser.
+        </p>
+
+        {/* <Checkbox style={{ marginBottom: 14 }}>Remember me</Checkbox> */}
 
         <Button form={form} submit={onSubmit} loading={loading}>
           Sign in

@@ -3,14 +3,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-26 17:48:10
+ * @Last Modified time: 2021-02-28 23:02:09
  */
-import React from 'react';
-import { Form, message, Input } from 'antd';
+import React, { useState } from 'react';
+import { Form, message, Input, Button } from 'antd';
 import md5 from 'blueimp-md5';
 import { useHistory } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
-import { register } from '../constants';
+import { userRegisterV2 } from '../constants';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
 import SignButton from '../component/button';
@@ -19,14 +19,28 @@ import '../index.less';
 import { Action_Types } from '../store/sign-store';
 import { formatSearch } from '@/common/request';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
+import imginvite from '../../../assets/Invite-Illustration.png';
 
 const prefix = 'sign-page';
 
+const RenderType = {
+  Password: 'Password',
+  Result: 'Result',
+};
+
 export default function SetPassword(props) {
+  const search = formatSearch(props.location.search);
+
   const dispatch = useDispatch();
   const history = useHistory();
+  console.log('history', history);
   const [form] = Form.useForm();
-  const setPasswordId = props.match.params.setpasswordid;
+
+  /**
+   * @param {renderType} 渲染的类型
+   *
+   */
+  const [renderType] = useState(RenderType.Password);
 
   /**
    * 注册
@@ -35,11 +49,14 @@ export default function SetPassword(props) {
   const onSubmit = async (values) => {
     try {
       const payload = {
-        verificationId: setPasswordId,
+        email: search.email,
+        firstname: search.firstname,
+        lastname: search.lastname,
         password: md5(values.password),
       };
       console.log('payload', payload);
-      const result = await register(payload);
+      const result = await userRegisterV2(payload);
+      // const result = await register(payload);
       console.log('[注册返回结果]', result);
       invariant(result.error_code === 0, result.message || ' ');
 
@@ -48,98 +65,107 @@ export default function SetPassword(props) {
         payload: result.data,
       });
 
-      setTimeout(() => {
-        if (history.location.search.length > 0) {
-          const params = formatSearch(history.location.search);
-          if (params.forward_url) {
-            const forwardUrl = decodeURIComponent(params.forward_url);
-            history.push(forwardUrl);
-            return;
-          }
-        }
-      }, 1000);
-
-      history.push(
-        `/sign/check${
-          history.location.search
-          // ? `${history.location.search}&userId=${'userId'}`
-          // : `?userId=${'userId'}`
-        }`,
-      );
+      message.success('Confirmation code sent. Please check your email.');
+      history.push(`/sign/check${props.location.search}`);
     } catch (error) {
       console.log('[报错信息]', error);
       message.error(error.message);
     }
   };
-  return (
-    <Container>
-      <div className={`${prefix}-up-title`} style={{ textAlign: 'center' }}>
-        Welcome!
-      </div>
-      <div className={`${prefix}-check-text`} style={{ textAlign: 'center' }}>
-        <p>You are enrolled through</p>
-        <p style={{ fontWeight: 'bold' }}>[Name of Organization]</p>
-      </div>
-      <Form form={form} layout="vertical">
-        <FormItem
-          style={{ marginTop: 30 }}
-          label="Create a password"
-          name="password"
-          rules={[
-            {
-              required: true,
-              type: 'string',
-              min: 8,
-              message: 'Please choose a password with 8 or more characters.',
-            },
-          ]}
-          render={() => {
-            return (
-              <Input.Password
-                placeholder="Password 8+ characters"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            );
-          }}
-        />
-        <FormItem
-          label="Confirm password"
-          name="confirmpassword"
-          dependencies={['password']}
-          rules={[
-            {
-              required: true,
-              type: 'string',
-              min: 8,
-              message: 'Please use 8+ characters for secure password.',
-            },
-            ({ getFieldValue }) => ({
-              validator(_, value) {
-                if (!value || getFieldValue('password') === value) {
-                  return Promise.resolve();
-                }
-                // eslint-disable-next-line prefer-promise-reject-errors
-                return Promise.reject('Please confirm your password');
+
+  const onHome = () => {
+    history.push(`/home`);
+  };
+
+  if (renderType === RenderType.Password) {
+    return (
+      <Container>
+        <div className={`${prefix}-up-title`} style={{ textAlign: 'center' }}>
+          Welcome!
+        </div>
+        <div className={`${prefix}-check-text`} style={{ textAlign: 'center' }}>
+          <p>You are enrolled through</p>
+          <p style={{ fontWeight: 'bold' }}>{search.organizationName || ' '}</p>
+        </div>
+        <Form form={form} layout="vertical">
+          <FormItem
+            style={{ marginTop: 30 }}
+            label="Create a password"
+            name="password"
+            rules={[
+              {
+                required: true,
+                type: 'string',
+                min: 8,
+                message: 'Please choose a password with 8 or more characters.',
               },
-            }),
-          ]}
-          render={() => {
-            return (
-              <Input.Password
-                placeholder="Confirm password"
-                iconRender={(visible) =>
-                  visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
-                }
-              />
-            );
-          }}
-        />
-        <SignButton form={form} submit={onSubmit}>
-          Create password
-        </SignButton>
-      </Form>
+            ]}
+            render={() => {
+              return (
+                <Input.Password
+                  placeholder="Password 8+ characters"
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                />
+              );
+            }}
+          />
+          <FormItem
+            label="Confirm password"
+            name="confirmpassword"
+            dependencies={['password']}
+            rules={[
+              {
+                required: true,
+                type: 'string',
+                min: 8,
+                message: 'Please use 8+ characters for secure password.',
+              },
+              ({ getFieldValue }) => ({
+                validator(_, value) {
+                  if (!value || getFieldValue('password') === value) {
+                    return Promise.resolve();
+                  }
+                  // eslint-disable-next-line prefer-promise-reject-errors
+                  return Promise.reject('Please confirm your password');
+                },
+              }),
+            ]}
+            render={() => {
+              return (
+                <Input.Password
+                  placeholder="Confirm password"
+                  iconRender={(visible) =>
+                    visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
+                  }
+                />
+              );
+            }}
+          />
+          <SignButton form={form} submit={onSubmit}>
+            Create password
+          </SignButton>
+        </Form>
+      </Container>
+    );
+  }
+
+  return (
+    <Container border={false}>
+      <section className={`${prefix}-result`}>
+        <img className={`${prefix}-invite`} alt="" src={imginvite} />
+        <h1>Thank you for signing up!</h1>
+        <p>We have added you to our invite-only waitlist.</p>
+        <p>Stay tuned for upcoming offerings.</p>
+        <Button
+          onClick={onHome}
+          type="primary"
+          style={{ width: 323, marginTop: 24 }}
+        >
+          Return to home page
+        </Button>
+      </section>
     </Container>
   );
 }

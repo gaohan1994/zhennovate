@@ -199,16 +199,11 @@ function Goal({ style = {} }) {
                   );
                 })}
               </>
-            ) : (
-              <p>
-                <Tag color="#e0e0e0">
-                  <span style={{ color: '#1b2631' }}>Confidence</span>
-                </Tag>
-              </p>
-            )}
+            ) : null}
           </div>
           <span style={{ marginTop: 18, fontSize: 16, textAlign: 'center' }}>
-            {learningTitle}
+            {learningTitle ||
+              'Take a moment to reflect on your learning goal here.'}
           </span>
           <span
             style={{

@@ -154,7 +154,7 @@ function WeeklyGoal(props) {
                 <span style={{ fontWeight: 'bold' }}>
                   {weeklyGoalPlanValue - endCount}
                 </span>{' '}
-                actions to
+                {weeklyGoalPlanValue - endCount > 1 ? 'actions' : 'action'} to
                 <br />
                 reach your weekly goal.
               </span>

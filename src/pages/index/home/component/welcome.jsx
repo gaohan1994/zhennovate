@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-11-30 09:58:42
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 17:32:28
+ * @Last Modified time: 2021-02-28 23:33:40
  */
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
@@ -31,7 +31,8 @@ function Welcome(props) {
 
   const [isCheckin, setIsCheckin] = useState(false);
   const [visible, setVisible] = useState(false);
-  const [checkinData,
+  const [
+    checkinData,
     // setCheckinData
   ] = useState({});
 
@@ -110,7 +111,10 @@ function Welcome(props) {
           <div className={`${prefix}-info`}>
             <span className={`${prefix}-info-title`}>
               Welcome back
-              {`${userinfo && userinfo.Name ? `, ${userinfo.Name}` : ''}`}!
+              {`${
+                userinfo && userinfo.FirstName ? `, ${userinfo.FirstName}` : ''
+              }`}
+              !
               <span
                 className={`${prefix}-info-emoji`}
                 style={{ backgroundImage: `url(${imgemoji})` }}

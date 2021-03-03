@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 17:32:55
+ * @Last Modified time: 2021-03-01 00:28:26
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
@@ -46,27 +46,45 @@ export default () => {
 
   if (showResult) {
     return (
-      <Container style={{ width: '360px', alignItems: 'center' }}>
-        <div className={`${prefix}-up-title`}>Thank you!</div>
+      <Container
+        style={{
+          width: '500px',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+        border={false}
+      >
+        <div className={`${prefix}-up-title`} style={{ textAlign: 'center' }}>
+          Thank you!
+        </div>
 
         <div
           className={`${prefix}-up-subtitle`}
           style={{ textAlign: 'center' }}
         >
-          We’ve sent password reset instructions to your email address. If no
-          email is received within ten minutes, check if the submitted address
-          is correct.
+          <p>We’ve sent password reset instructions to your email address.</p>
+          <p>If no email is recieved within 10 minutes, please check </p>
+          <p>if the submitted email address is correct.</p>
         </div>
 
-        <Button type="primary" style={{ width: 156 }} onClick={backToSignin}>
-          Back to sign in
-        </Button>
+        <div
+          style={{
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+            width: '100%',
+          }}
+        >
+          <Button type="primary" style={{ width: 367 }} onClick={backToSignin}>
+            Back to sign in
+          </Button>
+        </div>
       </Container>
     );
   }
 
   return (
-    <Container style={{ width: '360px' }}>
+    <Container style={{ width: '390px' }}>
       <div className={`${prefix}-up-title`}>Forgot Password?</div>
       <div className={`${prefix}-up-subtitle`}>
         Enter the email you’re using for your account
@@ -79,6 +97,10 @@ export default () => {
             placeholder: 'Email Address',
           }}
           rules={[
+            {
+              required: true,
+              message: 'Please enter your email address.',
+            },
             {
               required: true,
               type: 'email',
@@ -98,7 +120,7 @@ export default () => {
         <div
           className={`${prefix}-up-forgot`}
           onClick={() => {
-            history.back();
+            history.goBack();
           }}
           style={{
             textAlign: 'center',

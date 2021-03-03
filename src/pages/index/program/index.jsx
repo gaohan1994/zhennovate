@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 22:01:06
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-24 17:44:59
+ * @Last Modified time: 2021-03-01 00:11:14
  */
 import React, { useState, useEffect, useRef } from 'react';
 import { Tabs, Spin } from 'antd';
@@ -75,11 +75,12 @@ export default (props) => {
 
   // 切换tab显示骨架屏 滑动到tabs顶部
   const onChangeTab = (key) => {
-    const top = bannerHeight + Math.random();
-    window.scrollTo({
-      top: top,
-      behavior: 'smooth',
-    });
+    console.log('bannerHeight', bannerHeight);
+    // const top = bannerHeight + Math.random();
+    // window.scrollTo({
+    //   top: top,
+    //   behavior: 'smooth',
+    // });
     setShowSkeleton(true);
     setCurrentTab(key);
 

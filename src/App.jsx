@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-19 21:46:55
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-24 19:45:50
+ * @Last Modified time: 2021-02-28 23:58:25
  */
 import React from 'react';
 import { HashRouter, Switch, Route } from 'react-router-dom';
@@ -11,6 +11,7 @@ import Sign from '@/pages/sign';
 import PaperformModal from './component/paperform-modal';
 import CalendarModal from './component/calendar/calendar-modal';
 import { message } from 'antd';
+import AuthRoute from './component/auth/auth';
 
 message.config({
   duration: 2,
@@ -49,9 +50,21 @@ function App() {
         <Switch>
           {RouteMenu.map((item, index) => {
             const { path, component, ...rest } = item;
-            return (
-              <Route path={path} component={component} key={index} {...rest} />
-            );
+
+            if (item.path === '/sign') {
+              return (
+                <Route
+                  path={path}
+                  component={component}
+                  key={index}
+                  {...rest}
+                />
+              );
+            } else {
+              return (
+                <AuthRoute key={index} {...rest} path={path} component={Home} />
+              );
+            }
           })}
         </Switch>
       </HashRouter>

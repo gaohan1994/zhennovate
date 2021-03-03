@@ -84,4 +84,24 @@
       color: @clear-blue;
     }
   }
+
+  &-invite {
+    width: 380px;
+    height: 264px;
+  }
+
+  &-result {
+    .flex(center, center, column);
+
+    & > h1 {
+      .margin(12px, tb);
+      font-size: 30px;
+      .fontWeight();
+      color: var(--clear-blue);
+    }
+
+    & > p {
+      font-size: 16px;
+    }
+  }
 }

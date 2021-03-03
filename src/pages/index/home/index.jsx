@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-12 09:37:11
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 14:09:14
+ * @Last Modified time: 2021-02-28 23:59:02
  */
 import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
@@ -17,9 +17,10 @@ import './index.less';
 import Insights from '../insights';
 import Workshops from '../workshop';
 import AuthRoute from '@/component/auth/auth';
+import Setting from '../setting';
 // import { useMount } from 'ahooks';
 
-const renderWithFooter = (Component, props) => {
+export const renderWithFooter = (Component, props) => {
   return (
     <div>
       <Component {...props} />
@@ -80,11 +81,15 @@ export default function (componentProps) {
           path="/insights"
           component={(props) => renderWithFooter(Insights, props)}
         />
-
         <AuthRoute
           exact={true}
           path="/workshops"
           component={(props) => renderWithFooter(Workshops, props)}
+        />
+
+        <AuthRoute
+          path="/setting"
+          component={(props) => renderWithFooter(Setting, props)}
         />
       </AnimatedSwitch>
     </LayoutContainer>

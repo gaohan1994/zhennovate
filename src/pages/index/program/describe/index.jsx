@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 14:11:51
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 15:12:14
+ * @Last Modified time: 2021-02-28 23:30:15
  */
 import React, { useEffect, useState, useRef } from 'react';
 import { message } from 'antd';
@@ -48,6 +48,18 @@ export default (props) => {
 
   const { userId } = useSignSdk();
 
+  // 进入页面滑动到顶端
+  useEffect(() => {
+    if (!loading) {
+      setTimeout(() => {
+        window.scrollTo({
+          top: 0,
+        });
+        // document.documentElement.scrollTop = 0;
+      }, 100);
+    }
+  }, [loading]);
+
   useEffect(() => {
     if (!loading && !!programDescribe.OutComes) {
       if (isSticky) {
@@ -66,14 +78,6 @@ export default (props) => {
       }
     }
   }, [loading, isSticky, programDescribe]);
-
-  // 进入页面滑动到顶端
-  // useEffect(() => {
-  //   window.scrollTo({
-  //     top: 0,
-  //     behavior: 'smooth',
-  //   });
-  // }, []);
 
   // 获取program详情
   useEffect(() => {

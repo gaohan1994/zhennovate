@@ -35,22 +35,29 @@ export default function () {
     setActiveKey([keys.key]);
   };
 
+  // const onSetting = () => {
+  //   history.push(`/setting`);
+  // };
+
   const Logout = () => {
     userLogout(() => {
+      history.replace('/sign/signin');
       // notificatin.success({ message: 'Log Out' });
     });
   };
 
   const dropMenu = (
     <Menu>
-      <Menu.Item key="setting">Settings</Menu.Item>
+      {/* <Menu.Item key="setting" onClick={onSetting}>
+        Settings
+      </Menu.Item> */}
       <Menu.Item key="logout" onClick={Logout}>
         Log out
       </Menu.Item>
     </Menu>
   );
 
-  const username = (sign && sign.userinfo && sign.userinfo.Name) || 'name';
+  const username = (sign && sign.userinfo && sign.userinfo.FirstName) || 'name';
   const firstWord = username.substring(0, 1);
 
   // <Menu.Item key="insights" style={{ borderBottom: 0 }}>

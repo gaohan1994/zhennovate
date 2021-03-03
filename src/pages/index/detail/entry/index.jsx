@@ -237,55 +237,6 @@ export default (props) => {
   const hasReflect = Reflect && Reflect.length > 0;
   const emptyEntryToken = !hasAction && !hasAssessment && !hasReflect;
 
-  /**
-   * @param renderEntryAction 渲染action
-   */
-  // const renderEntryAction = () => {
-  //   const showAction = selectedCategory.some((s) => s === EntryFilter.Action);
-
-  //   if (!showAction) {
-  //     return null;
-  //   }
-
-  //   if (!hasAction) {
-  //     return null;
-  //   }
-
-  //   return <RenderEntryData data={Action} type={EntryFilter.Action} />;
-  // };
-
-  // /**
-  //  * @param renderEntryAssessment 渲染Assessment
-  //  */
-  // const renderEntryAssessment = () => {
-  //   const showAssessment = selectedCategory.some(
-  //     (s) => s === EntryFilter.Assessment,
-  //   );
-
-  //   if (!showAssessment) {
-  //     return null;
-  //   }
-  //   if (!hasAssessment) {
-  //     return null;
-  //   }
-  //   return <RenderEntryData data={Assessment} type={EntryFilter.Assessment} />;
-  // };
-
-  // /**
-  //  * @param renderEntryReflect 渲染Reflect
-  //  */
-  // const renderEntryReflect = () => {
-  //   const showReflect = selectedCategory.some((s) => s === EntryFilter.Reflect);
-  //   if (!hasReflect) {
-  //     return null;
-  //   }
-  //   if (!showReflect) {
-  //     return null;
-  //   }
-  //   return <RenderEntryData data={Reflect} type={EntryFilter.Reflect} />;
-  // };
-  console.log('entryArray', entryArray);
-
   return (
     <div
       className={`${prefix}-container-box`}

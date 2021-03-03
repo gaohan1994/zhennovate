@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-04 17:32:36
+ * @Last Modified time: 2021-03-01 10:08:47
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
@@ -17,6 +17,7 @@ import { ResponseCode } from '@/common/config';
 import invariant from 'invariant';
 import imgcheck from '@/assets/modal/Icon_Check_128x128.png';
 import '@/component/paperform/index.less';
+import Container from '../component/container';
 
 const prefix = 'sign-page';
 
@@ -40,12 +41,6 @@ export default () => {
   // const params = formatSearch(history.location.search);
 
   const { userId, sign } = useSignSdk();
-
-  useEffect(() => {
-    if (!userId) {
-      history.replace('/sign/signup');
-    }
-  }, [userId]);
 
   /**
    * @param {validateStatus} 'success' 'warning' 'error' 'validating'
@@ -137,7 +132,7 @@ export default () => {
       setUserActiveResult(result.data);
 
       /**
-       * 如果正确1秒后显示结果页
+       * 如果正确0.5秒后显示结果页
        */
       setTimeout(() => {
         setRenderType(RenderCheckType.Result);
@@ -145,7 +140,7 @@ export default () => {
 
       setTimeout(() => {
         setRenderType(RenderCheckType.Paperform);
-      }, 1.5 * 1000);
+      }, 3.5 * 1000);
     } catch (error) {
       /**
        * 如果失败显示失败信息
@@ -190,14 +185,14 @@ export default () => {
           src={userActiveResult.url}
         />
       ) : (
-        <div className="sign-component-box">
+        <Container style={{ width: '412px' }}>
           {renderType === RenderCheckType.Check && (
             <>
               <div className={`${prefix}-up-title`}>Check your email</div>
               <div className={`${prefix}-check-text`}>
                 We’ve sent you a six-digit confirmation code to{' '}
                 <span style={{ fontWeight: 'bold' }}>
-                  [{` ${sign.userinfo?.Email || ''} `}].
+                  {` ${sign.userinfo?.Email || ''} `}.
                 </span>{' '}
                 Please enter it below to confirm your email address.
               </div>
@@ -231,16 +226,21 @@ export default () => {
                 <span
                   className={`${prefix}-check-url`}
                   style={{ color: '#1890ff' }}
+                  common-touch="touch"
                 >
                   Send code again
                 </span>
-                {` or find more information in`}
-                <span
-                  className={`${prefix}-check-url`}
-                  style={{ color: '#1890ff', marginLeft: 5 }}
-                >
-                  Help Center.
-                </span>
+                {` or find more information`}
+                <p>
+                  in our
+                  <span
+                    className={`${prefix}-check-url`}
+                    style={{ color: '#1890ff', marginLeft: 5 }}
+                    common-touch="touch"
+                  >
+                    Help Center.
+                  </span>
+                </p>
               </div>
             </>
           )}
@@ -277,7 +277,7 @@ export default () => {
               src={userActiveResult.url}
             />
           )}
-        </div>
+        </Container>
       )}
     </div>
   );

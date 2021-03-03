@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:28:24
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-26 17:45:06
+ * @Last Modified time: 2021-02-27 23:33:36
  */
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -41,11 +41,7 @@ export default function () {
           component={ResetPage}
           exact={true}
         />
-        <Route
-          path="/sign/setpassword/:setpasswordid"
-          component={SetPassword}
-          exact={true}
-        />
+        <Route path="/sign/setpassword" component={SetPassword} exact={true} />
         <Route path="/sign/check" component={Check} exact={true} />
       </Switch>
     </LayoutContainer>

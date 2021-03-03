@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:10:21
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-01-07 15:04:50
+ * @Last Modified time: 2021-02-27 23:33:25
  */
 import { BASE_URL } from './config';
 import { notification } from 'antd';
@@ -16,12 +16,14 @@ import { useHistory } from 'react-router-dom';
  */
 export const jsonToQueryString = (json) => {
   const field = Object.keys(json)
-    .forEach(function (key) {
+    .map((key) => {
       if (json[key] !== undefined) {
         return key + '=' + json[key];
+      } else {
+        return '';
       }
     })
-    .filter((item) => !!item)
+    .filter((f) => !!f)
     .join('&');
   return field.length > 0 ? `?${field}` : '';
 };
