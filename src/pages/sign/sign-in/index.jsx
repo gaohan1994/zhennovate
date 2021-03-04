@@ -3,23 +3,23 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:28:41
+ * @Last Modified time: 2021-03-04 16:30:49
  */
 import React, { useState } from 'react';
-import { Form, message, Input } from 'antd';
+import { Form, message, Input, Checkbox } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
 import '../index.less';
-// import signSdk from '../store/sign-sdk';
 import { useHistory } from 'react-router-dom';
 import Button from '../component/button';
 import { formatSearch } from '@/common/request';
 import { EyeTwoTone, EyeInvisibleOutlined } from '@ant-design/icons';
 import { signin } from '../constants';
-import { useDispatch } from 'react-redux';
-import { Action_Types } from '../store/sign-store';
+import { useDispatch, useSelector } from 'react-redux';
+import { Action_Types, Action_Types_Black_Sign } from '../store/sign-store';
 import { ResponseCode } from '@/common/config';
+import useSignSdk from '../store/sign-sdk';
 
 const prefix = 'sign-page';
 
@@ -27,6 +27,9 @@ export default function SignIn(props) {
   const [form] = Form.useForm();
   const history = useHistory();
   const dispatch = useDispatch();
+  const rememberToken = useSelector((state) => state.sign.rememberToken);
+
+  const { toggleRememberMe } = useSignSdk();
 
   const [loading, setLoading] = useState(false);
   const [errorFields, setErrorFields] = useState([]);
@@ -64,10 +67,17 @@ export default function SignIn(props) {
         password: md5(fields.password),
       }).then((result) => {
         if (result.error_code === ResponseCode.success) {
-          dispatch({
-            type: Action_Types.Receive_Userinfo,
-            payload: result.data,
-          });
+          if (rememberToken === true) {
+            dispatch({
+              type: Action_Types.Receive_Userinfo,
+              payload: result.data,
+            });
+          } else {
+            dispatch({
+              type: Action_Types_Black_Sign.Receive_Userinfo_Black,
+              payload: result.data,
+            });
+          }
           loginCallback(result);
         } else {
           setErrorFields(result.message);
@@ -97,7 +107,6 @@ export default function SignIn(props) {
   const onSignUp = () => {
     history.push(`/sign/signup`);
   };
-
   return (
     <Container>
       <div className={`${prefix}-up-title`}>Welcome back</div>
@@ -154,12 +163,18 @@ export default function SignIn(props) {
           }}
         />
 
-        <p style={{ marginBottom: 24 }}>
+        {/* <p style={{ marginBottom: 24 }}>
           Your sign-in will be automatically remembered on this device, unless
           you delete the cache on this browser.
-        </p>
+        </p> */}
 
-        {/* <Checkbox style={{ marginBottom: 14 }}>Remember me</Checkbox> */}
+        <Checkbox
+          style={{ marginBottom: 14 }}
+          onChange={toggleRememberMe}
+          checked={rememberToken}
+        >
+          Remember me
+        </Checkbox>
 
         <Button form={form} submit={onSubmit} loading={loading}>
           Sign in

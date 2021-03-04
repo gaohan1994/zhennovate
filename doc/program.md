@@ -3,6 +3,13 @@
 2、user active 报错 fixed
 3、remember me 页面关闭的时候 2 天左右
 
+remember me
+
+记住的 store 放到 sign 里面
+单独开一个不记住的 store
+
+sign sdk 根据 remember me 来返回？
+
 ## error case
 
 ### SIGN ERRORCASE

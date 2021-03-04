@@ -6,6 +6,7 @@ import { getLearningReminder, setLearningReminder } from '../../constants';
 import { ResponseCode } from '@/common/config';
 import moment from 'moment';
 import { merge } from 'lodash';
+import { timezonecity } from '@/common/city';
 
 const prefix = 'setting';
 
@@ -30,6 +31,7 @@ function LearningReminder() {
   const [timeValue, setTimeValue] = useState(undefined);
   const [data, setData] = useState({});
   const [dayWeek, setDayWeek] = useState([]);
+  const [selectedTimeZone, setSelectedTimeZone] = useState(36);
 
   useEffect(() => {
     if (userId) {
@@ -37,6 +39,7 @@ function LearningReminder() {
         if (result.error_code === ResponseCode.success) {
           setData(result.data);
           setDayWeek(result.data.dayWeek);
+          setSelectedTimeZone(Number(result.data.id));
         }
       });
     }
@@ -49,14 +52,17 @@ function LearningReminder() {
   }, [data]);
 
   const onSubmit = () => {
-    const timeZoneOffsetMinutes = new Date().getTimezoneOffset();
+    const currentTimeZone = timezonecity.find((t) => t.id === selectedTimeZone);
 
     const payload = {
       userId: userId,
       hour: moment(timeValue).hour(),
       minute: moment(timeValue).minute(),
       dayWeek: dayWeek,
-      zoneOffset: timeZoneOffsetMinutes / 60,
+      zoneOffset: currentTimeZone.value,
+      id: selectedTimeZone,
+      city: currentTimeZone.name,
+      country: currentTimeZone.country,
     };
 
     console.log('payload', payload);
@@ -115,8 +121,19 @@ function LearningReminder() {
           format={format}
           style={{ marginLeft: 5 }}
         />
-        <Select placeholder="Time Zone" style={{ marginLeft: 5 }}>
-          <Select.Option>time zone 1</Select.Option>
+        <Select
+          placeholder="Time Zone"
+          style={{ marginLeft: 5, width: 120 }}
+          value={selectedTimeZone}
+          onChange={setSelectedTimeZone}
+        >
+          {timezonecity.map((item) => {
+            return (
+              <Select.Option key={item.id} value={item.id}>
+                {item.name}
+              </Select.Option>
+            );
+          })}
         </Select>
       </p>
 

@@ -1,5 +1,5 @@
 import { store } from '@/module/redux/persist';
-import { Action_Types } from './sign-store';
+import { Action_Types, Action_Types_Black_Sign } from './sign-store';
 import { signin } from '../constants';
 import { useHistory } from 'react-router-dom';
 import { message } from 'antd';
@@ -10,9 +10,14 @@ import { useSelector } from 'react-redux';
 function useSignSdk() {
   const history = useHistory();
   const sign = useSelector((state) => state.sign);
+  const signBlack = useSelector((state) => state.signBlack);
 
-  // 是否登录
-  const isSign = sign.userinfo && sign.userinfo._id;
+  const rememberToken = sign.rememberToken;
+
+  const isSign = rememberToken
+    ? sign.userinfo && sign.userinfo._id
+    : signBlack.userinfo && signBlack.userinfo._id;
+
   /**
    * 用户登录
    *
@@ -51,6 +56,11 @@ function useSignSdk() {
       payload: {},
     });
 
+    store.dispatch({
+      type: Action_Types_Black_Sign.Receive_Userinfo_Black,
+      payload: {},
+    });
+
     if (callback) {
       callback();
     }
@@ -74,13 +84,23 @@ function useSignSdk() {
     callback && callback();
   };
 
+  const toggleRememberMe = () => {
+    store.dispatch({
+      type: Action_Types.Change_Remember_Token,
+      payload: {},
+    });
+  };
+
   return {
     userSignin,
     checkSign,
     userLogout,
-    sign,
-    isSign,
-    userId: (sign.userinfo && sign.userinfo._id) || '',
+    toggleRememberMe,
+    sign: rememberToken ? sign : signBlack,
+    isSign: isSign,
+    userId: rememberToken
+      ? (sign.userinfo && sign.userinfo._id) || ''
+      : (signBlack.userinfo && signBlack.userinfo._id) || '',
   };
 }
 

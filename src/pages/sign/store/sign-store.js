@@ -1,17 +1,19 @@
 export const initState = {
   userinfo: {
-    CreateAt: '2021-01-06T03:13:19.062Z',
-    Email: 'Lauren@gmail.com',
-    Name: 'Lauren',
-    Password: '65903d7d1f12c888af536d7adb0d3df1',
-    Status: '1',
-    __v: 0,
-    _id: '5ff52acf1430331764267a83',
+    // CreateAt: '2021-01-06T03:13:19.062Z',
+    // Email: 'Lauren@gmail.com',
+    // Name: 'Lauren',
+    // Password: '65903d7d1f12c888af536d7adb0d3df1',
+    // Status: '1',
+    // __v: 0,
+    // _id: '5ff52acf1430331764267a83',
   },
+  rememberToken: true,
 };
 
 export const Action_Types = {
   Receive_Userinfo: 'Receive_Userinfo',
+  Change_Remember_Token: 'Change_Remember_Token',
 };
 
 export function sign(state = initState, action) {
@@ -23,7 +25,39 @@ export function sign(state = initState, action) {
         userinfo: payload,
       };
     }
+
+    case Action_Types.Change_Remember_Token: {
+      const { payload } = action;
+      return {
+        ...state,
+        rememberToken:
+          typeof payload === 'boolean' ? payload : !state.rememberToken,
+      };
+    }
     default:
       return state;
+  }
+}
+
+export const Action_Types_Black_Sign = {
+  Receive_Userinfo_Black: 'Receive_Userinfo_Black',
+};
+
+const signBlackInitState = {
+  userinfo: {},
+};
+
+export function signBlackStore(state = signBlackInitState, action) {
+  switch (action.type) {
+    case Action_Types_Black_Sign.Receive_Userinfo_Black: {
+      const { payload } = action;
+      return {
+        ...state,
+        userinfo: payload,
+      };
+    }
+    default: {
+      return state;
+    }
   }
 }

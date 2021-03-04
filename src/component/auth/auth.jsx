@@ -27,9 +27,16 @@ const AuthRoute = ({ component: ComposedComponent, ...rest }) => {
     }
   }
 
-  const AuthComponentContainer = connect((state) => ({
-    isLogin: state.sign && state.sign.userinfo && state.sign.userinfo._id,
-  }))(AuthComponent);
+  const AuthComponentContainer = connect((state) => {
+    const rememberToken = state.sign.rememberToken;
+    return {
+      isLogin: rememberToken
+        ? state.sign && state.sign.userinfo && state.sign.userinfo._id
+        : state.signBlack &&
+          state.signBlack.userinfo &&
+          state.signBlack.userinfo._id,
+    };
+  })(AuthComponent);
 
   return <AuthComponentContainer />;
 };
