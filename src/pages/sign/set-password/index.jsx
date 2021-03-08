@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:00:24
+ * @Last Modified time: 2021-03-05 14:47:46
  */
 import React, { useState } from 'react';
 import { Form, message, Input, Button } from 'antd';
@@ -76,7 +76,6 @@ export default function SetPassword(props) {
       history.push(`/sign/check${props.location.search}`);
     } catch (error) {
       console.log('[报错信息]', error);
-      message.error(error.message);
     }
   };
 

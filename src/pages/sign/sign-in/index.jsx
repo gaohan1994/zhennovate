@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-04 16:30:49
+ * @Last Modified time: 2021-03-05 14:47:30
  */
 import React, { useState } from 'react';
-import { Form, message, Input, Checkbox } from 'antd';
+import { Form, Input, Checkbox } from 'antd';
 import md5 from 'blueimp-md5';
 import Container from '../component/container';
 import FormItem from '../component/form-item';
@@ -87,16 +87,6 @@ export default function SignIn(props) {
       setLoading(false);
 
       error.errorFields && setErrorFields(error.errorFields);
-      error.errorFields &&
-        error.errorFields[0]?.errors[0] &&
-        message.error({
-          content: error.errorFields[0]?.errors[0],
-        });
-
-      error.message &&
-        message.error({
-          content: error.message,
-        });
     }
   };
 

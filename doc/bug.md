@@ -1,3 +1,53 @@
+## 2021-03-05
+
+> Hi Han,
+> I'm currently testing sign up and sign in, here is a few bugs I filed, I Will be updating this list as I file new bugs
+> Update capitalization on sign up screen
+> https://zhennovate.atlassian.net/browse/PHASE1-320
+> fixed
+
+> Update the error state messages for first name and last name
+> https://zhennovate.atlassian.net/browse/PHASE1-319
+> fixed
+
+> When users click on sign up, nothing is happening
+> https://zhennovate.atlassian.net/browse/PHASE1-316
+> 暂不知道为什么
+
+> Update Copywriting for Thank you for signing up
+> https://zhennovate.atlassian.net/browse/PHASE1-317
+> fixed
+
+> Disable toast notifcations for error message
+> https://zhennovate.atlassian.net/browse/PHASE1-318
+> fixed
+
+> Update Error message for when password is wrong or account does not exist
+> https://zhennovate.atlassian.net/browse/PHASE1-321
+> 陈禹修改
+
+> Update Forgot Password Error message
+> https://zhennovate.atlassian.net/browse/PHASE1-322
+> fixed
+
+> Update learning goal changed Toast notifications
+> https://zhennovate.atlassian.net/browse/PHASE1-326
+> fixed
+
+> Update Timezone dropdown in Learning Reminder settings
+> https://zhennovate.atlassian.net/browse/PHASE1-325
+> A-Z 排序 ok
+> 添加时区时间 ok https://blog.csdn.net/qq_43627981/article/details/107206242
+> 选项待定
+
+> Confirmation Code does not work
+> https://zhennovate.atlassian.net/browse/PHASE1-324
+> 已经修改了
+
+> Add Skip for now button in Confirmation Code UI
+> https://zhennovate.atlassian.net/browse/PHASE1-323
+> fixed
+
 ## 2021-02-24
 
 https://zhennovate.atlassian.net/browse/PHASE1-216 cannot add program to calendar Nanan Gao Di Ye Highest To Do 2021/2/19 7:03 3/1;Program

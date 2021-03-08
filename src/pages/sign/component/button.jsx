@@ -2,10 +2,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 10:22:02
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 16:56:23
+ * @Last Modified time: 2021-03-05 14:47:04
  */
 import React, { useRef, useEffect, useState } from 'react';
-import { message, Button } from 'antd';
+import { Button } from 'antd';
 // import  from '@/component/button';
 
 export default (props) => {
@@ -37,10 +37,6 @@ export default (props) => {
       }, 3000);
     } catch (error) {
       console.log('error', error);
-      error.errorFields &&
-        message.error({
-          content: error.errorFields[0]?.errors[0],
-        });
       submit(error);
     }
   };

@@ -7,6 +7,7 @@ import { ResponseCode } from '@/common/config';
 import moment from 'moment';
 import { merge } from 'lodash';
 import { timezonecity } from '@/common/city';
+import { getTimezoneTime, addZero } from '@/common/time';
 
 const prefix = 'setting';
 
@@ -32,6 +33,7 @@ function LearningReminder() {
   const [data, setData] = useState({});
   const [dayWeek, setDayWeek] = useState([]);
   const [selectedTimeZone, setSelectedTimeZone] = useState(36);
+  const [renderTimezoneCity, setRenderTimezoneCity] = useState([]);
 
   useEffect(() => {
     if (userId) {
@@ -50,6 +52,16 @@ function LearningReminder() {
       setTimeValue(moment(`${pt(data.hour)}:${pt(data.minute)}`, format));
     }
   }, [data]);
+
+  useEffect(() => {
+    if (timezonecity) {
+      const rtc = timezonecity.sort((a, b) => {
+        return a.name.charCodeAt(0) - b.name.charCodeAt(0);
+      });
+
+      setRenderTimezoneCity(rtc);
+    }
+  }, [timezonecity]);
 
   const onSubmit = () => {
     const currentTimeZone = timezonecity.find((t) => t.id === selectedTimeZone);
@@ -123,13 +135,14 @@ function LearningReminder() {
         />
         <Select
           placeholder="Time Zone"
-          style={{ marginLeft: 5, width: 120 }}
+          style={{ marginLeft: 5, width: 240 }}
           value={selectedTimeZone}
           onChange={setSelectedTimeZone}
         >
-          {timezonecity.map((item) => {
+          {renderTimezoneCity.map((item) => {
             return (
               <Select.Option key={item.id} value={item.id}>
+                {`（GMT-${addZero(getTimezoneTime(item.value).hour)}:00）`}
                 {item.name}
               </Select.Option>
             );

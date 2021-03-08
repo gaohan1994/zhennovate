@@ -3,13 +3,13 @@
  * @Author: centerm.gaohan
  * @Date: 2020-12-18 11:37:00
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 16:27:51
+ * @Last Modified time: 2021-03-05 14:52:03
  */
 import React, { useState } from 'react';
 import Container from '../component/container';
 import '../index.less';
 import FormItem from '../component/form-item';
-import { Form, message, Button } from 'antd';
+import { Form, Button } from 'antd';
 // import Button from '../component/button';
 import SignButton from '../component/button';
 import { forgotEmail } from '../constants';
@@ -23,20 +23,25 @@ export default () => {
   const [form] = Form.useForm();
   // const [loading, setLoading] = useState(false);
   const [showResult, setShowResult] = useState(false);
+  const [errorFields, setErrorFields] = useState([]);
 
   const onSubmit = (values) => {
     try {
+      if (values.errorFields) {
+        setErrorFields(values.errorFields);
+        return;
+      }
       // setLoading(true);
       forgotEmail(values).then((result) => {
         if (result.error_code !== ResponseCode.success) {
-          message.error(result.msg || ' ');
+          setErrorFields(result.message || ' ');
           return;
         }
 
         setShowResult(true);
       });
     } catch (error) {
-      message.error(error.message);
+      console.log('error', error);
     }
   };
 
@@ -92,6 +97,7 @@ export default () => {
       <Form form={form} layout="vertical">
         <FormItem
           form={form}
+          errorFields={errorFields}
           label="Email Address"
           name="email"
           inputProps={{

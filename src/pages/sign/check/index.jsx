@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:55:47
+ * @Last Modified time: 2021-03-08 10:40:47
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
@@ -188,6 +188,10 @@ export default (props) => {
     return <div />;
   };
 
+  const onSkip = () => {
+    history.push('/home');
+  };
+
   return (
     <div className="sign-component" ref={iframeContainerRef}>
       {renderType === RenderCheckType.Paperform ? (
@@ -197,7 +201,18 @@ export default (props) => {
           src={userActiveResult.url}
         />
       ) : (
-        <Container style={{ width: '412px' }}>
+        <Container
+          style={{ width: '412px' }}
+          extra={
+            <div
+              onClick={onSkip}
+              className={`${prefix}-skip`}
+              common-touch="touch"
+            >
+              skip for now
+            </div>
+          }
+        >
           {renderType === RenderCheckType.Check && (
             <>
               <div className={`${prefix}-up-title`}>Check your email</div>

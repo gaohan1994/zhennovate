@@ -3,10 +3,10 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:39:37
+ * @Last Modified time: 2021-03-05 14:56:29
  */
 import React, { useState, useEffect } from 'react';
-import { Form, Checkbox, message, Row, Col, Radio, Input, Button } from 'antd';
+import { Form, Checkbox, Row, Col, Radio, Input, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { isOrganization } from '../constants';
 import Container from '../component/container';
@@ -16,6 +16,8 @@ import '../index.less';
 import { ResponseCode } from '@/common/config';
 import imginvite from '../../../assets/Invite-Illustration.png';
 import { jsonToQueryString } from '@/common/request';
+import { CloseCircleFilled } from '@ant-design/icons';
+import { merge } from 'lodash';
 
 const prefix = 'sign-page';
 
@@ -99,7 +101,7 @@ export default function SignUp() {
       }
 
       const checkResult = await checkOrganizationEmail(values.email);
-
+      console.log('checkResult', checkResult);
       if (!checkResult.organization) {
         setErrorFields(checkResult.message);
         return;
@@ -115,7 +117,6 @@ export default function SignUp() {
       history.push(`/sign/setpassword${jsonToQueryString(payload)}`);
     } catch (error) {
       console.log('[报错信息]', error);
-      message.error(error.message);
     }
   };
 
@@ -134,7 +135,40 @@ export default function SignUp() {
     history.push(`/home`);
   };
 
+  const checkFormItemStatus = async (name) => {
+    form
+      .validateFields([name])
+      .then((result) => {
+        /**
+         * 如果当前name有errorfields，则去掉
+         */
+        if (errorFields.some((ef) => ef.name[0] === name)) {
+          const index = errorFields.findIndex((ef) => ef.name[0] === name);
+          const nextErrorFields = merge([], errorFields);
+          nextErrorFields.splice(index, 1);
+          setErrorFields(nextErrorFields);
+        }
+      })
+      .catch((error) => {
+        if (error.errorFields) {
+          if (Array.isArray(errorFields) && errorFields.length > 0) {
+            setErrorFields(errorFields.concat(error.errorFields));
+          } else {
+            setErrorFields(error.errorFields);
+          }
+        }
+      });
+  };
+
   if (renderType === RenderType.SignUp) {
+    console.log('errorFields', errorFields);
+    const showFullNameErrorToken =
+      Array.isArray(errorFields) &&
+      errorFields &&
+      errorFields.some(
+        (ef) => ef.name[0] === 'lastname' || ef.name[0] === 'firstname',
+      );
+
     return (
       <Container>
         <div className={`${prefix}-up-title`}>Join us</div>
@@ -165,45 +199,71 @@ export default function SignUp() {
 
           <Row gutter={8}>
             <Col span={12}>
-              <FormItem
-                form={form}
-                errorFields={errorFields}
-                label="First Name"
+              <Form.Item
+                style={{ marginBottom: 0 }}
+                label="First name"
                 name="firstname"
-                inputProps={{
-                  placeholder: 'First Name',
-                }}
                 rules={[
                   {
                     required: true,
                     message: 'Please enter your first name.',
                   },
                 ]}
-              />
+                help=""
+                validateStatus={
+                  Array.isArray(errorFields) &&
+                  errorFields &&
+                  errorFields.some((ef) => ef.name[0] === 'firstname')
+                    ? 'error'
+                    : ''
+                }
+              >
+                <Input
+                  placeholder="First name"
+                  onChange={() => checkFormItemStatus('firstname')}
+                />
+              </Form.Item>
             </Col>
             <Col span={12}>
-              <FormItem
-                form={form}
-                errorFields={errorFields}
-                label="Last Name"
+              <Form.Item
+                style={{ marginBottom: 0 }}
+                label="Last name"
                 name="lastname"
-                inputProps={{
-                  placeholder: 'Last Name',
-                }}
                 rules={[
                   {
                     required: true,
                     message: 'Please enter your last name.',
                   },
                 ]}
-              />
+                help=""
+                validateStatus={
+                  Array.isArray(errorFields) &&
+                  errorFields &&
+                  errorFields.some((ef) => ef.name[0] === 'lastname')
+                    ? 'error'
+                    : ''
+                }
+              >
+                <Input
+                  placeholder="Last name"
+                  onChange={() => checkFormItemStatus('lastname')}
+                />
+              </Form.Item>
             </Col>
+            {showFullNameErrorToken && (
+              <div style={{ marginTop: 5, marginLeft: 4 }}>
+                <CloseCircleFilled style={{ color: '#ff4d4f' }} />
+                <span style={{ marginLeft: 5, color: '#48515a', fontSize: 12 }}>
+                  Please enter full name.
+                </span>
+              </div>
+            )}
           </Row>
 
           <FormItem
             form={form}
             errorFields={errorFields}
-            label="Email Address"
+            label="Email address"
             name="email"
             rules={[
               {
@@ -220,7 +280,7 @@ export default function SignUp() {
               return (
                 <Input
                   onChange={checkFormItemStatus}
-                  placeholder="Email Address"
+                  placeholder="Email address"
                   onBlur={onInputBlur}
                 />
               );
@@ -276,7 +336,9 @@ export default function SignUp() {
       <section className={`${prefix}-result`}>
         <img className={`${prefix}-invite`} alt="" src={imginvite} />
         <h1>Thank you for signing up!</h1>
-        <p>暂时还未开放非机构用户注册.</p>
+
+        <p>We have added you to our invite-only waitlist.</p>
+        <p>Stay tuned for upcoming offerings.</p>
         <Button
           onClick={onHome}
           type="primary"

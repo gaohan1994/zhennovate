@@ -4,7 +4,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 09:40:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:42:46
+ * @Last Modified time: 2021-03-08 09:43:44
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from 'antd';
@@ -29,11 +29,9 @@ export default (props) => {
   useEffect(() => {
     if (typeof errorFields === 'string') {
       if (/password/i.test(errorFields) && name === 'password') {
-        console.log('password');
         setHelp(errorFields);
         setValidateStatus('error');
       } else if (/email/i.test(errorFields) && name === 'email') {
-        console.log('email');
         setHelp(errorFields);
         setValidateStatus('error');
       }
@@ -93,13 +91,26 @@ export default (props) => {
               {help}
               {help === 'Email address is already in use.' && (
                 <span>
-                  Please{' '}
+                  {' Please '}
                   <span
                     style={{ color: '#1890ff' }}
                     common-touch="touch"
                     onClick={onSign}
                   >
                     sign in.
+                  </span>
+                </span>
+              )}
+              {help ===
+                'This email address is not associated with an existing account.' && (
+                <span>
+                  {' Please '}
+                  <span
+                    style={{ color: '#1890ff' }}
+                    common-touch="touch"
+                    onClick={onSign}
+                  >
+                    sign up.
                   </span>
                 </span>
               )}
