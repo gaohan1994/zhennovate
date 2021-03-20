@@ -30,6 +30,11 @@ function InfomationPassword() {
         result.message || ' ',
       );
       message.success('Your changes were saved.');
+      form.setFieldsValue({
+        password: '',
+        newpassword: '',
+        confirmpassword: '',
+      });
     } catch (error) {
       error.errorFields && setErrorFields(error.errorFields);
       error.message && setErrorFields(error.message);
@@ -49,14 +54,13 @@ function InfomationPassword() {
               rules={[
                 {
                   required: true,
-                  message: 'Please enter a valid password.',
+                  message: 'Please enter your current password.',
                 },
                 {
                   required: true,
                   type: 'string',
                   min: 8,
-                  message:
-                    'Please choose a password with 8 or more characters.',
+                  message: 'Incorrect password. Please try again.',
                 },
               ]}
               inputProps={{

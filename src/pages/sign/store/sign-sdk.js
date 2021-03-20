@@ -50,6 +50,13 @@ function useSignSdk() {
     }
   };
 
+  const uploadUserinfo = (nextUserinfo) => {
+    store.dispatch({
+      type: Action_Types.Receive_Userinfo,
+      payload: nextUserinfo,
+    });
+  };
+
   const userLogout = (callback) => {
     store.dispatch({
       type: Action_Types.Receive_Userinfo,
@@ -96,6 +103,7 @@ function useSignSdk() {
     checkSign,
     userLogout,
     toggleRememberMe,
+    uploadUserinfo,
     sign: rememberToken ? sign : signBlack,
     isSign: isSign,
     userId: rememberToken

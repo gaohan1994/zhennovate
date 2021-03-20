@@ -120,7 +120,7 @@ function Goal({ style = {} }) {
         };
 
         goalEnd(payload, { paperformData }).then((result) => {
-          message.success('Learning Goal updated!');
+          message.success('Learning goal updated.');
           setLoading(true);
           setVisible(false);
           setTimeout(() => {

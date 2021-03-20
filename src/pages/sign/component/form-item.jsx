@@ -4,12 +4,21 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 09:40:34
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-08 09:43:44
+ * @Last Modified time: 2021-03-17 10:37:54
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Input } from 'antd';
 import { CloseCircleFilled } from '@ant-design/icons';
 import { useHistory } from 'react-router-dom';
+
+export function getErrorFields(name, errorMessage) {
+  return [
+    {
+      name: [name],
+      errors: Array.isArray(errorMessage) ? errorMessage : [errorMessage],
+    },
+  ];
+}
 
 export default (props) => {
   const history = useHistory();
@@ -19,6 +28,7 @@ export default (props) => {
     render,
     inputProps = {},
     message,
+    style = {},
     errorFields = [],
     ...rest
   } = props;
@@ -49,8 +59,13 @@ export default (props) => {
 
       if (errorFieldIndex >= 0) {
         const currentErrorField = errorFields[errorFieldIndex];
-        setHelp(currentErrorField.errors[0] || '');
-        setValidateStatus('error');
+        if (currentErrorField.errors[0]) {
+          setHelp(currentErrorField.errors[0] || '');
+          setValidateStatus('error');
+        } else {
+          setHelp('');
+          setValidateStatus('');
+        }
       }
     }
   }, [errorFields]);
@@ -71,7 +86,7 @@ export default (props) => {
   };
 
   const inputFormProps = {
-    onChange: checkFormItemStatus,
+    onBlur: checkFormItemStatus,
     ...inputProps,
   };
 
@@ -79,10 +94,16 @@ export default (props) => {
     history.push(`/sign/signin`);
   };
 
+  const onSignUp = () => {
+    history.push(`/sign/signup`);
+  };
+
   return (
     <Form.Item
       {...rest}
       name={name}
+      style={{ marginTop: 12, ...style }}
+      // validateTrigger="onBlur"
       help={
         help && (
           <div style={{ marginTop: 5 }}>
@@ -108,7 +129,7 @@ export default (props) => {
                   <span
                     style={{ color: '#1890ff' }}
                     common-touch="touch"
-                    onClick={onSign}
+                    onClick={onSignUp}
                   >
                     sign up.
                   </span>

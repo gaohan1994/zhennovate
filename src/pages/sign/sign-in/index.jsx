@@ -104,10 +104,10 @@ export default function SignIn(props) {
         <FormItem
           form={form}
           errorFields={errorFields}
-          label="Email Address"
+          label="Email address"
           name="email"
           inputProps={{
-            placeholder: 'Email Address',
+            placeholder: 'Email address',
           }}
           rules={[
             {
@@ -144,7 +144,7 @@ export default function SignIn(props) {
             return (
               <Input.Password
                 onChange={checkFormItemStatus}
-                placeholder="password"
+                placeholder="Password"
                 iconRender={(visible) =>
                   visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />
                 }

@@ -29,6 +29,7 @@ function Filter(props) {
   }
 
   const onCheckboxChange = (params) => {
+    console.log('params', params);
     // 如果只选择了all 那么全选
     // eslint-disable-next-line no-unreachable
     if (params.length === 1 && params[0] === 'All') {

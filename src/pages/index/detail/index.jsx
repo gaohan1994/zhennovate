@@ -2,7 +2,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-14 09:20:54
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-26 17:49:32
+ * @Last Modified time: 2021-03-17 11:09:40
  */
 import React, { useRef, useEffect, useState } from 'react';
 import { Layout, Menu, Spin, notification } from 'antd';
@@ -43,8 +43,17 @@ export default (props) => {
   const [urlParams, setUrlParams] = useState({});
   // iframe相关
   const iframeContainerRef = useRef(null);
+
   const [iframeHeight, setIframeHeight] = useState(-1);
   const [iframeWidth, setIframeWidth] = useState(-1);
+
+  const [layoutHeight, setLayoutHeight] = useState(-1);
+
+  useEffect(() => {
+    if (document.body.clientHeight) {
+      setLayoutHeight(document.body.clientHeight);
+    }
+  }, [document.body.clientHeight]);
 
   const [openKeys, setOpenKeys] = useState([]);
   const [selectedKeys, setSelectedKeys] = useState([]);
@@ -282,6 +291,7 @@ export default (props) => {
       </div>
     );
   };
+  console.log('layoutHeight', layoutHeight);
 
   return (
     <Layout
@@ -303,10 +313,11 @@ export default (props) => {
       >
         <Sider
           theme="light"
-          className={`${
+          className={
             collapsed ? `${prefix}-slider-collapse` : `${prefix}-slider`
-          }`}
+          }
           collapsed={collapsed}
+          style={{ height: layoutHeight - 72 - 64 }}
         >
           {programData._id && detailMenu.some((d) => d.children) && (
             <Menu

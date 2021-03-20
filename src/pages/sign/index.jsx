@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:28:24
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-27 23:33:36
+ * @Last Modified time: 2021-03-10 15:25:35
  */
 import React, { useEffect, useState } from 'react';
 import { Switch, Route } from 'react-router-dom';
@@ -42,7 +42,7 @@ export default function () {
           exact={true}
         />
         <Route path="/sign/setpassword" component={SetPassword} exact={true} />
-        <Route path="/sign/check" component={Check} exact={true} />
+        <Route path="/sign/check" component={Check} />
       </Switch>
     </LayoutContainer>
   );

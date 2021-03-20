@@ -157,6 +157,7 @@ export default (props) => {
   useEffect(() => {
     let cGory = [];
     const mergeEntryData = merge({}, entryData);
+
     for (let key in mergeEntryData) {
       if (mergeEntryData[key] && mergeEntryData[key].length > 0) {
         cGory.push(key);
@@ -169,13 +170,17 @@ export default (props) => {
   useEffect(() => {
     let eArray = [];
     const mergeEntryData = merge({}, entryData);
+    console.log('selectedCategory', selectedCategory);
     for (let key in mergeEntryData) {
       if (mergeEntryData[key] && mergeEntryData[key].length > 0) {
         const inSelectedToken = selectedCategory.some((k) => k === key);
+
+        console.log('inSelectedToken', inSelectedToken);
         if (inSelectedToken) {
           const currentKeyArray = mergeEntryData[key].map((item) => {
             return { ...item, TYPE: key };
           });
+          console.log('currentKeyArray', currentKeyArray);
           eArray = eArray.concat(currentKeyArray);
         }
       }
@@ -184,6 +189,7 @@ export default (props) => {
     const afterSortDatasource = eArray.sort((a, b) =>
       sortDataByTimeByNewest(a, b, 'EndAt'),
     );
+    console.log('afterSortDatasource', afterSortDatasource);
     setEntryArray(afterSortDatasource);
   }, [entryData, selectedCategory]);
 
@@ -213,15 +219,17 @@ export default (props) => {
    * @param Assessment 渲染用的 Assessment 数据
    * @param Reflect 渲染用的 Reflect 数据
    */
-  const [Action, setAction] = useState([]);
-  const [Assessment, setAssessment] = useState([]);
-  const [Reflect, setReflect] = useState([]);
+  // const [Action, setAction] = useState([]);
+  // const [Assessment, setAssessment] = useState([]);
+  // const [Reflect, setReflect] = useState([]);
+  // const [Quiz, setQuiz] = useState([]);
 
   useEffect(() => {
     if (entryData) {
-      setAction(entryData.Action);
-      setAssessment(entryData.Assessment);
-      setReflect(entryData.Reflect);
+      // setAction(entryData.Action);
+      // setAssessment(entryData.Assessment);
+      // setReflect(entryData.Reflect);
+      // setQuiz(entryData.Quiz);
     }
   }, [entryData]);
 
@@ -232,11 +240,13 @@ export default (props) => {
    * @param {hasReflect} hasReflect 是否为空
    * @param {emptyEntryToken} entry 是否为空
    */
-  const hasAction = Action && Action.length > 0;
-  const hasAssessment = Assessment && Assessment.length > 0;
-  const hasReflect = Reflect && Reflect.length > 0;
-  const emptyEntryToken = !hasAction && !hasAssessment && !hasReflect;
+  // const hasAction = Action && Action.length > 0;
+  // const hasAssessment = Assessment && Assessment.length > 0;
+  // const hasReflect = Reflect && Reflect.length > 0;
+  // const hasQuiz = Quiz && Quiz.length > 0;
+  // const emptyEntryToken = !hasAction && !hasAssessment && !hasReflect && !hasQuiz;
 
+  const emptyEntryToken = entryArray.length === 0;
   return (
     <div
       className={`${prefix}-container-box`}

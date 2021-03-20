@@ -3,14 +3,14 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-05 14:56:29
+ * @Last Modified time: 2021-03-17 10:39:30
  */
 import React, { useState, useEffect } from 'react';
 import { Form, Checkbox, Row, Col, Radio, Input, Button } from 'antd';
 import { useHistory } from 'react-router-dom';
 import { isOrganization } from '../constants';
 import Container from '../component/container';
-import FormItem from '../component/form-item';
+import FormItem, { getErrorFields } from '../component/form-item';
 import SignButton from '../component/button';
 import '../index.less';
 import { ResponseCode } from '@/common/config';
@@ -53,11 +53,7 @@ export default function SignUp() {
 
   const checkOrganizationEmail = async (email) => {
     const result = await isOrganization({ email });
-    if (result.error_code === ResponseCode.success) {
-      return result.data;
-    } else {
-      return result;
-    }
+    return result;
   };
 
   /**
@@ -68,17 +64,25 @@ export default function SignUp() {
       .validateFields(['email'])
       .then(async (result) => {
         const email = form.getFieldValue('email');
-        if (email && signUpType === SignUpType.Organization) {
-          const organization = await checkOrganizationEmail(email);
-          console.log('organization', organization);
-          if (organization.organization) {
-            console.log('organization');
-          } else {
-            setErrorFields(organization.message);
-          }
+
+        const checkResult = await checkOrganizationEmail(email);
+        if (checkResult.error_code !== ResponseCode.success) {
+          setErrorFields(
+            getErrorFields(
+              'email',
+              checkResult.message
+                ? checkResult.message
+                : 'Please enter the email address associated with your sign-up invitation.',
+            ),
+          );
+        } else {
+          setErrorFields(getErrorFields('email', []));
         }
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log('error', error);
+        setErrorFields(error.errorFields[0]?.errors[0] || '');
+      });
   };
 
   /**
@@ -92,18 +96,25 @@ export default function SignUp() {
         return;
       }
 
-      if (signUpType === SignUpType.Normal) {
-        /**
-         * @todo 非组织的用户暂时不开发注册
-         */
-        setRenderType(RenderType.Result);
-        return;
-      }
-
+      /**
+       * @todo 修改注册流程
+       * 不管选择的是yes还是nope，首先都校验email
+       * 如果校验出来在机构中，不管选择如何都进行注册
+       * 如果不在机构中在进行判断，用户选择nope时显示对应信息
+       */
       const checkResult = await checkOrganizationEmail(values.email);
-      console.log('checkResult', checkResult);
-      if (!checkResult.organization) {
-        setErrorFields(checkResult.message);
+      if (checkResult.error_code !== ResponseCode.success) {
+        // setErrorFields(checkResult.message);
+
+        setErrorFields(
+          checkResult.message
+            ? checkResult.message
+            : 'Please enter the email address associated with your sign-up invitation.',
+        );
+
+        if (signUpType === SignUpType.Normal) {
+          setRenderType(RenderType.Result);
+        }
         return;
       }
 
@@ -111,8 +122,9 @@ export default function SignUp() {
         email: values.email,
         firstname: values.firstname,
         lastname: values.lastname,
-        organizationName: checkResult.organization.Name,
-        organizationId: checkResult.organization._id,
+        organizationName:
+          checkResult.data && checkResult.data.organization.Name,
+        organizationId: checkResult.data && checkResult.data.organization._id,
       };
       history.push(`/sign/setpassword${jsonToQueryString(payload)}`);
     } catch (error) {
@@ -161,7 +173,6 @@ export default function SignUp() {
   };
 
   if (renderType === RenderType.SignUp) {
-    console.log('errorFields', errorFields);
     const showFullNameErrorToken =
       Array.isArray(errorFields) &&
       errorFields &&
@@ -181,6 +192,7 @@ export default function SignUp() {
           <Form.Item
             label="Are you joining through an organization?"
             name="signtype"
+            style={{ marginBottom: 16 }}
           >
             <Radio.Group
               style={{ width: '100%' }}
@@ -276,12 +288,13 @@ export default function SignUp() {
                 message: 'Please enter a valid email address.',
               },
             ]}
-            render={({ checkFormItemStatus }) => {
+            render={() => {
               return (
                 <Input
-                  onChange={checkFormItemStatus}
                   placeholder="Email address"
-                  onBlur={onInputBlur}
+                  onBlur={() => {
+                    onInputBlur();
+                  }}
                 />
               );
             }}
@@ -332,7 +345,7 @@ export default function SignUp() {
   }
 
   return (
-    <Container border={false}>
+    <Container border={false} style={{ width: 'auto' }}>
       <section className={`${prefix}-result`}>
         <img className={`${prefix}-invite`} alt="" src={imginvite} />
         <h1>Thank you for signing up!</h1>

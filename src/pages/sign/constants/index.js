@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:16:37
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-03 17:52:59
+ * @Last Modified time: 2021-03-10 15:40:11
  */
 
 import { api } from '@/common/request';
@@ -21,8 +21,16 @@ export const verficaCode = (params) => {
   return api.get(`/user/verification/${params.email}`);
 };
 
+export const onBoardingStart = (params) => {
+  return api.get(`/onboarding/start/${params.userId}`);
+};
+
 export const userActiveInfo = (params, payload) =>
   api.post(`/user/info/${params.userId}`, payload);
+
+export const onBoardingEnd = (params, payload) => {
+  return api.post(`/onboarding/end/${params.userId}`, payload);
+};
 
 export const forgotEmail = (params) => api.get(`/user/forgot/${params.email}`);
 

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-05 14:47:46
+ * @Last Modified time: 2021-03-17 10:39:27
  */
 import React, { useState } from 'react';
 import { Form, message, Input, Button } from 'antd';
@@ -33,7 +33,6 @@ export default function SetPassword(props) {
 
   const dispatch = useDispatch();
   const history = useHistory();
-  console.log('history', history);
   const [form] = Form.useForm();
 
   /**

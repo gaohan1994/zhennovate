@@ -3,15 +3,19 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-08 10:40:47
+ * @Last Modified time: 2021-03-17 11:05:54
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
-import { Form, Input, message } from 'antd';
+import { Form, Input, message, Spin } from 'antd';
 import { CheckCircleFilled, CloseCircleFilled } from '@ant-design/icons';
-import { userActive, userActiveInfo, verficaCode } from '../constants';
+import {
+  userActive,
+  verficaCode,
+  onBoardingEnd,
+  onBoardingStart,
+} from '../constants';
 import useSignSdk from '../store/sign-sdk';
-// import { formatSearch } from '@/common/request';
 import { useHistory } from 'react-router-dom';
 import { ResponseCode } from '@/common/config';
 import invariant from 'invariant';
@@ -28,7 +32,7 @@ const prefix = 'sign-page';
  * @param Result 显示结果
  * @param Paperform 通过校验的paperfrom
  */
-const RenderCheckType = {
+export const RenderCheckType = {
   Check: 'Check',
   Result: 'Result',
   Paperform: 'Paperform',
@@ -39,9 +43,11 @@ export default (props) => {
   const history = useHistory();
   const inputRef = useRef(null);
   const [form] = Form.useForm();
-  // const params = formatSearch(history.location.search);
+  const search = formatSearch(props.location.search);
 
-  const { userId, sign } = useSignSdk();
+  const [loading, setLoading] = useState(false);
+
+  const { userId, sign, uploadUserinfo } = useSignSdk();
 
   /**
    * @param {validateStatus} 'success' 'warning' 'error' 'validating'
@@ -62,13 +68,27 @@ export default (props) => {
   const [renderType, setRenderType] = useState(RenderCheckType.Check);
 
   /**
-   * @param {userActiveResult} 用户active返回的数据
+   * @param {onBoardData} 用户 onboard 数据
    */
-  const [userActiveResult, setUserActiveResult] = useState({});
+  const [onBoardData, setOnBoardData] = useState({});
   // console.log('userActiveResult', userActiveResult);
 
   const [iframeHeight, setIframeHeight] = useState(-1);
   const [iframeWidth, setIframeWidth] = useState(-1);
+
+  /**
+   * 刚进入check页面判断是否是显示onboarding paperfrom
+   */
+  useEffect(() => {
+    if (search && search.renderType) {
+      setLoading(true);
+      setRenderType(search.renderType);
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, []);
 
   const setSize = () => {
     if (iframeContainerRef.current && iframeContainerRef.current.clientHeight) {
@@ -86,13 +106,19 @@ export default (props) => {
     };
     const { data: postMessageData } = event;
     const { paperformData } = postMessageData;
-    userActiveInfo(payload, { paperformData })
+    setLoading(true);
+    onBoardingEnd(payload, { paperformData })
       .then((result) => {
         console.log('[用户active paperform提交返回数据]', result);
-        // message.success('')
-        history.push('/home');
+
+        uploadUserinfo(result.data.user);
+        setTimeout(() => {
+          // 新用户做完ongobarding的表格以后，应该然他们直接进到Programs > New 的页面，看Programs， 而不是看空空的首页。
+          history.push('/program');
+        }, 500);
       })
       .catch((error) => {
+        setLoading(false);
         message.error(error.message);
       });
   };
@@ -115,6 +141,34 @@ export default (props) => {
     return () => window.removeEventListener('resize', setSize);
   }, []);
 
+  useEffect(() => {
+    /**
+     * 如果是需要做onboarding 则请求地址
+     */
+    if (renderType === RenderCheckType.Paperform) {
+      setLoading(true);
+      onFetchOnboarding();
+
+      setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+    }
+  }, [renderType]);
+
+  const onFetchOnboarding = () => {
+    onBoardingStart({ userId }).then((result) => {
+      if (result.error_code !== ResponseCode.success) {
+        message.error(result.message || ' ');
+        return;
+      }
+      setOnBoardData(result.data);
+
+      if (result.data.user) {
+        uploadUserinfo(result.data.user);
+      }
+    });
+  };
+
   /**
    * 用户激活之后的回调
    */
@@ -130,7 +184,6 @@ export default (props) => {
         result.message || ' ',
       );
       setValidateStatus('success');
-      setUserActiveResult(result.data);
 
       /**
        * 如果正确0.5秒后显示结果页
@@ -151,13 +204,6 @@ export default (props) => {
     }
   };
 
-  // const onSendCode = () => {
-  //   userActive({ userId, code: event.target.value }).then((result) => {
-  //     console.log('[userActive]', result);
-  //     onUseractiveCallback(result);
-  //   });
-  // }
-
   const onInput = (event) => {
     if (event.target.value.length === 6) {
       inputRef.current?.blur();
@@ -170,7 +216,7 @@ export default (props) => {
   const onSendCode = () => {
     const search = formatSearch(props.location.search);
     verficaCode({ email: search.email }).then((result) => {
-      if (result.code === ResponseCode.success) {
+      if (result.error_code === ResponseCode.success) {
         message.success('Confirmation code sent. Please check your email.');
       } else {
         message.error(result.message || ' ');
@@ -188,125 +234,123 @@ export default (props) => {
     return <div />;
   };
 
-  const onSkip = () => {
-    history.push('/home');
+  const onHelpCenter = () => {
+    window.open(
+      'https://zhennovate.com/help-center/',
+      'zhennovate-help-center',
+    );
+  };
+
+  const paperformStyle = {
+    backgroundImage: 'none',
   };
 
   return (
-    <div className="sign-component" ref={iframeContainerRef}>
-      {renderType === RenderCheckType.Paperform ? (
-        <iframe
-          height={iframeHeight}
-          width={iframeWidth}
-          src={userActiveResult.url}
-        />
-      ) : (
-        <Container
-          style={{ width: '412px' }}
-          extra={
-            <div
-              onClick={onSkip}
-              className={`${prefix}-skip`}
-              common-touch="touch"
-            >
-              skip for now
-            </div>
-          }
-        >
-          {renderType === RenderCheckType.Check && (
-            <>
-              <div className={`${prefix}-up-title`}>Check your email</div>
-              <div className={`${prefix}-check-text`}>
-                We’ve sent you a six-digit confirmation code to{' '}
-                <span style={{ fontWeight: 'bold' }}>
-                  {` ${sign.userinfo?.Email || ''} `}.
-                </span>{' '}
-                Please enter it below to confirm your email address.
-              </div>
-              <Form
-                form={form}
-                layout="vertical"
-                style={{ marginTop: 24 }}
-                onChange={onInput}
-              >
-                <Form.Item
-                  name="confirmationCode"
-                  validateStatus={validateStatus}
-                  help={
-                    validateStatus === 'error' ? (
-                      <div className={`${prefix}-check-error`}>
-                        <CloseCircleFilled style={{ color: '#e86452' }} />
-                        <span>{errorMessage}</span>
-                      </div>
-                    ) : null
-                  }
+    <div
+      className="sign-component"
+      ref={iframeContainerRef}
+      style={renderType === RenderCheckType.Paperform ? paperformStyle : {}}
+      // style={{ backgroundImage: 'none' }}
+    >
+      <Spin spinning={loading}>
+        {renderType === RenderCheckType.Paperform ? (
+          <iframe
+            style={{ position: 'fixed', bottom: 0, right: 0, left: 0 }}
+            height={iframeHeight}
+            width={iframeWidth}
+            src={onBoardData.url}
+          />
+        ) : (
+          <Container style={{ width: '412px' }}>
+            {renderType === RenderCheckType.Check && (
+              <>
+                <div className={`${prefix}-up-title`}>Check your email</div>
+                <div className={`${prefix}-check-text`}>
+                  We’ve sent you a six-digit confirmation code to{' '}
+                  <span style={{ fontWeight: 'bold' }}>
+                    {` ${sign.userinfo?.Email || ''} `}.
+                  </span>{' '}
+                  Please enter it below to confirm your email address.
+                </div>
+                <Form
+                  form={form}
+                  layout="vertical"
+                  style={{ marginTop: 24 }}
+                  onChange={onInput}
                 >
-                  <Input
-                    ref={inputRef}
-                    placeholder="Enter 6 - digit code"
-                    maxLength={6}
-                    suffix={getSuffix()}
-                  />
-                </Form.Item>
-              </Form>
-              <div className={`${prefix}-check-text`}>
-                <span
-                  className={`${prefix}-check-url`}
-                  style={{ color: '#1890ff' }}
-                  common-touch="touch"
-                  onClick={onSendCode}
-                >
-                  Send code again
-                </span>
-                {` or find more information`}
-                <p>
-                  in our
+                  <Form.Item
+                    name="confirmationCode"
+                    validateStatus={validateStatus}
+                    help={
+                      validateStatus === 'error' ? (
+                        <div className={`${prefix}-check-error`}>
+                          <CloseCircleFilled style={{ color: '#e86452' }} />
+                          <span>{errorMessage}</span>
+                        </div>
+                      ) : null
+                    }
+                  >
+                    <Input
+                      ref={inputRef}
+                      placeholder="Enter 6 - digit code"
+                      maxLength={6}
+                      suffix={getSuffix()}
+                    />
+                  </Form.Item>
+                </Form>
+                <div className={`${prefix}-check-text`}>
                   <span
                     className={`${prefix}-check-url`}
-                    style={{ color: '#1890ff', marginLeft: 5 }}
+                    style={{ color: '#1890ff' }}
                     common-touch="touch"
+                    onClick={onSendCode}
                   >
-                    Help Center.
+                    Send code again
                   </span>
-                </p>
-              </div>
-            </>
-          )}
-          {renderType === RenderCheckType.Result && (
-            <div
-              style={{
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-              }}
-            >
+                  {` or find more information`}
+                  <p>
+                    in our
+                    <span
+                      className={`${prefix}-check-url`}
+                      style={{ color: '#1890ff', marginLeft: 5 }}
+                      common-touch="touch"
+                      onClick={onHelpCenter}
+                    >
+                      Help Center.
+                    </span>
+                  </p>
+                </div>
+              </>
+            )}
+            {renderType === RenderCheckType.Result && (
               <div
-                className="component-paperform-modal-icon"
-                style={{ backgroundImage: `url(${imgcheck})` }}
-              />
-              <span
-                className="component-paperform-modal-title"
-                style={{ fontSize: 32 }}
+                style={{
+                  display: 'flex',
+                  flexDirection: 'column',
+                  alignItems: 'center',
+                }}
               >
-                Email verified
-              </span>
-              <span
-                className="component-paperform-modal-subtitle"
-                style={{ fontSize: 14 }}
-              >
-                Your email address was successfully verified!
-              </span>
-            </div>
-          )}
-          {renderType === RenderCheckType.Paperform && (
-            <iframe
-              height={iframeHeight}
-              width={iframeWidth}
-              src={userActiveResult.url}
-            />
-          )}
-        </Container>
-      )}
+                <div
+                  className="component-paperform-modal-icon"
+                  style={{ backgroundImage: `url(${imgcheck})` }}
+                />
+                <span
+                  className="component-paperform-modal-title"
+                  style={{ fontSize: 32 }}
+                >
+                  Email verified
+                </span>
+                <span
+                  className="component-paperform-modal-subtitle"
+                  style={{ fontSize: 14 }}
+                >
+                  Your email address was successfully verified!
+                </span>
+              </div>
+            )}
+          </Container>
+        )}
+      </Spin>
     </div>
   );
 };

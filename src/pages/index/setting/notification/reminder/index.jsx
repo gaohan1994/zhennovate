@@ -8,6 +8,7 @@ import moment from 'moment';
 import { merge } from 'lodash';
 import { timezonecity } from '@/common/city';
 import { getTimezoneTime, addZero } from '@/common/time';
+import invariant from 'invariant';
 
 const prefix = 'setting';
 
@@ -32,6 +33,7 @@ function LearningReminder() {
   const [timeValue, setTimeValue] = useState(undefined);
   const [data, setData] = useState({});
   const [dayWeek, setDayWeek] = useState([]);
+  // const [dayWeekStatus, setDayWeekStatus] = useState('');
   const [selectedTimeZone, setSelectedTimeZone] = useState(36);
   const [renderTimezoneCity, setRenderTimezoneCity] = useState([]);
 
@@ -64,28 +66,41 @@ function LearningReminder() {
   }, [timezonecity]);
 
   const onSubmit = () => {
-    const currentTimeZone = timezonecity.find((t) => t.id === selectedTimeZone);
+    try {
+      // if (dayWeek.length === 0) {
+      //   setDayWeekStatus('error');
+      // }
 
-    const payload = {
-      userId: userId,
-      hour: moment(timeValue).hour(),
-      minute: moment(timeValue).minute(),
-      dayWeek: dayWeek,
-      zoneOffset: currentTimeZone.value,
-      id: selectedTimeZone,
-      city: currentTimeZone.name,
-      country: currentTimeZone.country,
-    };
+      invariant(
+        dayWeek.length > 0,
+        'Please select a day for your learning reminder.',
+      );
 
-    console.log('payload', payload);
+      const currentTimeZone = timezonecity.find(
+        (t) => t.id === selectedTimeZone,
+      );
 
-    setLearningReminder({ userId }, payload).then((result) => {
-      if (result.error_code === ResponseCode.success) {
-        message.success('Your changes were saved.');
-      } else {
-        message.error(result.message || ' ');
-      }
-    });
+      const payload = {
+        userId: userId,
+        hour: moment(timeValue).hour(),
+        minute: moment(timeValue).minute(),
+        dayWeek: dayWeek,
+        zoneOffset: currentTimeZone.value,
+        id: selectedTimeZone,
+        city: currentTimeZone.name,
+        country: currentTimeZone.country,
+      };
+
+      setLearningReminder({ userId }, payload).then((result) => {
+        if (result.error_code === ResponseCode.success) {
+          message.success('Your changes were saved.');
+        } else {
+          message.error(result.message || ' ');
+        }
+      });
+    } catch (error) {
+      message.error(error.message || ' ');
+    }
   };
 
   const onWeekClick = (item) => {
@@ -115,6 +130,7 @@ function LearningReminder() {
                 key={item.value}
                 className={`${prefix}-reminder-time`}
                 reminder-active={selectedDays ? 'active' : 'normal'}
+                reminder-error={dayWeek.length === 0 ? 'error' : ''}
                 common-touch="touch"
                 onClick={() => onWeekClick(item)}
               >

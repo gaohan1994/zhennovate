@@ -98,10 +98,11 @@ export default () => {
         <FormItem
           form={form}
           errorFields={errorFields}
-          label="Email Address"
+          label="Email address"
           name="email"
+          validateTrigger="onBlur"
           inputProps={{
-            placeholder: 'Email Address',
+            placeholder: 'Email address',
           }}
           rules={[
             {
@@ -126,7 +127,8 @@ export default () => {
         <div
           className={`${prefix}-up-forgot`}
           onClick={() => {
-            history.goBack();
+            // history.goBack();
+            history.push(`/sign/signin`);
           }}
           style={{
             textAlign: 'center',

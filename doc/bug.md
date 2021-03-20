@@ -1,3 +1,156 @@
+改密码
+
+## 2021-03-14
+
+352 fixed 目前做法是取消 sign 模块的 icon 点击功能
+351 fixed 是全部校验规则都这样还是只有 sign up 的 email？ 现在修改成失去焦点时校验
+347 fixed
+344 陈禹修改
+336 fixed
+332 陈禹修改
+328 fixed
+
+Good morning,
+Here are the following tickets to focus on,
+
+For Han
+
+Stuck Onboarding Loop
+https://zhennovate.atlassian.net/browse/PHASE1-354
+dizhen
+
+Update copywriting on Sign in Screen
+https://zhennovate.atlassian.net/browse/PHASE1-353
+fixed
+
+Missing - If user checks the radio button as individual - Currently even when my email address is whitelisted i am being directed to sign in screen
+https://zhennovate.atlassian.net/browse/PHASE1-328
+
+linda.zheng+5@zhennovate.com
+fixed
+
+Logo should be clickable on the sign-in screen
+https://zhennovate.atlassian.net/browse/PHASE1-337
+如果用户没有登录的时候会重定向到 signin
+
+Email Field is highlighted red when there is no error message
+https://zhennovate.atlassian.net/browse/PHASE1-355
+fixed
+
+Remove hexagon pattern in onboarding shown here
+https://zhennovate.atlassian.net/browse/PHASE1-327
+fixed
+
+Update Timezone dropdown in Learning Reminder settings -> to Han, Is this ticket fixed? or do you need more information on this?
+https://zhennovate.atlassian.net/browse/PHASE1-325
+
+Unable to scroll all the way down in coaching path with sessions expanded
+https://zhennovate.atlassian.net/browse/PHASE1-334
+fixed
+
+For Yu ( Please also double check these tickets to see if there is a backend dependency )
+Calculate Progress Bar based on Module Completion %
+https://zhennovate.atlassian.net/browse/PHASE1-335
+
+Email case sensitivity shouldn't matter in sign in, sign up, and forgot password - this applies to error messages on Frontend, capitalized whitelisted emails are treated as different emails and not being recognized.
+https://zhennovate.atlassian.net/browse/PHASE1-350
+陈禹修改
+
+Remove "[MC_Preview_Text]" from HTMLs in Our Email Templates
+https://zhennovate.atlassian.net/browse/PHASE1-348
+
+Weekly goal - default value should be 1 for new users
+https://zhennovate.atlassian.net/browse/PHASE1-315
+
+Invalid Date on Entries on Entry Page
+https://zhennovate.atlassian.net/browse/PHASE1-331
+
+For Han & Yu
+Missing Error messages for current password
+https://zhennovate.atlassian.net/browse/PHASE1-345
+需要讨论
+
+This error message is mainly for the settings page when users already signed in, Please ask Di if you have any questions
+
+## 2021-03-10
+
+Updated with the comment of latest bug issue with session level
+https://zhennovate.atlassian.net/browse/PHASE1-289
+后端修改
+
+unable to scroll in coaching path when user expands the sessions
+https://zhennovate.atlassian.net/browse/PHASE1-334
+缺少较多的 session 案例
+
+No progress in coaching path but UI shows 10% in progress bar --> thus when saving a not (New) program, it shows 10% done in saved tab
+https://zhennovate.atlassian.net/browse/PHASE1-333
+dizhen 添加的默认 10%进度
+
+Program is being put into complete status when there are still unfinished modules ( Most likely related to the session level bug )
+https://zhennovate.atlassian.net/browse/PHASE1-332
+陈禹修改
+
+Invalid Date on Entries on Entry Page
+https://zhennovate.atlassian.net/browse/PHASE1-331
+陈玉修改
+
+Quiz Entry not showing up
+https://zhennovate.atlassian.net/browse/PHASE1-330
+fixed
+
+When users click on error message "Please sign up" direct to sign up page
+https://zhennovate.atlassian.net/browse/PHASE1-329
+fixed
+
+---
+
+> When users click on sign up, nothing is happening
+> https://zhennovate.atlassian.net/browse/PHASE1-316
+
+> 如果 email 在机构里，不管用户选择的是否是 Are you joining through an organization? 都按 organization 继续注册 fixed
+> 用户使用不在机构里的邮箱注册时没有报错信息返回 前端解决 fixed
+
+> Update Copywriting for Thank you for signing up
+> https://zhennovate.atlassian.net/browse/PHASE1-317
+> fixed
+> 屏幕适配 不换行 fixed
+
+New Tickets covering sign up, sign in, change password setting page, and learning reminder setting page
+
+Missing toast notification for when users click on send code again
+https://zhennovate.atlassian.net/browse/PHASE1-339
+fixed
+
+Missing link when users click on the help center
+https://zhennovate.atlassian.net/browse/PHASE1-340
+fixed
+
+Missing when the user leaves zhennovate site mid-way through confirming the email when user signs in or come back to platform display confirm email screen
+https://zhennovate.atlassian.net/browse/PHASE1-341
+
+Missing- When users click on send code again make the previous code invalid
+https://zhennovate.atlassian.net/browse/PHASE1-342
+陈禹修改
+
+Missing - if users leave midway through onboarding when signing in or coming back to the platform display onboarding paper form
+https://zhennovate.atlassian.net/browse/PHASE1-343
+fixed
+
+Missing - User clicks on a used forgot password link or expired link
+https://zhennovate.atlassian.net/browse/PHASE1-344
+后端修改
+
+Missing Error messages for current password
+https://zhennovate.atlassian.net/browse/PHASE1-345
+1、陈禹对此有不同的看法，目前改为不到 8 位显示错误信息
+
+When users complete change password on the settings page
+https://zhennovate.atlassian.net/browse/PHASE1-346
+fixed
+
+change password errorcase https://app.zeplin.io/project/5f6ebe7037ba5f49f5943de8/screen/60301254ed2831a38f8afcfa
+fixed
+
 ## 2021-03-05
 
 > Hi Han,
@@ -10,21 +163,13 @@
 > https://zhennovate.atlassian.net/browse/PHASE1-319
 > fixed
 
-> When users click on sign up, nothing is happening
-> https://zhennovate.atlassian.net/browse/PHASE1-316
-> 暂不知道为什么
-
-> Update Copywriting for Thank you for signing up
-> https://zhennovate.atlassian.net/browse/PHASE1-317
-> fixed
-
 > Disable toast notifcations for error message
 > https://zhennovate.atlassian.net/browse/PHASE1-318
 > fixed
 
 > Update Error message for when password is wrong or account does not exist
 > https://zhennovate.atlassian.net/browse/PHASE1-321
-> 陈禹修改
+> 陈禹修改 fixed
 
 > Update Forgot Password Error message
 > https://zhennovate.atlassian.net/browse/PHASE1-322

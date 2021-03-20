@@ -47,6 +47,7 @@
       border: 1px solid @clear-blue;
       .flex(center, center);
       line-height: 1;
+      transition: all 0.3s ease-in;
     }
     &-time[reminder-active='normal'] {
       background-color: #fff;
@@ -55,6 +56,9 @@
     &-time[reminder-active='active'] {
       background-color: @clear-blue;
       color: #fff;
+    }
+    &-time[reminder-error='error'] {
+      border-color: #e86452;
     }
   }
 }
