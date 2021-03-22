@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-21 16:47:44
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-02-08 16:47:47
+ * @Last Modified time: 2021-03-22 18:03:49
  */
 import React, { useEffect, useState } from 'react';
 import { Collapse } from 'antd';
@@ -21,8 +21,7 @@ export default (props) => {
   const { data, id } = props;
   const [coachMenu, setCoachMenu] = useState([]);
   const [activeKey, setActiveKey] = useState(['']);
-  const [hoverModuleId, setHoverModuleId] = useState('');
-  console.log('hoverModuleId', hoverModuleId);
+  // const [hoverModuleId, setHoverModuleId] = useState('');
   // const [defaultKeys, setDefaultKeys] = useState([]);
 
   // const { checkSign } = useSignSdk();
@@ -94,8 +93,8 @@ export default (props) => {
                       key={moduleItem._id}
                       className={`${prefix}-coach-module`}
                       onClick={() => onModuleClick(moduleItem)}
-                      onMouseEnter={() => setHoverModuleId(moduleItem._id)}
-                      onMouseLeave={() => setHoverModuleId('')}
+                      // onMouseEnter={() => setHoverModuleId(moduleItem._id)}
+                      // onMouseLeave={() => setHoverModuleId('')}
                     >
                       <div className={`${prefix}-coach-module-dot`} />
                       {moduleItem.Title}

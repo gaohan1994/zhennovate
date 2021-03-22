@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-22 14:13:33
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-01 00:22:09
+ * @Last Modified time: 2021-03-22 18:03:09
  */
 import React, { useState, useEffect } from 'react';
 import { Progress, message } from 'antd';
@@ -159,21 +159,17 @@ function Program(props) {
   let percent = 0;
 
   if (data && data._id) {
-    if (data.FinishSessionTotal !== 0) {
-      percent = data.FinishSessionTotal / data.Sessions.length;
-    } else {
-      percent = 0.1;
-    }
+    percent = data.FinishedModuleTotal / data.ModuleTotal;
   }
 
   const percentText =
     data && data._id
       ? percent === 1
         ? 'Completed'
-        : `${data.Sessions.length - data.FinishSessionTotal} ${
-            data.Sessions.length - data.FinishSessionTotal > 1
-              ? 'sessions'
-              : 'session'
+        : `${data.ModuleTotal - data.FinishedModuleTotal} ${
+            data.ModuleTotal - data.FinishedModuleTotal > 1
+              ? 'modules'
+              : 'module'
           } left`
       : '';
 

@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-17 10:39:27
+ * @Last Modified time: 2021-03-22 12:02:34
  */
 import React, { useState } from 'react';
 import { Form, message, Input, Button } from 'antd';
@@ -16,7 +16,7 @@ import FormItem from '../component/form-item';
 import SignButton from '../component/button';
 import invariant from 'invariant';
 import '../index.less';
-import { Action_Types } from '../store/sign-store';
+import { Action_Types, Action_Types_Black_Sign } from '../store/sign-store';
 import { formatSearch } from '@/common/request';
 import { EyeInvisibleOutlined, EyeTwoTone } from '@ant-design/icons';
 import imginvite from '../../../assets/Invite-Illustration.png';
@@ -71,8 +71,15 @@ export default function SetPassword(props) {
         payload: result.data,
       });
 
+      dispatch({
+        type: Action_Types_Black_Sign.Receive_Userinfo_Black,
+        payload: result.data,
+      });
+
       message.success('Confirmation code sent. Please check your email.');
-      history.push(`/sign/check${props.location.search}`);
+      setTimeout(() => {
+        history.push(`/sign/check${props.location.search}`);
+      }, 100);
     } catch (error) {
       console.log('[报错信息]', error);
     }

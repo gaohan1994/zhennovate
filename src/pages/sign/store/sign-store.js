@@ -57,7 +57,7 @@ export function signBlackStore(state = signBlackInitState, action) {
       };
     }
     default: {
-      return state;
+      return { ...state };
     }
   }
 }

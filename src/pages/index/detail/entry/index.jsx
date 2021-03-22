@@ -22,7 +22,7 @@ const prefix = 'page-program';
 export function RenderEntryData({ item, type }) {
   // 如果是Assessment 则点击查看pdf
   const isAssessment = type === EntryFilter.Assessment;
-  const { Module = {}, PFDatas = [], EndAt = '' } = item;
+  const { Module = {}, PFDatas = [], CreateAt = '' } = item;
 
   if (isAssessment) {
     return (
@@ -30,7 +30,7 @@ export function RenderEntryData({ item, type }) {
         <Card>
           <RenderHeader
             title={Module.Title}
-            subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+            subTitle={`${moment(CreateAt).format('ddd, MMM D, YYYY')}`}
             icon={imgassessment}
             border={false}
           >
@@ -54,7 +54,7 @@ export function RenderEntryData({ item, type }) {
         renderHeader={() => (
           <RenderHeader
             title={Module.Title}
-            subTitle={`${moment(EndAt).format('ddd, MMM D, YYYY')}`}
+            subTitle={`${moment(CreateAt).format('ddd, MMM D, YYYY')}`}
             icon={
               type === EntryFilter.Action
                 ? imgaction
