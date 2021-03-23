@@ -3,7 +3,7 @@
  * @Author: centerm.gaohan
  * @Date: 2020-10-20 22:21:49
  * @Last Modified by: centerm.gaohan
- * @Last Modified time: 2021-03-17 11:05:54
+ * @Last Modified time: 2021-03-23 11:00:16
  */
 import React, { useState, useEffect, useRef } from 'react';
 import '../index.less';
@@ -15,6 +15,7 @@ import {
   onBoardingEnd,
   onBoardingStart,
 } from '../constants';
+import { trim } from 'lodash';
 import useSignSdk from '../store/sign-sdk';
 import { useHistory } from 'react-router-dom';
 import { ResponseCode } from '@/common/config';
@@ -23,6 +24,7 @@ import imgcheck from '@/assets/modal/Icon_Check_128x128.png';
 import '@/component/paperform/index.less';
 import Container from '../component/container';
 import { formatSearch } from '@/common/request';
+import { RECEIVE_MESSAGE_TYPE } from '@/pages/index/home/constants';
 
 const prefix = 'sign-page';
 
@@ -76,6 +78,8 @@ export default (props) => {
   const [iframeHeight, setIframeHeight] = useState(-1);
   const [iframeWidth, setIframeWidth] = useState(-1);
 
+  // 判断如果用户已经做过check而且已经做过onboarding
+
   /**
    * 刚进入check页面判断是否是显示onboarding paperfrom
    */
@@ -83,7 +87,6 @@ export default (props) => {
     if (search && search.renderType) {
       setLoading(true);
       setRenderType(search.renderType);
-
       setTimeout(() => {
         setLoading(false);
       }, 1000);
@@ -106,28 +109,34 @@ export default (props) => {
     };
     const { data: postMessageData } = event;
     const { paperformData } = postMessageData;
-    setLoading(true);
-    onBoardingEnd(payload, { paperformData })
-      .then((result) => {
-        console.log('[用户active paperform提交返回数据]', result);
 
-        uploadUserinfo(result.data.user);
-        setTimeout(() => {
-          // 新用户做完ongobarding的表格以后，应该然他们直接进到Programs > New 的页面，看Programs， 而不是看空空的首页。
-          history.push('/program');
-        }, 500);
-      })
-      .catch((error) => {
-        setLoading(false);
-        message.error(error.message);
-      });
+    console.log('[receiveMessage onboarding event]', event);
+    if (
+      postMessageData &&
+      postMessageData.type === RECEIVE_MESSAGE_TYPE.ONBOARDING
+    ) {
+      setLoading(true);
+      onBoardingEnd(payload, { paperformData })
+        .then((result) => {
+          console.log('[用户active paperform提交返回数据]', result);
+          uploadUserinfo(result.data.user);
+          setTimeout(() => {
+            // 新用户做完ongobarding的表格以后，应该然他们直接进到Programs > New 的页面，看Programs， 而不是看空空的首页。
+            history.push('/program');
+          }, 500);
+        })
+        .catch((error) => {
+          setLoading(false);
+          message.error(error.message);
+        });
+    }
   };
 
   /**
    * 监听window.postmessage事件
    */
   useEffect(() => {
-    window.addEventListener('message', receiveMessage, false);
+    window.addEventListener('message', receiveMessage);
     return () => window.removeEventListener('message', receiveMessage);
   }, []);
 
@@ -147,6 +156,7 @@ export default (props) => {
      */
     if (renderType === RenderCheckType.Paperform) {
       setLoading(true);
+      console.log('onFetchOnboarding');
       onFetchOnboarding();
 
       setTimeout(() => {
@@ -207,7 +217,7 @@ export default (props) => {
   const onInput = (event) => {
     if (event.target.value.length === 6) {
       inputRef.current?.blur();
-      userActive({ userId, code: event.target.value }).then((result) => {
+      userActive({ userId, code: trim(event.target.value) }).then((result) => {
         onUseractiveCallback(result);
       });
     }

@@ -15,6 +15,7 @@ export const RECEIVE_MESSAGE_TYPE = {
   CHECKIN: 'checkin',
   WORKSHOP: 'workshop',
   MODULE: 'module',
+  ONBOARDING: 'onboarding',
 };
 
 export const doingaction = (params) => {

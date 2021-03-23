@@ -50,11 +50,19 @@ function useSignSdk() {
     }
   };
 
+  // 更新用户信息
   const uploadUserinfo = (nextUserinfo) => {
-    store.dispatch({
-      type: Action_Types.Receive_Userinfo,
-      payload: nextUserinfo,
-    });
+    if (rememberToken === true) {
+      store.dispatch({
+        type: Action_Types.Receive_Userinfo,
+        payload: nextUserinfo,
+      });
+    } else {
+      store.dispatch({
+        type: Action_Types_Black_Sign.Receive_Userinfo_Black,
+        payload: nextUserinfo,
+      });
+    }
   };
 
   const userLogout = (callback) => {
